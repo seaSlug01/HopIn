@@ -177,7 +177,7 @@ const createPost = async (req, res) => {
       .catch(err => console.error(err.message), res.status(400));
   } catch(error) {
     console.log(error)
-    res.sendStatus(500);
+    res.status(500).send(error);
   }
 
 }
