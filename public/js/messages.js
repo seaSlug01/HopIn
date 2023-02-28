@@ -1,7 +1,6 @@
 import {docReady, timeDifference, spinnerV2} from "./common.js";
 import {NavigationStack} from "./navigationStack.js";
 import {BubbleButton} from "./bubbleButton.js";
-import {socket} from "./clientSocket.js";
 
 document.querySelectorAll(".navigate")[0].addEventListener("click", () => window.location.href = window.location.origin);
 
