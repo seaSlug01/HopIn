@@ -1,0 +1,27 @@
+extends layouts/main-layout.pug
+    
+block content
+  if !profileUser
+    .msg.danger
+      .icon
+        i.fa-solid.fa-circle-exclamation
+      p Check if the username you searched for exists or the url is incorrect.   
+  else
+    script.
+      const profileUserId = "!{profileUser._id}";
+      const profileUsername = "!{profileUser.username}";
+    .followingAndFollowersContainer
+      ul.tabsContainer
+        +createTab("Followers", `/profile/${profileUser.username}/followers`, "followers-tab")
+        +createTab("Following", `/profile/${profileUser.username}/following`, "following-tab")
+      .postsContainer
+
+
+  +createPostModals(userLoggedIn)
+
+  block scripts
+    script(src="/js/tabs.js", type="module")
+    script(src="/js/modal.js", type="module")
+    script(src="/js/followersAndFollowing.js", type="module")
+
+

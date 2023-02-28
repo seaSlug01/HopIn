@@ -1,0 +1,15 @@
+if pageTitle === "Home"
+  header.header.sticky
+    h1.pageTitle
+      | #{pageTitle}
+else if pageTitle === "Search"
+  header.header.sticky
+    .pageTitle
+      +navigationButton
+      +searchBox
+else if pageTitle === "Chats"
+else
+  header.header.sticky
+    h1.pageTitle
+        +navigationButton
+        span #{pageTitle}

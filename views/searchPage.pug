@@ -1,0 +1,20 @@
+extends layouts/main-layout.pug
+
+block content
+  .searchPage#searchPage
+    ul.tabsContainer.d-none
+      +createTab("Top", ``, "top-tab")
+      +createTab("Latest", ``, "latest-tab")
+      +createTab("People", ``, "people-tab")
+
+    .postsContainer
+
+
+
+    +createPostModals(userLoggedIn)
+    block scripts
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==", crossorigin="anonymous", referrerpolicy="no-referrer")
+      script(src="/js/modal.js", type="module")
+      script(src="/js/posts.js", type="module")
+      script(src="/js/tabs.js", type="module")
+      script(src="/js/searchPage.js", type="module")

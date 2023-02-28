@@ -1,0 +1,620 @@
+extends layouts/login-register-layout.pug
+
+block content
+  .login-register-container.register
+    
+    .left
+      p.welcome Welcome to HopIn
+      .container
+        .pre
+          .title
+            .first-syllable
+              h1 Re
+              .ball
+            h1 gister
+          p.subtitle Upload images, Share videos & songs, talk with your friends and relax!
+
+          ul.track-steps
+            li.step
+              .circle.active
+            li.step.muted
+              .circle
+            li.step.muted
+              .circle
+
+          p.errorMessage(data-error = `${error}`) #{errorMessage}
+        .form
+          form#registerForm(method="POST")
+            .formStepsContainer(data-page = `${page}`, data-error = `${error}`, data-error-fields = `${errorFields}`)
+              .formStep
+                h2.header Personal Information
+                .form-control
+                  label(for="firstName") First Name
+                  .input-group
+                    p.placeholder.shrink(data-shrink="100%") Kwstas
+                    input.pt-0(type="text", name="firstName", id="firstName", autocomplete="off", value=firstName, required="", autofocus, onfocus="this.selectionStart = this.selectionEnd = 10000;")
+                    
+                      //- i.fas.fa-eye
+                  //- .error
+                  //-   span Your username should be more than 25 characters
+
+                .form-control
+                  label(for="lastName") Last Name
+                  .input-group
+                    p.placeholder(data-shrink="100%") Tzianakoulis
+                    input.pt-0(type="text", name="lastName",id="lastName", autocomplete="off", value=lastName required="")
+
+                button.btn.step2(type="button") Next Step
+                  span.icon ⟶
+                a.link(href="/login") Already have an account? Login here.
+                  
+              
+              .formStep
+                h2.header Account Information
+                .form-control
+                  label(for="username") Username
+                  .input-group
+                    p.placeholder You can change it later
+                    input(type="text", name="username", value=username required="")
+
+                .form-control
+                  label(for="email") Email
+                  .input-group
+                    p.placeholder e.g. neelix@gmail.com
+                    input(type="email", name="email", value=email required="")
+
+                
+                button.btn(type="button") Last Step
+                  span.icon ⟶
+                a.link(href="/login") Already have an account? Login here.
+              
+              .formStep
+                h2.header Account Security
+                .form-control
+                    label(for="password") Password
+                    .input-group
+                      span.placeholder Your password
+                      input#password(type="password", name="password", value=password required="")
+                      .icon
+                        .eyeball
+                        i.fas.fa-eye-slash
+
+                .form-control
+                    label(for="confirmPassword") Confirm Password
+                    .input-group
+                      span.placeholder Confirm password
+                      input#confirmPassword(type="password", name="confirmPassword" required="")
+                      .icon
+                        .eyeball
+                        i.fas.fa-eye-slash
+                
+                button.btn(type="submit") Register  
+                  span.icon
+                    i.fas.fa-sign-in-alt
+                  
+                a.link(href="/login") Already have an account? Login here.
+              
+                 
+          
+    .right.register
+      //- img.register(src="../images/pexels-lisa-fotios-1921336.jpg")
+
+
+    script.
+      const inputFields = document.querySelectorAll("input");
+      const pw = document.getElementById("password");
+      const confirmPassword = document.getElementById("confirmPassword");
+      const form = document.getElementById("registerForm")
+      //- const formSteps  = document.querySelectorAll(".formStepsContainer > .formStep:not(:last-child)");
+      const formSteps  = document.querySelectorAll(".formStep");
+      const trackStepsContainer = document.querySelector(".track-steps");
+      const steps = trackStepsContainer.children;
+      const circles = document.querySelectorAll(".circle");
+      const formStepsContainer = document.querySelector(".formStepsContainer");
+      const formContainer = document.querySelector(".container")
+
+
+      //- const formState = {
+      //-   firstName: "",
+      //-   lastName: "",
+      //-   username: "",
+      //-   email: "",
+      //-   password: "",
+      //-   confirmPassword: ""
+      //- }
+
+      //- document.querySelector(".form-control").insertAdjacentHTML("beforeend", `<div class="error"><div class="errorContainer"><span>Username must be more than 3 characters</span></div></div>`)
+
+      
+      function validateForm(e) {
+        e.preventDefault();
+        if(pw.value !== confirmPassword.value) {
+          alert("Your passwords do not match")
+        } else {
+          form.submit();
+          console.log("submitted")
+        }
+      }
+
+      
+
+      function shrinkPlaceholder (el) {
+        el.previousElementSibling.classList.add("shrink")
+      }
+
+      function inputBlur(el) {
+        if(el.value.length < 1) el.previousElementSibling.classList.remove("shrink")
+        removeErrors([el])
+      }
+      
+
+      function getElements(target) {
+        const className = target.classList[0];
+
+        switch(className) {
+          case "btn":
+            return { allElements: formSteps, currentlyActiveElement: getElementWithSpecificClassInNodelist(formSteps, "active"), targetElement: target.parentNode}
+          case "circle":
+            return { allElements: circles, currentlyActiveElement: getElementWithSpecificClassInNodelist(circles, "active"), targetElement: target }
+        }
+      }
+
+      const getElementWithSpecificClassInNodelist = (nodeList, targetClass) => {
+        let targetElement;
+        nodeList.forEach(node => {
+          if(node.classList.contains(targetClass)) targetElement = node;
+        })
+
+        return targetElement;
+      }
+
+
+      function reFlow(el, className) {
+ 
+          el.classList.remove(className)
+          el.offsetHeight;
+          el.classList.add(className);      
+      }
+
+      function focusInput(input) {
+        setTimeout(() => {
+        input.focus();
+        input.selectionStart = input.selectionEnd = 10000;
+        }, 100)
+      }
+
+     window.addEventListener("keypress", function(e) {
+       
+        if(e.keyCode == "13") {
+          const currentlyActiveElement = getElementWithSpecificClassInNodelist(formSteps, "active");
+          const currentIndex = getIndexOfElement(formSteps, currentlyActiveElement)
+          const allSteps = formSteps.length;
+          const definedIndex = currentIndex < allSteps - 1 ? currentIndex + 1 : currentIndex;
+          const stepInputs = formSteps[currentIndex].querySelectorAll("input")
+
+
+          const errors = inputsToLoopThrough(stepInputs);
+
+          const currentCircle = circles[currentIndex];
+          const nextCircle = circles[definedIndex]
+
+          if(currentIndex < allSteps - 1) {
+            e.preventDefault();
+          }
+
+            if(errors.length) {
+              e.preventDefault();
+              displayErrors(errors);
+              reFlow(currentCircle, "error")
+            } else {
+              circleOperation(currentCircle, nextCircle, currentIndex, currentIndex + 1)
+
+
+              steps[definedIndex].classList.contains("muted") && steps[definedIndex].classList.remove("muted");
+              formSteps[currentIndex].classList.remove("active")
+              formSteps[definedIndex].classList.add("active")
+              
+
+              
+                focusInput(formSteps[currentIndex + 1].querySelectorAll("input")[0])
+                //- formSteps[currentIndex + 1].querySelectorAll("input")[0].focus();
+              
+            }
+
+        }
+          
+      })
+
+
+      formContainer.addEventListener("click", e => {
+        if(e.target.classList.contains("circle") || (e.target.classList.contains("btn") && e.target.type == "button")) {
+          
+
+          const elements = getElements(e.target);
+          const { allElements, targetElement, currentlyActiveElement } = elements;
+
+          const currentIndex = getIndexOfElement(allElements, currentlyActiveElement)
+          const goToIndex = e.target.type == "button" ? currentIndex + 1 : getIndexOfElement(allElements, targetElement); 
+
+
+          // -1 to active element
+          // Epeidi exei class success kai oxi active
+
+
+          const currentCircle = circles[currentIndex];
+          const clickedCircle = circles[goToIndex];
+          const currentFormStep = formSteps[currentIndex];
+          const goToFormStep = formSteps[goToIndex];
+
+
+          const stepInputs = formSteps[currentIndex].querySelectorAll("input")
+          const errors = inputsToLoopThrough(stepInputs);
+          
+
+
+          // An paei pisw, alla yparxoun errors sto current step
+          // Den peirazei
+          // Mono na paei mprosta den epitrepetai me errors
+
+          
+           if(errors.length) { 
+              displayErrors(errors);
+              reFlow(currentCircle, "error")
+      
+           } else {
+             
+             if(currentIndex !== goToIndex) {
+              circleOperation(currentCircle, clickedCircle, currentIndex, goToIndex)
+             }   
+             
+             steps[goToIndex].classList.contains("muted") && steps[goToIndex].classList.remove("muted");
+
+             currentFormStep.classList.remove("active")
+             goToFormStep.classList.add("active")
+
+             focusInput(formSteps[goToIndex].querySelectorAll("input")[0])
+
+           }  
+        }
+      })
+
+      function circleOperation(currentCircle, clickedCircle, currentIndex, goToIndex) {
+          if(goToIndex > currentIndex) {
+              console.log("1: that happens, if the current circle has error class, its removed, it should be...")
+              console.log("1: current circle also gets success since no errorz")
+ 
+              currentCircle.classList.add("success")        
+            } else {
+              console.log("2: this happens, if the clicked circle contains  success, success is removed")
+              console.log("2: if the current circle has success, its removed")
+              
+              currentCircle.classList.contains("success") && currentCircle.classList.remove("success");    
+            }
+
+            currentCircle.classList.contains("error") && currentCircle.classList.remove("error")
+
+
+            if(clickedCircle.classList.contains("success")) {
+              clickedCircle.classList.remove("success")
+              console.log("4: if the cliked circle already had success, since goToIndex > currentIndex, its removed in order to get the active class")
+            }
+            
+            
+           
+            if(currentIndex !== circles.length - 1) {
+              console.log("3: current Index is not the last one so success is added to current circle")
+              currentCircle.classList.add("success")
+            } 
+ 
+            clickedCircle.classList.add("active")
+            clickedCircle.classList.add("clicked")
+              setTimeout(function() {
+              clickedCircle.classList.remove("clicked")
+            }, 500)
+            currentCircle.classList.remove("active");
+      }
+
+      function removeErrors(inputArr) {
+        inputArr.forEach(input => {
+          const error = input.parentNode.parentNode.lastElementChild;
+         
+          if(error.classList.contains("error")) {
+
+            error.classList.add("slideUp")
+            
+            error.firstElementChild.addEventListener("animationend", () => {
+              error.remove();
+            })
+          }
+        })
+      }
+
+      // Thelw validation gia to email
+      // Thelw validation gia length
+      // Thelw validation gia to an ta passwords kanoun match
+      
+      let passwordKeyupTimeout;
+
+      window.addEventListener("input", (e) => {
+
+        passwordKeyupTimeout && clearTimeout(passwordKeyupTimeout);
+
+
+        if(e.target == pw || e.target.id == "confirmPassword") {
+          if(e.target.value.length > 5) {
+          let alreadyWrittenField = (e.target == pw ? confirmPassword.value : pw.value);
+
+            if(e.target.value != alreadyWrittenField && alreadyWrittenField.length > 5) {
+              console.log("passwords are not identical")
+              
+              
+              
+
+              passwordKeyupTimeout = setTimeout(() => {
+                const formControl = e.target.parentNode.parentNode;
+                const errorDiv = formControl.querySelector(".error");
+
+                !circles[2].classList.contains("error") && circles[2].classList.add("error")
+                  if(!errorDiv) {
+                    console.log(errorDiv, "there's no errorDiv")
+                    insertError(formControl, "Passwords do not match.")
+                  }
+              }, 1000)
+
+
+              
+             
+              
+            } else {
+              circles[2].classList.remove("error")
+            }
+          }
+        }
+      })
+
+      function insertError(container, message, className = "red") {
+        container.insertAdjacentHTML("beforeend", `<div class="error"><div class="errorContainer"><span class=${className}><img src="icons/danger.png" alt="danger.png">${message}</span></div></div>`)
+      }
+
+      function displayErrors(errors) {
+        errors.forEach((error, index) => {
+          const formControl = error.input.parentNode.parentNode;
+          const errorDiv = formControl.querySelector(".error")
+
+          index < 1 && focusInput(error.input)
+
+          if(errorDiv) {
+            const errorInnerText = errorDiv.querySelector(".errorContainer > span")
+            const textContent = errorInnerText.textContent;
+
+            textContent !== error.message ? errorInnerText.textContent = error.message : highlightError(errorDiv)
+          } else {
+            insertError(formControl, error.message);
+          }
+          
+        })
+      }
+
+      function highlightError(error) {
+        const errorInnerText = error.querySelector(".errorContainer > span");
+        error.classList.add("highlight")
+        if(error.classList.contains("highlight")) {
+          // onanimationend remove the class AND the eventListener so it doesnt bubble
+          const animation = errorInnerText.addEventListener("animationend", e => {
+            
+            if(e.animationName == "highlightError") {     
+              error.classList.remove("highlight")
+            }
+
+            errorInnerText.removeEventListener("animationend", animation);
+          })}
+      }
+
+      function validateEmail(email) {
+        const re = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        return re.test(email);
+      }
+
+      function inputsToLoopThrough(inputArr) {
+        const errors = [];
+         inputArr.forEach(input => {
+           let error = (input.type !== "password") ? inputLength(input, 3, 25) : inputLength(input, 8, 25);
+           
+           
+           if(input.name == "password" || input.name == "confirmPassword") {
+            
+           }
+
+           if(input.name == "email") {
+            if(!validateEmail(input.value)) {
+              error = "This email is invalid."
+            } 
+           }
+           if(error !== "") {
+             errors.push({input, message: error})
+           }
+           
+        })
+
+        return errors;
+      }
+      
+      function inputLength(input, min, max) {
+        let error = "";
+        if(input.value.trim() === "") {
+           error = inputName(input) !== "Confirm Password" ? `${inputName(input)} is required` : `Your password needs to be validated.`
+        } else if(input.value.length < min) {
+           error = `${inputName(input)} should be more than ${min} characters`
+        } else if(input.value.length > max) {
+           error = `${inputName(input)} should be less than ${max} characters`
+        }
+
+        return error;
+      }
+
+      function inputName(input) {
+        if(input.name !== "confirmPassword") {
+          return input.name.charAt(0).toUpperCase() + input.name.slice(1).toLowerCase();
+        } else {
+          return input.name.charAt(0).toUpperCase() + input.name.slice(1, 7).toLowerCase() + " " + input.name.charAt(7).toUpperCase() + input.name.slice(8)
+        }
+        
+      }
+
+      function passwordBackground(input, darken = false) {
+        input.parentNode.style.backgroundColor = darken ? "#e6e6e6" : "#d3d3d3";
+      }
+  
+      // Event Listeners
+
+      form.addEventListener("submit", validateForm)
+
+      window.addEventListener("click", (e) => {
+
+        if(e.target.classList.contains("icon")) {
+          const icon = e.target;
+          const container = e.target.parentNode;
+          const input = container.querySelector("input");
+
+          icon.classList.toggle("seeThrough");
+
+          if(icon.classList.contains("seeThrough")) {
+            input.type = "text";
+
+            icon.querySelector("i").remove();
+            icon.insertAdjacentHTML("afterbegin", "<i class='fas fa-eye'></i>")
+          
+          } else {
+            input.type = "password"
+            icon.querySelector("i").remove();
+            icon.insertAdjacentHTML("afterbegin", "<i class='fas fa-eye-slash'></i>")
+          }
+        } else {
+          return false;
+        }
+      })
+
+
+
+      inputFields.forEach((input, index) => {
+        input.addEventListener("focus", () => {
+          shrinkPlaceholder(input)
+
+          if(input.id == "password" || input.id == "confirmPassword") {
+
+            passwordBackground(input)
+          }
+
+        })
+        input.addEventListener("blur", () => {
+          inputBlur(input)
+
+          if(input.id == "password" || input.id == "confirmPassword") {
+
+            passwordBackground(input, true)
+          }
+        })
+        input.addEventListener("input", (e) => {
+          removeErrors([input])
+          
+          if(input.name == "firstName" || input.name == "lastName") {
+              
+              if(e.target.value.trim() !== "") {
+                e.target.value[0].toUpperCase()
+              }
+              
+            
+          }
+
+          if(input.id == "password" || input.id == "confirmPassword") {
+            
+            const icon = input.nextElementSibling;
+            if(input.value.trim().length > 0) {
+              icon.classList.add("visible")
+            } else {
+              icon.classList.remove("visible")
+            }
+          }
+
+
+          
+        })
+      })
+
+      function getIndexOfElement(allElements, targetElement) {
+        return Array.prototype.indexOf.call(allElements, targetElement)
+      }
+
+      function checkInputValue(input) {
+        
+        if(input.value) shrinkPlaceholder(input);
+      }
+
+      function focusAtTheEndOfInputText(el) {
+        // douleyei den douleyei
+        el.selectionStart = el.selectionEnd = 10000;  
+      }
+
+      function focusAtTheEndOfInputText2(el) {
+        // ok ayto fainetai na doyleyei alla ugly solution, fainetai toso needless alla kanei ti douleia tou so wtv...
+        var val = el.value; //store the value of the element
+        el.value = ''; //clear the value of the element
+        el.value = val; //set that value back.
+      }
+
+      window.addEventListener("load", () => {
+      let page = formStepsContainer.dataset.page;
+      let error = formStepsContainer.dataset.error.toString();
+      let errorFields = formStepsContainer.dataset.errorFields;
+      console.log(error);
+      console.log(errorFields);
+
+      let errorFieldsArr = errorFields.split(",").map(el => el.trim());
+      console.log(document.querySelector(`input[name="${errorFieldsArr[0]}"]`))
+      setTimeout(() => {
+        if(error === true) {
+          console.log(error);
+          
+          document.querySelector(`input[name="${errorFieldsArr[0]}"]`).focus();
+          focusAtTheEndOfInputText2(document.querySelector(`input[name="${errorFieldsArr[0]}"]`))
+          
+        } else {
+          document.querySelectorAll(`input`)[0].focus();
+          console.log(document.querySelector("input"))
+        }
+         
+      }, 200)
+
+      const step = steps[page -1 ];
+      step.classList.remove("muted");
+
+      const formStep = formSteps[page -1];
+      formStep.classList.add("active");
+
+      const circle = circles[page -1 ];
+      circle.classList.add("active");
+
+      const stepInputs = formStep.querySelectorAll("input");
+      
+      if(error === true) {
+        circle.classList.add("error");
+
+        errorFieldsArr.forEach(inputName => {
+          inputName === "username" &&
+            insertError(document.querySelector(`input[name="${inputName}"]`).parentNode.parentNode, "Please choose a different username", "blue")
+          
+
+          inputName === "email" && insertError(document.querySelector(`input[name="${inputName}"]`).parentNode.parentNode, "Please choose a different email", "blue")
+        })
+      } 
+      
+        inputFields.forEach(input => {
+          checkInputValue(input);
+        })
+      })
+
+
+      
+
+
+

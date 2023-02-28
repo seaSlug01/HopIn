@@ -1,0 +1,72 @@
+.rangeContainer {
+  width: 20rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rangeContainer > *  {
+  pointer-events: none;
+}
+
+.range {
+  height: 0.25rem;
+  border-radius: 100vw;
+  background: rgb(142, 205, 248);
+  width: 100%;
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+
+.progress {
+  --widthVal: 0px;
+  width: var(--widthVal);
+  height: 100%;
+  background: rgb(21 160 255);
+}
+
+
+.ball {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: rgb(21 160 255);
+  cursor: pointer;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.ball::after {
+  content: "";
+  position: absolute;
+  width: 2.1rem;
+  height: 2.1rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: transparent;
+  border-radius: 50%;
+  z-index: -1;
+  transition: background 0.3s ease;
+}
+
+
+
+.ball.hover::after {
+  background:  rgba(142, 205, 248, 0.25);
+}
+
+.ball.scaleUp.hover::after {
+  background: rgba(142, 205, 248, 0.35)
+}
+
+.ball.scaleUp {
+  width: 1.2rem;
+  height: 1.2rem;
+}

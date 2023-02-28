@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/42639968/how-to-change-the-color-of-the-text-above-a-threshold-length-using-js

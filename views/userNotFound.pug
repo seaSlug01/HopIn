@@ -1,0 +1,18 @@
+extends layouts/main-layout.pug
+    
+block content
+  .profileContainer.notFound
+    .cover
+    .userContainer
+      .upper
+        .profileImage
+      h3 @#{profileUser.username}
+      .not-found-details
+        .not-found-details__description
+          h2 This account doesn't exist
+          p.muted Try searching for another
+        
+
+
+
+  script(src="/js/profileUserNotFound.js", type="module")

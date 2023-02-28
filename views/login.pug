@@ -1,0 +1,129 @@
+extends layouts/login-register-layout.pug
+
+block content
+  .login-register-container.login
+    
+    .left
+      p.welcome Welcome to HopIn
+      .container
+        .pre
+          .title
+            .first-syllable
+              h1 Lo
+              .ball
+            h1 gin
+          p.subtitle Upload images, Share videos & songs, talk with your friends and relax!
+          p.errorMessage(data-error = `${error}`) #{errorMessage}
+        .form
+          form(method="POST")
+            //- .form-control
+            //-   label(for="logUsername") Username or email
+            //-   .input-group
+            //-     p.placeholder eg Neelixman or neelix@gmail.com
+            //-     input(type="text", name="logUsername", value=logUsername required="")
+            //- .form-control
+            //-     label(for="logPassword") Acount Password
+            //-     .input-group
+            //-       span.placeholder Password
+            //-       input(type="password", name="logPassword", id="password" required="")
+            //-       .icon
+            //-         .eyeball
+            //-         i.fas.fa-eye-slash
+            .form-control
+              label(for="logUsername") Username or email
+              .input-group
+                p.placeholder eg Neelixman or neelix@gmail.com
+                input(type="text", name="logUsername", required="")
+            .form-control
+                label(for="logPassword") Acount Password
+                .input-group
+                  span.placeholder Password
+                  input(type="password", value="password", name="logPassword", id="password" required="")
+                  .icon
+                    .eyeball
+                    i.fas.fa-eye-slash
+            button.btn(type="submit") Login
+            a.link(href="/register") Need an account? Register here.
+               
+             
+              
+          
+    .right.login
+      //- img.login(src="../images/pexels-lisa-fotios-1921336.jpg")
+
+    script.
+
+      let defaultName = navigator.userAgent.indexOf("Firefox") != -1 ? "takis" : "Neelixman"
+      document.querySelector("input[name='logUsername']").value = defaultName;
+
+      
+      const inputFields = document.querySelectorAll("input");
+      const passwordField = inputFields[1];
+
+      function inputFocus(el) {
+        console.log(el.previousElementSibling)
+
+        el.previousElementSibling.classList.add("shrink")
+      }
+
+      function inputBlur(el) {
+        if(el.value.length < 1) el.previousElementSibling.classList.remove("shrink")
+      }
+
+      function passwordBackground(input, darken = false) {
+        
+        input.parentNode.style.backgroundColor = darken ? "#e6e6e6" : "#d3d3d3";
+      }
+
+      inputFields.forEach(input => {
+        input.addEventListener("focus", () => {
+          inputFocus(input)
+          passwordBackground(input)
+        })
+        input.addEventListener("blur", () => {
+          inputBlur(input)
+          passwordBackground(input, true)
+          })
+      })
+
+
+      window.addEventListener("click", (e) => {
+
+        if(e.target.classList.contains("icon")) {
+          const icon = e.target;
+          const container = e.target.parentNode;
+          const input = container.querySelector("input");
+
+          icon.classList.toggle("seeThrough");
+
+          if(icon.classList.contains("seeThrough")) {
+            input.type = "text";
+
+            icon.querySelector("i").remove();
+            icon.insertAdjacentHTML("afterbegin", "<i class='fas fa-eye'></i>")
+          
+          } else {
+            input.type = "password"
+            icon.querySelector("i").remove();
+            icon.insertAdjacentHTML("afterbegin", "<i class='fas fa-eye-slash'></i>")
+          }
+        } else {
+          return false;
+        }
+      })
+
+
+      passwordField.addEventListener("input", e => {
+        const icon = passwordField.nextElementSibling;
+            if(passwordField.value.trim().length > 0) {
+              icon.classList.add("visible")
+            } else {
+              icon.classList.remove("visible")
+            }
+      })
+
+      window.addEventListener("load", () => {
+        inputFields.forEach(input => {
+          if(input.value) input.previousElementSibling.classList.add("shrink")
+        })
+      })

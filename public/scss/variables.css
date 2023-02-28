@@ -1,0 +1,17 @@
+:root {
+  --clr-primary: rgb(29, 161, 242);
+  --clr-primary-light: rgb(0, 157, 255);
+  --clr-primary-rgb: 29, 161, 242;
+  --blue: #0072ff;
+  --thin-border: thin solid rgb(236, 236, 236);
+  --spacing: 0.8rem;
+  --icon-filter: invert(52%) sepia(29%) saturate(4403%) hue-rotate(159deg)
+    brightness(92%) contrast(102%);
+  --txt-primary: #353535;
+  --txt-grey: #5e5e5e;
+  --txt-muted: #6b6e70;
+  --hover-grey: rgba(15, 20, 25, 0.1);
+  --padding-Y: 0rem 1rem;
+  --box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px,
+    rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+}
