@@ -29,35 +29,12 @@ function directoryPath(filePath, goBack) {
   return path.join(__dirname, `${goBack}${filePath}`);
 }
 
-
-function createCloudinarySignature() {
-  
-
-    var file='https://upload.wikimedia.org/wikipedia/commons/b/b1/VAN_CAT.png';
-
-  var curl_command = 'curl -d "file=' + file + 
-    '&api_key=323127161127519&eager=w_400,h_300,c_pad|w_260,h_200,c_crop&public_id=sample_image' + 
-    '&timestamp=' + timestamp +
-    '&signature=' + signature +
-    '" -X POST http://api.cloudinary.com/v1_1/carl/image/upload';
-}
-
 const fileUpload = async (filePath, goBack = "", options) => {
   try {
-
-    const timestamp = Math.round((new Date).getTime() / 1000);
-
-    var signature = cloudinary.utils.api_sign_request({
-      timestamp: timestamp,
-      eager: 'w_400,h_300,c_pad|w_260,h_200,c_crop',
-      public_id: 'sample_image'}, process.env.API_SECRET);
-
-
     const response = await cloudinary.uploader.upload(directoryPath(filePath, goBack), {
       ...options,
       use_fileName: true,
       folder: "HopIn",
-      signature
     });
 
     return response;
