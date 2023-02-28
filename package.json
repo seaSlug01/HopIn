@@ -8,7 +8,8 @@
     "watch-node": "nodemon app.js",
     "watch-postcss": "postcss public/scss -d public/css/ -w",
     "start": "concurrently \"npm:watch-*\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install",
+    "build": "node app.js"
   },
   "author": "Neelix",
   "license": "ISC",
