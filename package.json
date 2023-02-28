@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-node": "nodemon app.js",
     "watch-postcss": "postcss public/scss -d public/css/ -w",
-    "start": "concurrently \"npm:watch-*\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install",
-    "build": "node app.js"
+    "dev": "concurrently \"npm:watch-*\"",
+    "start": "node app.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
   },
   "author": "Neelix",
   "license": "ISC",
