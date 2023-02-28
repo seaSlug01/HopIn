@@ -1,6 +1,6 @@
-export let connected = false;
+let connected = false;
 
-export const socket = io()
+const socket = io()
 
 socket.emit("setup", userLoggedIn);
 

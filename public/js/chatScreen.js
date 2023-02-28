@@ -5,7 +5,6 @@ import {openModal, closingModalInitialState} from "./modal.js";
 import {Accordion} from "./accordion.js";
 import {BubbleButton} from "./bubbleButton.js";
 import {Gallery} from "./gallery.js";
-import {socket} from "./clientSocket.js";
 
 
 let userIsTyping = false;
