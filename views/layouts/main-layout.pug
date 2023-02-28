@@ -1,0 +1,61 @@
+include ../mixins/mixins
+
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+        //- link(rel='stylesheet' href='/loading-attribute-polyfill/dist/loading-attribute-polyfill.css')
+        //- script(src='/loading-attribute-polyfill/dist/loading-attribute-polyfill.umd.js' async='')
+        link(href='//vjs.zencdn.net/7.10.2/video-js.min.css' rel='stylesheet')
+        script(src='//vjs.zencdn.net/7.10.2/video.min.js')
+        link(rel="stylesheet", href="/scripts/cropperjs/dist/cropper.min.css")
+        link(rel="stylesheet", href="/scripts/dropzone/dist/dropzone.css")
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css' integrity='sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==' crossorigin='anonymous' referrerpolicy='no-referrer')
+        link(rel="stylesheet", href="/css/global.css")
+        link(rel="stylesheet", href="/css/main.css")  
+        title #{pageTitle}
+    
+    body
+        script.
+          let userLoggedIn = !{userLoggedInJs}
+        .wrapper
+            include ../sidebar.pug
+            
+            main
+                .mainSectionContainer
+                    include ../header.pug
+                             
+                    .container 
+                        block content
+                
+                include third-column.pug
+
+        .modal#imageGalleryModal(tabindex="-1", role="dialog", aria-labelledBy="imageGalleryModal", aria-hidden="false")
+          button.modal-close.round.btn-icon(data-title="Close", type="button", data-toggle="tooltip", data-tooltip-color="black")
+          .gallery
+            .galleryContent
+
+        +giphyModal
+
+
+        script(src="/scripts/socket.io/client-dist/socket.io.min.js")
+        script(src="/scripts/axios/dist/axios.min.js")
+        script(src="/scripts/gsap/dist/gsap.min.js")
+        script(src="/scripts/moment/min/moment.min.js")
+        script(src="/scripts/cropperjs/dist/cropper.min.js")
+        script(src="/scripts/dropzone/dist/dropzone-min.js")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/fontawesome.min.js' integrity='sha512-nKvEIGRKw2OQCR34yLfnWnvrOBxidLG9aK+vzsBxCZ/9ZxgcS4FrYcN+auWUTkCitTVZAt82InDKJ7x+QtKu6g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+        
+        script(src="/js/leftSidebar.js", type="module")
+        script(src="/js/search.js", type="module")
+        script(src="/js/clientSocket.js", type="module")
+        script(src="/js/common.js", type="module")
+        
+        
+        
+
+
+

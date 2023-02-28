@@ -1,0 +1,1495 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.466);
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+}
+  /* overflow-y: auto; */
+
+  .modal.bg-transparent {
+    background: transparent !important;
+  }
+
+  .modal.show {
+    z-index: 100;
+  }
+
+.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-container {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  width: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.modal-container .wrapperScroll {
+    max-height: 90vh;
+    position: relative;
+  }
+
+.modal-container .wrapperScroll.scrollable {
+      overflow-y: auto;
+    }
+
+.modal-container .close-prompt {
+    margin-top: 2rem;
+    font-weight: bold;
+    color: white;
+    background: #0072ff;
+    font-family: "Lato", sans-serif;
+    border-radius: 4px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    height: 2.2rem;
+  }
+
+.modal-container .close-prompt:hover, .modal-container .close-prompt:active {
+      background: #0065e1;
+    }
+
+.modal-container .close-prompt:active {
+      transform: scale(0.9);
+    }
+
+.modal-container .close-prompt:disabled {
+      color: #ababab;
+      background: #e9e9e9;
+      pointer-events: none;
+    }
+
+.modal-container .modal-header {
+    padding: 0.5rem 0.5rem 0.7rem 0.5rem;
+    display: flex;
+    align-items: center;
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+.modal-container .modal-header__text, .modal-container .modal-header h3 {
+      font-size: 1.25rem;
+      margin-left: 2rem;
+      flex: 1;
+    }
+
+.modal-container.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+.modal-container .postForm .buttonsContainer {
+      margin-top: 4rem;
+    }
+
+.modal-container .postContainer {
+    border: none;
+    cursor: default;
+  }
+
+.modal-container .postContainer .post-details:hover {
+        background: white !important;
+      }
+
+#replyModal .modal-container .wrapperScroll .original-post .postContainer .post-details {
+          cursor: default;
+        }
+
+#replyModal .modal-container .wrapperScroll .postForm {
+        
+      }
+
+#deleteModal .modal-container, #unfollowModal .modal-container {
+    width: 20rem;
+    padding: 2.5rem 2rem 2rem 2rem;
+  }
+
+#deleteModal .modal-header, #unfollowModal .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+#deleteModal .modal-header h3, #unfollowModal .modal-header h3 {
+      margin-left: 0;
+      font-size: 1.3rem;
+    }
+
+#deleteModal .modal-header p, #unfollowModal .modal-header p {
+      color: var(--txt-grey);
+      margin-top: 0.5rem;
+    }
+
+#deleteModal .modal-actions, #unfollowModal .modal-actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+
+#deleteModal .modal-actions button:first-of-type, #unfollowModal .modal-actions button:first-of-type {
+      margin-bottom: 0.5rem;
+    }
+
+#uploadErrorModal {
+  background: rgba(231, 231, 231, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+#uploadErrorModal .modal-container {
+    padding: 1rem;
+    box-shadow: 0 15px 30px #c7c7c7;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+  }
+
+#uploadErrorModal .modal-container .close-prompt {
+      align-self: flex-end;
+      
+    }
+
+#uploadErrorModal .modal-container h2 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+#uploadErrorModal .modal-container p, #uploadErrorModal .modal-container .upload-error-message {
+      color: rgb(74, 74, 74);
+    }
+
+#uploadErrorModal .modal-container .modal-close {
+      background: var(--hover-grey);
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+
+#uploadErrorModal .modal-container .modal-close:hover {
+        background: rgba(0, 69, 139, 0.1);
+      }
+
+#modifyChatModal .modal-container, #reactionsModal .modal-container {
+    box-shadow: 0 15px 30px #c7c7c7;
+    border-radius: 10px;
+  }
+
+#modifyChatModal .modal-container .body, #reactionsModal .modal-container .body {
+      margin-top: 1.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+#modifyChatModal .modal-container .modal-close, #reactionsModal .modal-container .modal-close {
+      position: absolute;
+      z-index: 1;
+      right: 0.8rem;
+      top: 0.6rem;
+      background: #e3e3e3;
+      color: #626262;
+    }
+
+#modifyChatModal .modal-container .modal-close:hover, #reactionsModal .modal-container .modal-close:hover {
+        background: lightgrey;
+      }
+
+#modifyChatModal .modal-container .modal-close:active, #reactionsModal .modal-container .modal-close:active {
+        background: #cbcbcb;
+      }
+
+#modifyChatModal .modal-container .modal-header, #reactionsModal .modal-container .modal-header {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #dddddd;
+    }
+
+#modifyChatModal .modal-container .modal-header h3, #reactionsModal .modal-container .modal-header h3 {
+        display: contents;
+        letter-spacing: 0.2px;
+      }
+
+#modifyChatModal {
+  background: rgba(245, 245, 245, 0.75);
+}
+
+#modifyChatModal .modal-container {
+    width: 35rem;
+  }
+
+#modifyChatModal .modal-container .modal-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+#modifyChatModal .modal-container .modal-body__chatName-form {
+        margin-top: 1rem;
+      }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          margin-top: 1rem;
+          gap: 0.5rem;
+        }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons .close-prompt {
+            margin-top: 0;
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
+          }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons .close-prompt:disabled {
+              pointer-events: all;
+              cursor: not-allowed;
+            }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons .close-prompt:disabled:active {
+                transform: scale(1);
+              }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons .cancel {
+            color: rgb(0, 118, 191);
+            font-weight: bold;
+            transition: background 0.2s ease;
+            height: 2.2rem;
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+            border-radius: 4px;
+          }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons .cancel:active {
+              font-size: 0.9rem;
+              padding-left: 0.8rem;
+              padding-right: 0.8rem;
+            }
+
+#modifyChatModal .modal-container .modal-body__chatName-form__buttons .cancel:hover {
+              background: #e3e3e3;
+            }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group {
+          position: relative;
+          border-radius: 8px;
+          border: 2px solid transparent;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 3.8rem;
+        }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group .counter {
+            pointer-events: none;
+            position: absolute;
+            right: 1rem;
+            color: var(--txt-grey);
+            top: 0.5rem;
+            font-size: 0.75rem;
+          }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group.active label {
+              font-size: 0.7rem;
+              transform: translateY(-140%);
+            }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group.focused {
+            border-color: rgb(0, 118, 191);
+          }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group.focused label {
+              color: rgb(0, 118, 191);
+              font-size: 0.7rem;
+              transform: translateY(-140%);
+              text-shadow: 0 0 0.5px rgb(0, 118, 191);
+            }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group label {
+            position: absolute;
+            top: 50%;
+            left: 1.2rem;
+            transform: translateY(-50%);
+            transition: all 0.2s ease;
+            color: var(--txt-grey);
+            font-size: 1rem;
+          }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group input {
+            padding-top: 1.5rem;
+            padding-right: 3rem;
+            padding-left: 1rem;
+            padding-bottom: 0.8rem;
+            border-radius: 4px;
+            border: thin solid #b7b7b7;
+            font-family: "Lato", sans-serif;
+            width: 99%;
+            height: 99%;
+            outline: none;
+            width: 99.2%;
+            height: 91%;
+            font-size: 1rem;
+          }
+
+#modifyChatModal .modal-container .modal-body__chatName-form .input-group input:hover {
+              border-color: #6a6a6a;
+            }
+
+#modifyChatModal .modal-container .modal-body__form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 33.5rem;
+      }
+
+#modifyChatModal .modal-container .modal-body__form__submit.close-prompt {
+            margin-top: 0;
+          }
+
+#modifyChatModal .modal-container .modal-body__form__submit.close-prompt:active {
+              transform: scale(0.97);
+            }
+
+#modifyChatModal .modal-container .modal-body__form-group {
+        display: flex;
+        align-items: stretch;
+        border-radius: 7px;
+        border: 1px solid #c7c7c7;
+      }
+
+#modifyChatModal .modal-container .modal-body__form-group label {
+          width: 2.4rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: grey;
+        }
+
+#modifyChatModal .modal-container .modal-body__form-group input {
+          padding: 0.5rem;
+          padding-left: 0;
+          flex: 1;
+          border: none;
+          background: transparent;
+          outline: none;
+          font-size: 1rem;
+          font-family: 'Lato', sans-serif;
+          font-weight: bold;
+          color: #222222;
+        }
+
+#modifyChatModal .modal-container .modal-body__form-group input:focus::-moz-placeholder {
+              color: #a1a1a1;
+          }
+
+#modifyChatModal .modal-container .modal-body__form-group input:focus::placeholder {
+              color: #a1a1a1;
+          }
+
+#modifyChatModal .modal-container .modal-body__form-group input:placeholder {
+
+            color: grey;
+          }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview {
+        min-height: 6.85rem;
+        display: flex;
+        overflow-x: auto;
+      }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview--empty {
+          justify-content: center;
+          align-items: center;
+        }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .noUsersSelected  {
+          font-weight: 400;
+          font-size: 0.8rem;
+        }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .selectedUserPreview {
+          display: flex;
+          flex-direction: column;
+          min-width: 6rem;
+          align-items: center;
+          margin-top: 1.5rem;
+          transition: min-width 0.5s ease;
+        }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .selectedUserPreview.remove {
+            min-width: 0;
+          }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .selectedUserPreview .imageContainer {
+            position: relative;
+          }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .selectedUserPreview .imageContainer button {
+              position: absolute;
+              right: -3px;
+              top: -3px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              background: white;
+              width: 1.2rem;
+              height: 1.2rem;
+              font-size: 0.9rem;
+              box-shadow: 0 0 2px black;
+              color: #686868;
+            }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .selectedUserPreview .imageContainer .profileImage {
+              width: 2.5rem;
+              height: 2.5rem;
+              cursor: default;
+            }
+
+#modifyChatModal .modal-container .modal-body .selectedUsersPreview .selectedUserPreview p {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            text-align: center;
+            max-width: 5rem;
+            line-height: 1.4;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers {
+        width: 100%;
+        overflow-y: auto;
+        max-height: 19.8rem;
+        min-height: 19.8rem;
+      }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers:hover::-webkit-scrollbar-thumb {
+            background: lightgrey;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers::-webkit-scrollbar {
+          width: 10px;
+        }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers::-webkit-scrollbar-track:hover {
+            background: #f1f1f1;
+          }
+
+/* Handle */
+
+#modifyChatModal .modal-container .modal-body .searchedUsers::-webkit-scrollbar-thumb {
+          background: transparent;
+          border-radius: 4px;
+          -webkit-transition: background 0.3s ease;
+          transition: background 0.3s ease;
+          background-clip: content-box;
+        }
+
+/* Handle on hover */
+
+#modifyChatModal .modal-container .modal-body .searchedUsers::-webkit-scrollbar-thumb:hover {
+          background: #bfbfbf;
+        }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem;
+          border-radius: 5px;
+          transition: background 0.3s ease;
+          cursor: pointer;
+        }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox > *:not(.checkbox) {
+            pointer-events: none;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox:hover {
+            background: whitesmoke;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox .profileImage {
+            margin-right: 1rem;
+            width: 2.25rem;
+            height: 2.25rem;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox .name {
+            flex: 1;
+            font-weight: bold;
+            color: #222222;
+            font-size: 0.95rem;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox .checkbox {
+            border-radius: 3px;
+            border: thin solid #222222;
+            width: 1.1rem;
+            height: 1.1rem;
+          }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox .checkbox::before {
+              font-size: 0.8rem;
+              padding: 0px;
+              padding-left: 1px;
+              padding-top: 0.5px;
+            }
+
+#modifyChatModal .modal-container .modal-body .searchedUsers .userCheckbox .checkbox:checked {
+              border-color: #3661ff;
+            }
+
+#modifyChatModal .userNickname {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: 0.3s ease background;
+    cursor: pointer;
+  }
+
+#modifyChatModal .userNickname.white {
+      transition: none;
+    }
+
+#modifyChatModal .userNickname.white:hover {
+        background: white;
+      }
+
+#modifyChatModal .userNickname .initial {
+      display: block;
+    }
+
+#modifyChatModal .userNickname .initial.userNickname__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+#modifyChatModal .userNickname .hidden {
+      display: none;
+    }
+
+#modifyChatModal .userNickname__icon {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      transition: 0.3s ease background;
+    }
+
+#modifyChatModal .userNickname__icon i {
+        font-size: 1.1rem;
+      }
+
+#modifyChatModal .userNickname__icon:hover {
+        background: #e9e9e9;
+      }
+
+#modifyChatModal .userNickname > *:not(.userNickname__icon.initial) {
+      pointer-events: none;
+    }
+
+#modifyChatModal .userNickname.active {
+      cursor: default;
+      transition: none;
+      
+    }
+
+#modifyChatModal .userNickname.active > * {
+        pointer-events: all;
+      }
+
+#modifyChatModal .userNickname.active input {
+        pointer-events: all;
+      }
+
+#modifyChatModal .userNickname.active .userNickname__icon.hidden {
+        pointer-events: all;
+      }
+
+#modifyChatModal .userNickname.active .initial {
+        display: none;
+      }
+
+#modifyChatModal .userNickname.active .hidden {
+        display: block;
+      }
+
+#modifyChatModal .userNickname__toggle {
+      flex: 1;
+    }
+
+#modifyChatModal .userNickname__toggle input {
+        background: #f1f1f1;
+        padding: 0.5rem;
+        width: 98%;
+        bprder-radius: 5px;
+        border-radius: 5px;
+        outline: 0;
+        border: thin solid #ababab;
+        font-family: "Lato", sans-serif;
+        font-weight: bold;
+        font-size: 0.95rem;
+        display: none;
+      }
+
+#modifyChatModal .userNickname__toggle input:focus {
+          border: thin solid rgb(0, 131, 211);
+          background: white;
+        }
+
+#modifyChatModal .userNickname__toggle input:hover {
+          background: #e1e1e1;
+        }
+
+#modifyChatModal .userNickname__toggle p {
+        font-weight: bold;
+      }
+
+#modifyChatModal .userNickname__toggle small {
+        margin-top: 0.2rem;
+      }
+
+#modifyChatModal .userNickname:hover {
+      background: #efefef;
+    }
+
+#modifyChatModal .userNickname:hover.active {
+        background: transparent;
+      }
+
+#modifyChatModal .userNickname .profilePic {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+
+#modifyChatModal .addPeopleSearch {
+
+  }
+
+#reactionsModal {
+  background: rgba(231, 231, 231, 0.3);
+}
+
+#reactionsModal .modal-container {
+    min-height: 350px;
+  }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction {
+          display: flex;
+          align-items: center;
+          padding: 0.5rem;
+          border-radius: 8px;
+        }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction > * {
+            pointer-events: none;
+          }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction.isUser--true {
+              transition: background 0.3s ease;
+              cursor: pointer;
+            }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction.isUser--true:hover {
+                background: var(--hover-grey);
+              }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction .profilePic {
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-right: 1rem;
+          }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction p {
+            flex: 1;
+            font-weight: bold;
+          }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction p small {
+              display: block;
+              margin-top: 0.25rem;
+              font-weight: lighter;
+              font-size: 0.75rem;
+              letter-spacing: 0.3px;
+            }
+
+#reactionsModal .modal-container .body__reactionsList .userReaction .emoji {
+            font-size: 1.5rem;
+          }
+
+#editProfileModal .modal-container {
+    overflow: visible;
+    overflow: initial;
+  }
+
+#editProfileModal .mainModalContentContainer {
+    overflow: hidden;
+    background: white;
+    border-radius: 20px;
+  }
+
+@media(max-width: 700px) {
+    #editProfileModal .modal-container {
+      width: 100%;
+      padding: 0 4rem;
+      height: 100%;
+      border-radius: 0;
+      overflow: auto;
+    }
+        #editProfileModal .modal-container .modal-close::after {
+          content: "\f060";
+          font-family: FontAwesome;
+          font-size: 0.97rem;
+        }
+
+    @media(max-width: 650px) {
+      #editProfileModal .modal-container {
+        padding: 0 3vw;
+      }
+
+      #editProfileModal .cover {
+        height: 30vw;
+      }
+    }
+
+    @media(max-width: 625px) {
+      #editProfileModal .modal-container {
+        padding: 0;
+      }
+    }
+
+    #editProfileModal #editProfileDetailsForm {
+      overflow: visible;
+      overflow: initial;
+    }
+  }
+
+#editProfileModal .modal-header {
+    padding: 0.5rem 0.5rem calc(0.7rem - 3px) 0.5rem; /* to accomodate for the dashed border of the cover photo (having z-index 10 hides the top dashed border) */
+    width: calc(100% + 4px);
+    transform: translateX(-2px);
+  }
+
+#editProfileModal .editProfileDetailsForm {
+    max-height: 41rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0.1rem;
+  }
+
+.modal-close {
+  border: 1px solid transparent;
+  font-weight: bold;
+  transition: 0.1s all ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-close.round::after {
+    content: "\2715";
+    position: absolute;
+    top: 46%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+.modal-close:focus {
+    border: 2px solid rgb(161, 161, 161);
+  }
+
+.modal-close.round {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.1rem;
+  }
+
+.modal-close.btn-icon:hover {
+      background: var(--hover-grey);
+    }
+
+#confirmEditBirthDateDialog .btn-black {
+    padding: 0.7rem 0;
+  }
+
+#imageGalleryModal {
+  display: flex;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+#imageGalleryModal.fairlyBlack {
+    background: rgba(0, 0, 0, 0.92);
+  }
+
+#imageGalleryModal .modal-close {
+    -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+    background-color: rgba(48, 43, 64, 0.75);
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    border: none;
+    z-index: 10;
+  }
+
+#imageGalleryModal .modal-close:hover {
+      background-color: rgba(48, 43, 64, 0.4)
+    }
+
+#imageGalleryModal .modal-close:focus {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+#imageGalleryModal .modal-close::after {
+      color: white;
+      font-weight: normal;
+    }
+
+#imageGalleryModal .gallery {
+    display: flex;
+    flex: 1;
+    max-width: 100vw;
+
+    
+  }
+
+#imageGalleryModal .gallery .galleryItems {
+      height: 3rem;
+      width: 100%;
+      overflow: hidden;
+      margin-left: 0.5rem;
+    }
+
+#imageGalleryModal .gallery .galleryItems__item {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 5px;
+        min-width: 3rem;
+        cursor: pointer;
+        filter: brightness(0.7);
+        opacity: 0.5;
+      }
+
+#imageGalleryModal .gallery .galleryItems__item.active {
+          filter: brightness(1.3);
+          opacity: 1;
+        }
+
+#imageGalleryModal .gallery .galleryItems__scroller {
+        display: flex;
+        gap: 0.5rem;
+        align-self: flex-end;
+        margin-bottom: 0.3rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-right: 1rem;
+        background: rgba(96,96,96,0.83922);
+      }
+
+#imageGalleryModal .gallery .galleryContent {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: calc(100% - 3rem);
+      width: 100%;
+    }
+
+#imageGalleryModal .gallery .galleryContent__arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4rem;
+        height: 4rem;
+        background: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        text-shadow: 0 0 2px black;
+        background: rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+
+
+      }
+
+#imageGalleryModal .gallery .galleryContent__arrow > * {
+          pointer-events: none;
+        }
+
+#imageGalleryModal .gallery .galleryContent__arrow:hover img {
+            transform: scale(1);
+          }
+
+#imageGalleryModal .gallery .galleryContent__arrow i {
+          font-size: 1.2rem;
+        }
+
+#imageGalleryModal .gallery .galleryContent__arrow img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: scale(0);
+          border-radius: inherit;
+          z-index: -1;
+          filter: brightness(0.6);
+          transition: transform 0.4s ease;
+        }
+
+#imageGalleryModal .gallery .galleryContent__arrow--left {
+          left: 2rem;
+        }
+
+#imageGalleryModal .gallery .galleryContent__arrow--left img {
+            transform-origin: center left;
+          }
+
+#imageGalleryModal .gallery .galleryContent__arrow--right {
+          right: 2rem;
+        }
+
+#imageGalleryModal .gallery .galleryContent__arrow--right img {
+            transform-origin: center right;
+          }
+
+#imageGalleryModal .gallery .galleryContent__scroller {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
+#imageGalleryModal .gallery .galleryContent__scroller__item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 100vw;
+          margin: auto;
+        }
+
+#imageGalleryModal .gallery .galleryContent__scroller__item img {
+            -o-object-fit: contain;
+               object-fit: contain;
+            width: auto;
+            max-width: 65%;
+            max-height: 80vh;
+          }
+
+#imageGalleryModal .gallery .galleryContent .no-preview-available {
+        margin-bottom: 1rem;
+        color: white;
+      }
+
+#imageGalleryModal .gallery .galleryContent__filename {
+        position: absolute;
+        top: 1.3rem;
+        left: 4.2rem;
+        font-size: 1rem;
+        color: white;
+        font-weight: bold;
+      }
+
+#imageGalleryModal .gallery .galleryContent .controls {
+        position: absolute;
+        height: 99%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.15);
+        width: 5rem;
+        top: 0;
+        transition: 0.3s ease all;
+      }
+
+#imageGalleryModal .gallery .galleryContent .controls.hide {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+#imageGalleryModal .gallery .galleryContent .controls:hover {
+          background: rgba(0, 0, 0, 0.25);
+          width: 4.5rem;
+          opacity: 1;
+          visibility: visible;
+        }
+
+#imageGalleryModal .gallery .galleryContent .controls:hover .controls__icon {
+            background: #ededed;
+          }
+
+#imageGalleryModal .gallery .galleryContent .controls__icon {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          color: #343434;
+          display: flex;
+          justify-content: center;
+          align-items: center; 
+          background: #c9c9c9;
+          font-size: 1.3rem;
+        }
+
+#imageGalleryModal .gallery .galleryContent .controls__icon i {
+            position: relative;
+            top: 1.5px;
+          }
+
+#imageGalleryModal .gallery .galleryContent .controls.left {
+          left: 0;
+        }
+
+#imageGalleryModal .gallery .galleryContent .controls.right {
+          right: 0;
+        }
+
+#imageGalleryModal .gallery .galleryContent__item {
+        width: 50%;
+        height: 99%;
+      }
+
+#imageGalleryModal .gallery .galleryContent .profilePic {
+        width: 23rem;
+        height: 23rem;
+        border-radius: 50%;
+      }
+
+#imageGalleryModal .gallery .galleryContent .coverPic {
+        height: 33.5vw;
+        width: 100%;
+      }
+
+#giphy .modal-header__search {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      font-size: 0.9rem;
+      border-radius: 100vw;
+      color: var(--txt-muted);
+    }
+
+#giphy .modal-header__search__reset {
+        position: absolute;
+        right: 1rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        font-size: 0.55rem;
+        background: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+        border-radius: 50%;
+      }
+
+#giphy .modal-header__search label {
+        position: absolute;
+        background: white;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        border: 2px solid #c6dfff;
+      }
+
+#giphy .modal-header__search label i, #giphy .modal-header__search label span {
+          position: relative;
+          left: -1rem;
+        }
+
+#giphy .modal-header__search input {
+        border: 2px solid transparent;
+      }
+
+#giphy .modal-header__search input, #giphy .modal-header__search label {
+        width: 100%;
+        height: 100%;
+        outline: 0;
+        padding: 0.6rem;
+        text-indent: 0.5rem;
+        font-family: "Lato", sans-serif;
+        border-radius: inherit;
+      }
+
+#giphy .modal-header__search input:focus {
+        border: 2px solid var(--clr-primary);
+        
+      }
+
+#giphy .modal-header__search input:focus + label {
+          display: none;
+        }
+
+#giphy .autoPlayOptions {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+
+#giphy .autoPlayOptions p {
+      flex: 1;
+    }
+
+#giphy .modal-footer {
+    padding: 1rem;
+  }
+
+#giphy .modal-footer p {
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+#giphy .modal-footer p a {
+        color: var(--clr-primary);
+        text-decoration: none;
+      }
+
+#giphy .modal-body {
+    height: 40rem;
+    max-height: 40rem;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+  }
+
+#giphy .modal-body__GIF {
+      height: 8rem;
+      position: relative;
+      cursor: pointer;
+    }
+
+#giphy .modal-body__GIF > * {
+        pointer-events: none;
+      }
+
+@media (max-width: 600px) {
+    #giphy .modal-container {
+      width: 100%;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 0;
+      transform: translateX(0);
+    }
+        #giphy .modal-container .modal-close::after {
+          content: "\2190";
+        }
+
+      #giphy .modal-container .modal-header {
+        padding-right: 1rem;
+      }
+
+        #giphy .modal-container .modal-body__GIF {
+          height: 6rem;
+        }
+
+      #giphy .modal-container .autoPlayOptions, #giphy .modal-container .modal-footer {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+  }
+
+#mediaSettings .modal-close::after {
+      content: "\f060";
+      top: 50%;
+      font-family: 'FontAwesome';
+    }
+
+#mediaSettings .modal-container .wrapperScroll {
+      overflow-y: auto;
+      max-height: 92vh;
+    }
+
+#mediaSettings .modal-header {
+    z-index: 11;
+  }
+
+#mediaSettings .modal-header__changeSelectedImage {
+      margin-right: 0.8rem;
+      display: flex;
+      gap: 0.1rem;
+    }
+
+#mediaSettings .modal-header__changeSelectedImage button {
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid #cfcfff;
+        border-radius: 50%;
+        font-size: 0.9rem;
+      }
+
+#mediaSettings .modal-header__changeSelectedImage button:disabled {
+          pointer-events: none;
+        }
+
+#mediaSettings .modal-body {
+    position: relative;
+  }
+
+#mediaSettings .modal-body .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      height: 68vh;
+    }
+
+#mediaSettings .modal-body .container h1 {
+        margin-top: 2rem;
+        font-size: 1.6rem;
+        font-weight: 900;
+        letter-spacing: 0.8px;
+      }
+
+#mediaSettings .modal-body .container p {
+        margin-top: 0.5rem;
+        color: #2e2e2e;
+      }
+
+#mediaSettings .modal-body .container button {
+        margin-top: 2rem;
+      }
+
+#mediaSettings .modal-body .hide-overlay {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 1rem;
+      -webkit-backdrop-filter: blur(2px);
+              backdrop-filter: blur(2px);
+      background: rgba(0, 0, 0, 0.69);
+    }
+
+#mediaSettings .modal-body .hide-overlay:hover {
+        background: rgba(0, 0, 0, 0.59);
+      }
+
+#mediaSettings .modal-body__mainContentContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f3f3f3;
+    }
+
+#mediaSettings .modal-body__mainContentContainer img, #mediaSettings .modal-body__mainContentContainer video {
+        -o-object-fit: contain;
+           object-fit: contain;
+      }
+
+#mediaSettings .modal-body__mainContentContainer--alt img, #mediaSettings .modal-body__mainContentContainer--sensitiveContent img {
+          max-width: 80%;
+          max-height: 75%;
+        }
+
+#mediaSettings .modal-body__mainContentContainer--alt {
+        height: 35rem;
+      }
+
+#mediaSettings .modal-body__mainContentContainer--sensitiveContent {
+        height: 30rem;
+      }
+
+#mediaSettings .modal-body__mainContentContainer--sensitiveContent video {
+          width: 91%;
+          height: 90%;
+          cursor: pointer;
+        }
+
+#mediaSettings .modal-body__mainContentContainer--crop {
+        height: 40rem;
+      }
+
+#mediaSettings .modal-body__mainContentContainer--crop .cropper-modal {
+          background: transparent;
+        }
+
+#mediaSettings .modal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 3.5rem;
+    gap: 0.5rem;
+  }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer {
+        display: flex;
+        align-items: center;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        cursor: pointer;
+      }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer:hover input[type="checkbox"]::after {
+              background: rgba(209, 208, 208, 0.42);
+            }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer:hover input[type="checkbox"]:checked::after {
+                background: rgba(175, 224, 255, 0.42);
+              }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer > * {
+          pointer-events: none;
+        }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer p {
+          flex: 1;
+        }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer input[type="checkbox"] {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          width: 1.2rem;
+          height: 1.2rem;
+          border: 2px solid #707070;
+          position: relative;
+          border-radius: 4px;
+          background: white;
+        }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer input[type="checkbox"]::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            width: 2.2rem;
+            height: 2.2rem;
+            z-index: -1;
+            transition: background 0.3s ease;
+          }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer input[type="checkbox"]:checked {
+            background: var(--clr-primary);
+            border-color: var(--clr-primary);
+          }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer input[type="checkbox"]:checked::before {
+              font-family: "FontAwesome";
+              content: "\f00c";
+              width: 100%;
+              height: 100%;
+              font-size: 0.6rem;
+              padding: 3px;
+              color: white;
+            }
+
+#mediaSettings .modal-footer__checkboxes__checkboxContainer:not(:first-child) {
+          margin-top: 1rem;
+        }
+
+#mediaSettings .modal-footer__container {
+      padding: 1rem;
+    }
+
+#mediaSettings .modal-footer__heading {
+      font-weight: 900;
+      font-size: 1.25rem;
+    }
+
+#mediaSettings .modal-footer__subHeading {
+      font-size: 0.85rem;
+      line-height: 1.2;
+      margin-top: 0.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+#mediaSettings .modal-footer .highlight--blue {
+      text-indent: 0.5rem;
+      margin: -0.5rem auto 0.8rem 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+#mediaSettings .modal-footer .edit-input-group {
+      margin-top: 1rem;
+      width: 97%;
+    }
+
+#mediaSettings .modal-footer .edit-input-group label {
+        padding-top: 1.8rem;
+      }
+
+#mediaSettings .modal-footer .edit-input-group textarea {
+        line-height: 1.45rem;
+        max-height: 7rem;
+      }
+
+#mediaSettings .modal-footer .zoomMinus, #mediaSettings .modal-footer .zoomPlus {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+#mediaSettings .tabsContainer .tab-link {
+      letter-spacing: 1px;
+      
+    }
+
+#mediaSettings .tabsContainer .tab-link.active span::after {
+          width: 4rem !important; 
+        }
+
+#generalInfo .modal-container {
+    transform: translate(-50%, -50%);
+    top: 50%;
+    padding: 5rem;
+  }
+
+#generalInfo .modal-container h2 {
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+#generalInfo .modal-container p {
+      line-height: 1.3;
+    }
+
+#generalInfo .modal-container .btn-black {
+      margin-top: 2rem;
+      width: 100%;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+#generalInfo .modal-container .btn-black:active {
+        transform: scale(0.95);
+      }
+
+#generalInfo .modal-container .modal-close {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+    }

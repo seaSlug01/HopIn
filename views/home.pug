@@ -1,0 +1,27 @@
+extends layouts/main-layout.pug
+    
+block content
+    +createPostForm(userLoggedIn, "What's happening?", "Post")
+
+    .postsContainer.mt
+    +createPostModals(userLoggedIn)
+
+
+    block scripts
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==", crossorigin="anonymous", referrerpolicy="no-referrer")
+      script(src="/js/giphy.js", type="module")
+      script(src="/js/emoji.js", type="module")
+      script(src="/js/postForm.js", type="module")
+      script(src="/js/posts.js", type="module")
+      script(src="/js/home.js", type="module")
+      script(src="/js/modal.js", type="module")
+      script(src="/js/MediaSettings.js", type="module")
+      
+      
+        
+
+            
+
+                
+
+       

@@ -1,0 +1,38 @@
+.notification {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 1rem;
+  border-bottom: thin solid #e7e7e7;
+  font-size: 0.95rem;
+  color: #2e2e2e;
+  transition: 0.5s background ease;
+  letter-spacing: 0.3px;
+}
+
+  .notification > * {
+    pointer-events: none;
+  }
+
+  .notification:hover:not(.active) {
+    background: #efefef;
+  }
+
+  .notification.active {
+    background: #f5f5ff;
+  }
+
+  .notification:first-of-type {
+    border-top: thin solid #e7e7e7;
+  }
+
+  .notification .profilePic {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+
+  .notification p {
+    flex-basis: 70%;
+  }

@@ -1,0 +1,67 @@
+extends layouts/main-layout.pug
+    
+block content
+    .messagesContainer
+        .messagesListContainer(class=(activeTab == 0 && "active"))
+            header.header
+                .pageTitle.messageHeader
+                    +navigationButton
+                    .space-between
+                        h1 #{pageTitle}
+                        button.new-message.bubbleButton.next(type="button")
+                            .icon
+                                i.fa-solid.fa-pencil
+                            .text New message
+                            .next
+                                .angle-right
+            .searchFormGroup.bubbleButton
+                label(for="searchChatUsers")
+                    i.fa-solid.fa-magnifying-glass
+                input#searchChatUsers(type="text", placeholder="Search")
+            .results
+                .messagesList
+                .searchResults
+        .newMessageContainer(class=(activeTab == 1 && "active"))
+            .header.sticky
+                .pageTitle.messageHeader
+                    +navigationButton("back")
+                    h1 New message
+
+            .container    
+                form.searchBlock#newMessageSearchForm
+                    .searchInputGroup
+                        label(for="searchChatInput") To:
+                        input.searchInput#searchChatInput(type="text", placeholder="Type a name or group", autocomplete="off")
+                
+                button.goToGroupChat.bubbleButton.next(type="button")
+                    .icon 
+                        i.fa-solid.fa-users
+                    .text Create a group chat
+
+                .results
+                .searchResults
+        form.newGroupChatContainer(class=(activeTab == 2 && "active"))
+            .header.sticky
+                .pageTitle.messageHeader
+                    +navigationButton("back")
+                    .space-between
+                        h1 New group
+                        button.bubbleButton.createGroup(type="submit", disabled=true) CREATE 
+            .searchGroup
+                .searchBlock
+                    .searchInputGroup
+                        label(for="groupChatName") Name:
+                        input.searchInput#groupChatName(type="text", name="chatName" placeholder="(optional)", autocomplete="off")
+                .searchFormGroup.bubbleButton
+                    label(for="searchGroupChatUsers")
+                        i.fa-solid.fa-magnifying-glass
+                    input#searchGroupChatUsers(type="text", placeholder="Search", autocomplete="off")
+                .results
+                    .groupChatSelectionContainer
+                    .searchResults   
+
+
+
+    block scripts
+        script(src="/js/bubbleButton.js", type="module")
+        script(src="/js/messages.js", type="module")

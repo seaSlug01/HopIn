@@ -1,0 +1,189 @@
+.accordion {
+  width: 100%;
+  border-radius: 10px;
+  color: #6a6a6a;
+
+  overflow:hidden;
+}
+
+  .accordion.active {
+    overflow: visible;
+    overflow: initial;
+  }
+
+  .accordion.active .accordion__header__icon {
+        transform: rotateX(180deg);
+      }
+
+  .accordion + .accordion {
+    margin-top: 0.1rem;
+  }
+
+  .accordion__header, .accordion__body__item {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    transition: 0.3s ease background;
+    border-radius: 10px;
+
+  }
+
+  .accordion__header:hover, .accordion__body__item:hover {
+      background: #efefef;
+    }
+
+  .accordion__header__icon, .accordion__body__item__icon {
+      font-size: 1.1rem;
+      transition: transform 0.6s ease;
+    }
+
+  .accordion__header {
+    justify-content: space-between;
+  }
+
+  .accordion__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .accordion__body__item#chatImageUpload {
+        min-height: 0;
+        border: none;
+        padding: 0;
+      }
+
+  .accordion__body__item#chatImageUpload input[type="submit"] {
+          visibility: hidden;
+        }
+
+  .accordion__body__item#chatImageUpload label {
+          padding: 1rem;
+          width: 100%;
+          cursor: pointer;
+        }
+
+  .accordion__body__item#chatImageUpload label span {
+            color: #222222;
+          }
+
+  .accordion__body__item #changeChatPhoto {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+      }
+
+  .accordion__body__item__icon {
+        margin-right: 0.5rem;
+        width: 2rem;
+        color: #4c4c4c;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+  .accordion__user {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: #222222;
+  }
+
+  .accordion__user__optionsContainer {
+      position: relative;
+      margin-right: -1rem;
+    }
+
+  .accordion__user__optionsContainer__list {
+        position: absolute;
+        background: white;
+        border-radius: 10px;
+        flex-direction: column;
+        top: 100%;
+        right: 1.1rem;
+        width: 20rem;
+        padding: 0.5rem;
+        display: none;
+        box-shadow: 0 0 1rem #d1d1d1;
+        z-index: 1;
+      }
+
+  .accordion__user__optionsContainer__list.show {
+          display: flex;
+        }
+
+  .accordion__user__optionsContainer__list__list-item {
+          font-weight: bold;
+          text-decoration: none;
+          text-align: left;
+          padding: 1rem;
+          display: flex;
+          align-items: center;
+          color: #222222;
+          border-radius: inherit;
+          transition: background 0.3s ease;
+        }
+
+  .accordion__user__optionsContainer__list__list-item.make-admin i {
+              color: #549d54;
+            }
+
+  .accordion__user__optionsContainer__list__list-item.remove-admin i {
+              color: #ff7878;
+            }
+
+  .accordion__user__optionsContainer__list__list-item:hover {
+            background: #efefef;
+          }
+
+  .accordion__user__optionsContainer__list__list-item i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+          }
+
+  .accordion__user__optionsContainer__optionsBtn {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #5e5e5e;
+        font-size: 1.2rem;
+      }
+
+  .accordion__user__optionsContainer__optionsBtn > * { 
+          pointer-events: none;
+        }
+
+  .accordion__user__optionsContainer__optionsBtn:hover {
+          background: #efefef;
+        }
+
+  .accordion__user__userDetails {
+      font-weight: bold;
+      flex: 1;
+    }
+
+  .accordion__user__userDetails span { 
+        display: block;
+        font-weight: normal;
+        font-size: 0.8rem;
+        letter-spacing: 0.6px;
+        margin-top: 0.1rem;
+      }
+
+  .accordion__user img {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+
+  .accordion__user img:hover {
+        filter: brightness(0.8);
+      }

@@ -1,0 +1,551 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+}
+
+.login-register-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.login-register-container > * {
+    width: 50%;
+  }
+
+.login-register-container.login .left {
+      order: 2;
+    }
+
+.login-register-container.register .left, .login-register-container.login .left {
+      width: 75%;
+    }
+
+.login-register-container.register .left .container, .login-register-container.login .left .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+.login-register-container.register .left .container .pre, .login-register-container.login .left .container .pre {
+          width: 85%;
+          margin-bottom: 1.7rem;
+        }
+
+.login-register-container.register .left .container .pre .errorMessage, .login-register-container.login .left .container .pre .errorMessage {
+            padding: 1rem;
+            background: #ffe5e5;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            display: none;
+            margin-top: 1.7rem;
+          }
+
+.login-register-container.register .left .container .pre .errorMessage[data-error='true'], .login-register-container.login .left .container .pre .errorMessage[data-error='true'] {
+              display: block;
+            }
+
+.login-register-container.register .left .container .pre .track-steps, .login-register-container.login .left .container .pre .track-steps {
+            width: 87%;
+          }
+
+.login-register-container.register .left .container .form, .login-register-container.login .left .container .form {
+          width: 85%;
+        }
+
+.login-register-container .left {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-y: auto;
+  }
+
+.login-register-container .left .welcome {
+      position: absolute;
+      margin-top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1.2rem;
+      color: #9b9b9b;
+    }
+
+.login-register-container .left .track-steps {
+      list-style: none;
+      display: inline-flex;
+      width: 87%;
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+    }
+
+.login-register-container .left .track-steps li {
+        position: relative;
+        height: 2px;
+        background: rgb(41, 41, 41);
+        display: flex;
+        align-items: center;
+      }
+
+.login-register-container .left .track-steps li:not(:last-child) {
+          flex: 1;
+        }
+
+.login-register-container .left .track-steps li.muted {
+          background: silver;
+        }
+
+.login-register-container .left .track-steps li.muted .circle {
+            cursor: not-allowed;
+            pointer-events: not-allowed;
+          }
+
+.login-register-container .left .track-steps li .circle {
+          width: 40px;
+          height: 40px;
+          background: inherit;
+          border-radius: 50%;
+          position: relative;
+          cursor: pointer;
+          transition: transform 1s ease;
+        }
+
+.login-register-container .left .track-steps li .circle:hover {
+            transform: scale(1.15);
+          }
+
+.login-register-container .left .track-steps li .circle.error::before {
+              animation: pulse 1.5s 3 ease-in-out;
+            }
+
+.login-register-container .left .track-steps li .circle.error::after {
+              background: #ff5858;
+              transform: translate(-50%, -50%) scale(1);
+            }
+
+/* &::before { */
+
+/*   background: #16f33b; */
+
+/*   animation: pulse 1.5s 3 ease-in-out; */
+
+/* } */
+
+.login-register-container .left .track-steps li .circle.success::after {
+              transition: transform 1s ease;
+              transform: translate(-50%, -50%) scale(1);
+              background: #2dff50;
+            }
+
+.login-register-container .left .track-steps li .circle.error-2 {
+            background: #ff4b4b;
+          }
+
+.login-register-container .left .track-steps li .circle.active::after {
+              transform: translate(-50%, -50%) scale(1);
+            }
+
+.login-register-container .left .track-steps li .circle.clicked::before {
+              background: black;
+              animation: pulse 0.5s forwards
+                cubic-bezier(0.85, 0.25, 0.37, 0.85);
+            }
+
+.login-register-container .left .track-steps li .circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #5bfff0;
+            width: 50%;
+            height: 50%;
+            border-radius: inherit;
+            transition: all 0.3s ease;
+          }
+
+.login-register-container .left .track-steps li .circle::before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            background: red;
+            border-radius: inherit;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0;
+          }
+
+@keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 0.75;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
+      }
+    }
+
+.login-register-container .left .subtitle {
+      margin-top: 1.7rem;
+    }
+
+.login-register-container .left .formStepsContainer {
+      position: relative;
+    }
+
+.login-register-container .left .formStepsContainer .header {
+        font-size: 1.5rem;
+        color: #252525;
+      }
+
+.login-register-container .left .formStepsContainer .formStep {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 1s ease;
+        z-index: 0;
+        transform: translateX(10%);
+      }
+
+.login-register-container .left .formStepsContainer .formStep.active {
+          opacity: 1;
+          visibility: visible;
+          z-index: 1;
+          transform: translateX(0);
+          transition: opacity 1s ease, transform 1s ease, visibility 1s ease;
+        }
+
+.login-register-container .left .container {
+      width: 80%;
+      margin-top: 120px;
+      transform: scale(0.9);
+    }
+
+.login-register-container .left .container .form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+.login-register-container .left .container .form .link {
+          margin-top: 3rem;
+        }
+
+.login-register-container .left .container .form .btn {
+          margin-top: 3rem;
+        }
+
+.login-register-container .left .container .form .form-control:not(:first-child) {
+            margin-top: 2rem;
+          }
+
+.login-register-container .left .container .form .form-control label {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #4172fd;
+            padding-left: 0.3rem;
+          }
+
+.login-register-container .left .container .form .form-control .error {
+            border-top: 10px solid #d3d3d3;
+            z-index: -1;
+            position: relative;
+            top: -10px;
+            transition: borderWidth 0.5s ease;
+          }
+
+.login-register-container .left .container .form .form-control .error.highlight .errorContainer span {
+                animation: highlightError 2s 3 ease-in-out,
+                  highlightText 2s forwards ease-in-out;
+              }
+
+.login-register-container .left .container .form .form-control .error.slideUp {
+              border-width: 0;
+            }
+
+.login-register-container .left .container .form .form-control .error.slideUp .errorContainer {
+                animation: errorSlideUp 0.5s ease forwards;
+              }
+
+.login-register-container .left .container .form .form-control .error .errorContainer {
+              overflow: hidden;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              animation: errorSlideDown 0.5s ease forwards,
+                opacity 1s ease forwards;
+            }
+
+.login-register-container .left .container .form .form-control .error .errorContainer span {
+                font-size: 1rem;
+                padding: 0.5rem;
+
+                color: white;
+                font-weight: bold;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+              }
+
+.login-register-container .left .container .form .form-control .error .errorContainer span.red {
+                  background: #ff5656;
+                }
+
+.login-register-container .left .container .form .form-control .error .errorContainer span.blue {
+                  background: rgba(0,6,200,0.98824);
+                }
+
+.login-register-container .left .container .form .form-control .error .errorContainer span img {
+                  max-width: 100%;
+                  width: 26px;
+                  height: 26px;
+                  margin: 0 0.6rem;
+                  filter: invert(1);
+                }
+
+.login-register-container .left .container .form .form-control .input-group {
+            position: relative;
+            height: 60px;
+            margin-top: 5px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #e6e6e6;
+            transition: background 0.2s ease;
+          }
+
+.login-register-container .left .container .form .form-control .input-group > * {
+              letter-spacing: 2px;
+            }
+
+.login-register-container .left .container .form .form-control .input-group .placeholder {
+              position: absolute;
+              z-index: 1;
+              pointer-events: none;
+              font-size: 1.65rem;
+              font-weight: 300;
+              left: 8px;
+              color: #7c7c7c;
+              top: 50%;
+              transform: translateY(-50%);
+              left: 1rem;
+              transition: all 0.3s ease;
+            }
+
+.login-register-container .left .container .form .form-control .input-group .placeholder.shrink[data-shrink='100%'] {
+                  font-size: 1.2rem;
+                  opacity: 0;
+                }
+
+.login-register-container .left .container .form .form-control .input-group .placeholder.shrink {
+                font-size: 0.9rem;
+                top: 10px;
+                text-shadow: 0px 0.5px #7c7c7c;
+                letter-spacing: 3px;
+}
+
+.login-register-container .left .container .form .form-control .input-group .icon {
+              position: absolute;
+              width: 60px;
+              height: 60px;
+              top: 0;
+              right: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              border-left: 0.5px solid grey;
+              opacity: 0;
+              visibility: hidden;
+              transition: all 0.2s ease;
+              background: #e9e9e9;
+            }
+
+.login-register-container .left .container .form .form-control .input-group .icon.visible {
+                opacity: 0.4;
+                visibility: visible;
+              }
+
+.login-register-container .left .container .form .form-control .input-group .icon > * {
+                pointer-events: none;
+              }
+
+.login-register-container .left .container .form .form-control .input-group .icon.seeThrough {
+                opacity: 0.6;
+                box-shadow: inset 0px 0 20px #5c87ff,
+                  -5px 0px 20px 10px rgba(123,123,123,0.3098);
+                border-color: rgba(128, 128, 128, 0.555);
+                border-top-left-radius: 6px;
+                border-bottom-left-radius: 6px;
+              }
+
+.login-register-container .left .container .form .form-control .input-group .icon.seeThrough .eyeball {
+                  background: #ff0000;
+                }
+
+.login-register-container .left .container .form .form-control .input-group .icon .eyeball {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #090200;
+                top: 28px;
+                right: 25px;
+                transition: background 0.3s ease, transform 0.5s ease;
+              }
+
+.login-register-container .left .container .form .form-control .input-group .icon i {
+                font-size: 1.7em;
+                padding-top: 0.3rem;
+                pointer-events: none;
+                transition: transform 0.5s ease;
+              }
+
+.login-register-container .left .container .form .form-control .input-group input {
+              display: block;
+              width: 100%;
+              height: 100%;
+              border: none;
+              background: transparent;
+              padding-top: 0.8rem;
+              outline: none;
+              z-index: 0;
+              text-indent: 0.5rem;
+              font-size: 1.65rem;
+              text-indent: 15px;
+              font-family: Lato, sans-serif;
+              background: #e6e6e6;
+              transition: background 0.2s ease;
+            }
+
+.login-register-container .left .container .form .form-control .input-group input[name='firstName'],
+              .login-register-container .left .container .form .form-control .input-group input[name='lastName'] {
+                text-transform: capitalize;
+              }
+
+.login-register-container .left .container .form .form-control .input-group input[type='password']:focus {
+                  width: 92.5%;
+                }
+
+.login-register-container .left .container .form .form-control .input-group input:focus {
+                background: #d3d3d3;
+              }
+
+.login-register-container .right {
+    background-image: url('../images/pexels-lisa-fotios-1921336.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+
+    /* img { */
+    /*   height: 75vh; */
+    /*   object-fit: cover; */
+    /*   width: 95%; */
+    /*   border-radius: 20px; */
+
+    /*   &.register { */
+    /*     object-position: top; */
+    /*   } */
+
+    /*   &.login { */
+    /*     object-position: bottom; */
+    /*   } */
+    /* } */
+  }
+
+.login-register-container .right.register {
+      background-position: top;
+    }
+
+.login-register-container .right.login {
+      background-position: center;
+    }
+
+.link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 18px;
+  color: rgb(29, 161, 242);
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(
+      70deg,
+      rgb(29, 161, 242) 35%,
+      rgb(255, 108, 23) 70%,
+      #ff1b1b
+    );
+    left: 0;
+    border-radius: 20px;
+  }
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes errorSlideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: 37px;
+  }
+}
+
+@keyframes errorSlideUp {
+  from {
+    height: 37px;
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes highlightError {
+  0% {
+    background: #ff5656;
+  }
+  40% {
+    background: #ff1c1c;
+  }
+  80% {
+    background: #ff5656;
+  }
+  100% {
+    background: #ff5656;
+  }
+}
+
+@keyframes highlightText {
+  0% {
+    font-size: 1rem;
+  }
+  50% {
+    font-size: 1.02rem;
+  }
+  100% {
+    font-size: 1rem;
+  }
+}

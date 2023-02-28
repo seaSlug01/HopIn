@@ -1,0 +1,10 @@
+extends layouts/main-layout.pug
+    
+block content
+    script.
+      let notificationsDB = !{notifications}
+    .postsContainer
+
+    block scripts
+      script(src="/js/notificationsPage.js", type="module")
+      srcipt(src="/js/leftSidebar.js")

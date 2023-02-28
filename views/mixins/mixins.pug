@@ -1,0 +1,413 @@
+mixin createPostForm(userLoggedIn, placeholder, submitButtonText, additionalClasses) 
+   .postContainer.postForm(class=additionalClasses)
+        .userImageContainer
+            .profileImage
+                a(href="/profile")
+                    img(src=(userLoggedIn.profilePic), alt="User's profile picture")
+            
+        form.content.textareaContainer.postForm#post
+            .textareaBox
+                textarea.realTextarea#postTextarea(name="textarea", placeholder=placeholder)
+                .contentTextarea(contentEditable="",spellcheck="false")
+            input(type="hidden", name="GIF")
+            .postMediaPreview
+            .buttonsContainer
+              .btn-group
+                button.btn-icon(data-title="Media", data-toggle="tooltip", type="button", data-mediaTypes="all")
+                    .tooltip New Chapter
+                    svg.r-13gxpu9.r-4qtqp9.r-yyyyoo.r-1q142lx.r-50lct3.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-1srniue(viewbox='0 0 24 24')
+                        g
+                            path(d='M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z')
+                            circle(cx='8.868' cy='8.309' r='1.542')
+                button.btn-icon.giphy(data-title="GIF", data-toggle="tooltip", type="button", data-target="post")
+                    .tooltip 
+                    svg.r-13gxpu9.r-4qtqp9.r-yyyyoo.r-1q142lx.r-50lct3.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-1srniue(viewbox='0 0 24 24')
+                        g
+                            path(d='M19 10.5V8.8h-4.4v6.4h1.7v-2h2v-1.7h-2v-1H19zm-7.3-1.7h1.7v6.4h-1.7V8.8zm-3.6 1.6c.4 0 .9.2 1.2.5l1.2-1C9.9 9.2 9 8.8 8.1 8.8c-1.8 0-3.2 1.4-3.2 3.2s1.4 3.2 3.2 3.2c1 0 1.8-.4 2.4-1.1v-2.5H7.7v1.2h1.2v.6c-.2.1-.5.2-.8.2-.9 0-1.6-.7-1.6-1.6 0-.8.7-1.6 1.6-1.6z')
+                            path(d='M20.5 2.02h-17c-1.24 0-2.25 1.007-2.25 2.247v15.507c0 1.238 1.01 2.246 2.25 2.246h17c1.24 0 2.25-1.008 2.25-2.246V4.267c0-1.24-1.01-2.247-2.25-2.247zm.75 17.754c0 .41-.336.746-.75.746h-17c-.414 0-.75-.336-.75-.746V4.267c0-.412.336-.747.75-.747h17c.414 0 .75.335.75.747v15.507z')
+                .postEmoji
+                    button.btn-icon(data-title="Emoji", data-toggle="tooltip",  type="button")
+                        .tooltip 
+                        svg.r-13gxpu9.r-4qtqp9.r-yyyyoo.r-1q142lx.r-50lct3.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-1srniue(viewbox='0 0 24 24')
+                            g
+                                path(d='M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z')
+                                path(d='M12 17.115c-1.892 0-3.633-.95-4.656-2.544-.224-.348-.123-.81.226-1.035.348-.226.812-.124 1.036.226.747 1.162 2.016 1.855 3.395 1.855s2.648-.693 3.396-1.854c.224-.35.688-.45 1.036-.225.35.224.45.688.226 1.036-1.025 1.594-2.766 2.545-4.658 2.545z')
+                                circle(cx='14.738' cy='9.458' r='1.478')
+                                circle(cx='9.262' cy='9.458' r='1.478')
+              .btn-group
+                div.lettersCounter
+                    span.lettersRemaining
+                    svg
+                        circle.circle1(r="10")
+                        circle.circle2(r="10")
+                button.btn-submit(disabled="", type="submit") #{submitButtonText}
+
+mixin createReplyModal(userLoggedIn)
+    .modal#replyModal(tabindex="-1", role="dialog", aria-labelledBy="replyModal", aria-hidden="false")
+        .modal-container
+            .wrapperScroll
+                .modal-header.sticky
+                    button.modal-close.round.btn-icon(data-title="Close", data-toggle="tooltip") &#x2715;
+                        .tooltip
+                .original-post
+                .postContainer.postForm
+                    .userImageContainer
+                        .profileImage
+                            a(href="/profile")
+                                img(src="https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png", alt="User's profile picture")
+                        
+                    form.content.textareaContainer.postForm#reply
+                        .textareaBox
+                            textarea.realTextarea#replyTextarea(name="textarea", placeholder="Reply")
+                            .contentTextarea(contentEditable="",spellcheck="false")
+                        input(type="hidden", name="GIF")
+                        .postMediaPreview
+                        .buttonsContainer
+                            .btn-group
+                                button.btn-icon(data-title="Media", data-toggle="tooltip" type="button")
+                                    .tooltip New Chapter
+                                    svg.r-13gxpu9.r-4qtqp9.r-yyyyoo.r-1q142lx.r-50lct3.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-1srniue(viewbox='0 0 24 24')
+                                        g
+                                            path(d='M19.75 2H4.25C3.01 2 2 3.01 2 4.25v15.5C2 20.99 3.01 22 4.25 22h15.5c1.24 0 2.25-1.01 2.25-2.25V4.25C22 3.01 20.99 2 19.75 2zM4.25 3.5h15.5c.413 0 .75.337.75.75v9.676l-3.858-3.858c-.14-.14-.33-.22-.53-.22h-.003c-.2 0-.393.08-.532.224l-4.317 4.384-1.813-1.806c-.14-.14-.33-.22-.53-.22-.193-.03-.395.08-.535.227L3.5 17.642V4.25c0-.413.337-.75.75-.75zm-.744 16.28l5.418-5.534 6.282 6.254H4.25c-.402 0-.727-.322-.744-.72zm16.244.72h-2.42l-5.007-4.987 3.792-3.85 4.385 4.384v3.703c0 .413-.337.75-.75.75z')
+                                            circle(cx='8.868' cy='8.309' r='1.542')
+                                button.btn-icon.giphy(data-title="GIF", data-toggle="tooltip", type="button", data-target="reply")
+                                    .tooltip 
+                                    svg.r-13gxpu9.r-4qtqp9.r-yyyyoo.r-1q142lx.r-50lct3.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-1srniue(viewbox='0 0 24 24')
+                                        g
+                                            path(d='M19 10.5V8.8h-4.4v6.4h1.7v-2h2v-1.7h-2v-1H19zm-7.3-1.7h1.7v6.4h-1.7V8.8zm-3.6 1.6c.4 0 .9.2 1.2.5l1.2-1C9.9 9.2 9 8.8 8.1 8.8c-1.8 0-3.2 1.4-3.2 3.2s1.4 3.2 3.2 3.2c1 0 1.8-.4 2.4-1.1v-2.5H7.7v1.2h1.2v.6c-.2.1-.5.2-.8.2-.9 0-1.6-.7-1.6-1.6 0-.8.7-1.6 1.6-1.6z')
+                                            path(d='M20.5 2.02h-17c-1.24 0-2.25 1.007-2.25 2.247v15.507c0 1.238 1.01 2.246 2.25 2.246h17c1.24 0 2.25-1.008 2.25-2.246V4.267c0-1.24-1.01-2.247-2.25-2.247zm.75 17.754c0 .41-.336.746-.75.746h-17c-.414 0-.75-.336-.75-.746V4.267c0-.412.336-.747.75-.747h17c.414 0 .75.335.75.747v15.507z')
+                                button.btn-icon(data-title="Emoji", data-toggle="tooltip", type="button")
+                                    .tooltip 
+                                    svg.r-13gxpu9.r-4qtqp9.r-yyyyoo.r-1q142lx.r-50lct3.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-1srniue(viewbox='0 0 24 24')
+                                        g
+                                            path(d='M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z')
+                                            path(d='M12 17.115c-1.892 0-3.633-.95-4.656-2.544-.224-.348-.123-.81.226-1.035.348-.226.812-.124 1.036.226.747 1.162 2.016 1.855 3.395 1.855s2.648-.693 3.396-1.854c.224-.35.688-.45 1.036-.225.35.224.45.688.226 1.036-1.025 1.594-2.766 2.545-4.658 2.545z')
+                                            circle(cx='14.738' cy='9.458' r='1.478')
+                                            circle(cx='9.262' cy='9.458' r='1.478')
+                            .btn-group
+                                div.lettersCounter
+                                    span.lettersRemaining
+                                    svg
+                                        circle.circle1(r="10")
+                                        circle.circle2(r="10")
+                                button.btn-submit(disabled="", type="submit") Reply
+
+mixin giphyModal() 
+    .modal#giphy(tabindex="-1", role="dialog", aria-labelledBy="giphy", aria-hidden="false")
+        .modal-container
+            .modal-header
+                button.modal-close.round.btn-icon(data-title="Close", data-toggle="tooltip")
+                    .tooltip
+                .modal-header__search
+                    input#searchGiphy(placeholder="Search for GIFS", autocomplete="off")
+                    label(for="searchGiphy") 
+                        i.fa-solid.fa-magnifying-glass
+                        span Search for GIFS
+                    button(type="button").modal-header__search__reset.d-none ✕
+            .autoPlayOptions
+                p.muted Auto play GIFs
+                button(type="button").toggler
+            .modal-body
+            .modal-footer
+                p 
+                    | Powered by 
+                    a(href="https://giphy.com/") GIPHY
+
+
+mixin createDeleteModal()
+    .modal#deleteModal(tabindex="-1", role="dialog", aria-labelledBy="deletePostModal", aria-hidden="false")
+        .modal-container.center
+            .modal-header
+                h3 Delete Post?
+                p This can't be undone and it will be removed from your profile. Are you sure you want to proceed
+            .modal-actions
+                button.btn-border-radius.danger Delete
+                button.modal-close.btn-border-radius.btn-outline Cancel
+
+mixin createUnfollowModal()
+    .modal#unfollowModal(tabindex="-1", role="dialog", aria-labelledBy="unfollowUserModal", aria-hidden="false")
+        .modal-container.center
+            .modal-header
+                h3 Unfollow User?
+                p Their posts will no longer show up in your home timeline. You can still view their profile, unless their posts are protected. 
+            .modal-actions
+                button#unfollowUser.btn-border-radius.btn-dark Unfollow
+                button.modal-close.btn-border-radius.btn-outline Cancel
+              
+mixin createPostModals(userLoggedIn)
+    +createReplyModal(userLoggedIn)
+    +createDeleteModal()
+    +createUnfollowModal()
+
+mixin navigationButton(additionalClasses) 
+    .btn-icon.navigate(class=additionalClasses, aria-label="Back", data-toggle="tooltip", data-title="Back")
+        i.fa-solid.fa-arrow-left
+        .tooltip
+
+mixin searchBox(userLoggedIn)
+    .searchBox
+        form.searchForm#searchForm(method="GET")
+            input.searchBox__input#searchInput(type="search", placeholder="Search Hopin", value="", name="q", autoComplete="off")
+            label.searchBox__icon(for="searchInput")
+                i.fa-solid.fa-magnifying-glass
+            button.searchCancelButton.d-none(type="button", tabindex="-1") &#10005;
+            .searchBox__results.d-none
+                .scrollable
+                    p.search-instructions Try searching for people, topics, or keywords
+
+
+mixin header(navigationButton, otherStuff) 
+    header.header.sticky
+        .pageTitle
+            - otherStuff
+            - otherStuff    
+
+
+mixin createFollowButton(user, isFollowing, alert)
+    - text = isFollowing ? "Following" : "Follow"
+    - buttonClass = isFollowing ? "followButton following" : "followButton black"
+
+    button(class=buttonClass, data-user-id=user._id, data-alert="unfollow") #{text}
+
+mixin displayBirthDate(profileUser, userLoggedIn)
+    - monthsGreek = ["Ιανουαρίου", "Φεβρουαρίου", "Μαρτίου", "Απριλίου", "Μαίου", "Ιουνίου", "Ιουλίου", "Αυγούστου", "Σεπτεμβίου", "Οκτωβρίου", "Νοεμβρίου", "Δεκεμβρίου"]
+    - date = new Date(profileUser.birthDate.date);
+    - monthAndDay = date.getDate() + " " + monthsGreek[date.getMonth()];
+    - year = date.getFullYear()
+    - canSeeMonthAndDay = profileUser.birthDate.canSeeMonthAndDay
+    - canSeeYear = profileUser.birthDate.canSeeYear
+    - isFollower = profileUser.followers.some(userId => userId == userLoggedIn._id);
+    - isFollowing = profileUser.following.some(userId => userId == userLoggedIn._id);
+
+    - displayedDate = "";
+    - show = false;
+    case canSeeMonthAndDay
+        when "public"
+            - displayedDate = monthAndDay;
+        when "followers"
+            - displayedDate = isFollower && monthAndDay || "";
+        when "youAreFollowing"
+            - displayedDate = isFollowing && monthAndDay || "";
+        when "followingEachOther"
+            - displayedDate = (isFollowing && isFollower) && monthAndDay || ""
+        when "onlyYou"
+            - displayedDate = "";
+
+    case canSeeYear
+        when "public"
+            - displayedDate = displayedDate + " " + year;
+        when "followers"
+             - displayedDate = isFollower && displayedDate + " " + year || "";
+        when "youAreFollowing"
+            - displayedDate = isFollowing && displayedDate + " " + year || "";
+        when "followingEachOther"
+            - displayedDate = (isFollowing && isFollower) && displayedDate + " " + year || ""
+        when "onlyYou"
+            - displayedDate = displayedDate;
+    
+    - if(displayedDate !== "") 
+        span.muted.joinDate.mb
+            i.fa-solid.fa-cake-candles
+            span Γενέθλια: #{displayedDate}
+    
+    
+
+mixin createTab(name, href, tabName)
+    - className = `tab-link ${tabName}`
+    li(class="tab-item")
+        a(href=(href), class=className, data-tab=tabName)
+            span #{name}
+
+
+mixin createUserProfileActions(userLoggedIn, profileUser)
+    - const profileUserId = profileUser._id.toString()
+
+    if userLoggedIn._id !== profileUserId
+        .button-group
+                a.message(href=`/messages/t/${profileUserId}`)
+                    svg.r-18jsvk2.r-4qtqp9.r-yyyyoo.r-lwhw9o.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr(viewbox='0 0 24 24')
+                        g
+                        path(d='M19.25 3.018H4.75C3.233 3.018 2 4.252 2 5.77v12.495c0 1.518 1.233 2.753 2.75 2.753h14.5c1.517 0 2.75-1.235 2.75-2.753V5.77c0-1.518-1.233-2.752-2.75-2.752zm-14.5 1.5h14.5c.69 0 1.25.56 1.25 1.25v.714l-8.05 5.367c-.273.18-.626.182-.9-.002L3.5 6.482v-.714c0-.69.56-1.25 1.25-1.25zm14.5 14.998H4.75c-.69 0-1.25-.56-1.25-1.25V8.24l7.24 4.83c.383.256.822.384 1.26.384.44 0 .877-.128 1.26-.383l7.24-4.83v10.022c0 .69-.56 1.25-1.25 1.25z')
+                    |Message
+                - if(userLoggedIn.following && userLoggedIn.following.includes(profileUserId))
+                    +createFollowButton(profileUser, true)
+                - else 
+                    +createFollowButton(profileUser, false)
+                  
+    else
+        .button-group
+                button.btn-white.edit-profile(data-target="editProfileModal") Edit profile
+
+
+    mixin createEditProfileDetails(profileUser)
+        - const { birthDate: { date: stringDate, canSeeMonthAndDay, canSeeYear }, bio, firstName, lastName, location, website, profilePic, coverPic } = profileUser;
+        //- - const months = ["January", "February", "March", " April", " May", " June", " July", " August", " September", "October", "November", "December"]
+        - const months = [...Array(11).keys()].map(key => new Date(0, key).toLocaleString('en', { month: 'long' }));
+        
+        - let date, birthYear, birthDay, birthMonth, birthToDisplay;
+        - if(stringDate !== undefined && stringDate !== null) {
+            
+            - date = new Date(stringDate); // just in case
+            - birthYear = date.getFullYear();
+            - birthDay = date.getDate();
+            - birthMonth = date.getMonth();
+
+            - birthDateDisplay = `${date.toLocaleString('default', { month: 'long' })} ${birthDay}, ${birthYear}` || "";
+        - }
+        
+
+        - let coverPicCheck = coverPic && cover !== "";
+        - let coverPicImage = coverPicCheck ? `<img class="editCoverImage__temp" src="${coverPic}" alt='Cover Picture' />` : "";
+        - let removeCoverPicButton = `<button type="button" class="removeCover round btn-icon ${coverPic && cover !== "" ? "" : "d-none"}" data-title="Delete photo" data-toggle="tooltip" data-tooltip-color="black" tabindex=0>&#x2715</button>`;                        
+       
+        
+        
+        - let currentYear = new Date().getFullYear() + 1;
+        - let days = 31
+        - let name = lastName ? firstName + " " + lastName : firstName;
+
+        
+        .modal#editProfileModal(tabindex=-1, role="dialog", aria-labelledBy="editUserDetails", aria-hidden="false")
+            
+            .modal-container.center
+                .loadingMessage
+                    span Uploading images might take some seconds...Please don't exit.
+                .mainModalContentContainer
+                    #previewImageCropContainer.d-none
+                        .modal-header
+                            button.round.btn-icon.cancelCrop(data-title="Back", data-toggle="tooltip")
+                                .tooltip
+                            h3 Edit media
+                            button.btn-black.applyCrop#applyCrop(type="button") Apply
+                        .wrapper
+                            img.previewImageCrop
+                            .zoomContainer
+                                .zoom
+                                    span.magnifying-glass
+                                        svg(width='100%' height='100%' viewbox='0 0 79 79' fill='none' xmlns='http://www.w3.org/2000/svg')
+                                            g(id='Group 3')
+                                                circle(id='Ellipse 1' cx='35' cy='35' r='32' stroke='#2e2e2e' stroke-width='5.5')
+                                                path(id='Line 1' d='M18.5 35L28.5 35.0001L35 35H51' stroke='#2e2e2e' stroke-width='6')
+                                                path(id='Line 3' d='M59.2021 59.7314L76.4896 76.379' stroke='#2e2e2e' stroke-width='6')
+                                    #range   
+                                    span.magnifying-glass
+                                        svg(width='100%' height='100%' viewbox='0 0 79 79' fill='none' xmlns='http://www.w3.org/2000/svg')
+                                            g(id='Group 1')
+                                                circle(id='Ellipse 1' cx='35' cy='35' r='32' stroke='#2e2e2e' stroke-width='5.5')
+                                                path(id='Line 1' d='M21.5 35L28.5 35.0001L35 35L47.5 35.0001' stroke='#2e2e2e' stroke-width='6')
+                                                path(id='Line 2' d='M34.8677 47.1345L34.7575 22.9686' stroke='#2e2e2e' stroke-width='6')
+                                                path(id='Line 3' d='M59.2021 59.7314L76.4896 76.379' stroke='#2e2e2e' stroke-width='6')
+
+                    form.editProfileDetailsForm#editProfileDetailsForm(data-id=profileUser._id)
+                        .modal-header.sticky
+                            button.modal-close.round.btn-icon(data-title="Close", type="button", data-toggle="tooltip", tabindex=0)
+                                .tooltip
+                            h3 Edit Profile
+                            button.btn-black#save(type="submit", tabindex=0) Save
+                        .profileContainer
+                            .cover#editCoverImage
+                                .dropzone#coverImageDz
+                                    .dz-default.dz-message
+                                        .dz-button(type-button)
+                                            .uploadImage(tabindex=0, data-title="Add photo", data-toggle="tooltip", data-tooltip-color="black")
+                                                svg.r-jwli3a.r-4qtqp9.r-yyyyoo.r-18yzcnr.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-yc9v9c(viewbox='0 0 24 24' aria-hidden='true')
+                                                    g
+                                                        path(d='M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083h2.146C7.633 3.17 9.722 2 12 2c2.277 0 4.367 1.17 5.562 3.083h2.146C20.972 5.083 22 6.11 22 7.375v12.333C22 20.972 20.972 22 19.708 22zM4.292 6.583c-.437 0-.792.355-.792.792v12.333c0 .437.355.792.792.792h15.416c.437 0 .792-.355.792-.792V7.375c0-.437-.355-.792-.792-.792h-2.45c-.317.05-.632-.095-.782-.382-.88-1.665-2.594-2.7-4.476-2.7-1.883 0-3.598 1.035-4.476 2.702-.16.302-.502.46-.833.38H4.293z')
+                                                        path(d='M12 8.167c-2.68 0-4.86 2.18-4.86 4.86s2.18 4.86 4.86 4.86 4.86-2.18 4.86-4.86-2.18-4.86-4.86-4.86zm2 5.583h-1.25V15c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-1.25H10c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h1.25V11c0-.414.336-.75.75-.75s.75.336.75.75v1.25H14c.414 0 .75.336.75.75s-.336.75-.75.75z')
+                                | !{removeCoverPicButton}
+                                | !{coverPicImage}
+                                .dropzone-preview#previewCoverImage
+                            .userContainer
+                                .upper
+                                    .profileImage.editProfileImage#editProfileImage
+                                        .dropzone#profileImageDz
+                                            .dz-default.dz-message
+                                                .dz-button(type-button)
+                                                    .uploadImage(tabindex=0, data-title="Add photo", data-toggle="tooltip", data-tooltip-color="black")
+                                                        svg.r-jwli3a.r-4qtqp9.r-yyyyoo.r-18yzcnr.r-dnmrzs.r-bnwqim.r-1plcrui.r-lrvibr.r-yc9v9c(viewbox='0 0 24 24' aria-hidden='true')
+                                                            g
+                                                                path(d='M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083h2.146C7.633 3.17 9.722 2 12 2c2.277 0 4.367 1.17 5.562 3.083h2.146C20.972 5.083 22 6.11 22 7.375v12.333C22 20.972 20.972 22 19.708 22zM4.292 6.583c-.437 0-.792.355-.792.792v12.333c0 .437.355.792.792.792h15.416c.437 0 .792-.355.792-.792V7.375c0-.437-.355-.792-.792-.792h-2.45c-.317.05-.632-.095-.782-.382-.88-1.665-2.594-2.7-4.476-2.7-1.883 0-3.598 1.035-4.476 2.702-.16.302-.502.46-.833.38H4.293z')
+                                                                path(d='M12 8.167c-2.68 0-4.86 2.18-4.86 4.86s2.18 4.86 4.86 4.86 4.86-2.18 4.86-4.86-2.18-4.86-4.86-4.86zm2 5.583h-1.25V15c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-1.25H10c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h1.25V11c0-.414.336-.75.75-.75s.75.336.75.75v1.25H14c.414 0 .75.336.75.75s-.336.75-.75.75z')
+                                        img.editProfileImage__temp#temp(src=(profilePic), alt="Profile Picture")
+                                        .dropzone-preview#previewProfileImage
+                                .bottom
+                                    .edit-input-group
+                                        label(for="name")
+                                            input(type="text", name="name",id="name", autocomplete="off", value=(name), tabindex=0)
+                                            span.placeholder.shrink Name
+                                            span.counter #{name.length} / 50
+                                    .edit-input-group.bio
+                                        label(for="bio")
+                                            textarea(type="text", name="bio",id="bio", autocomplete="off", rows="4", tabindex=0) #{bio || ""}
+                                            span.placeholder(class=(bio !== undefined && bio !== "" && "shrink")) Bio
+                                            span.counter #{bio ? bio.length : 0} / 160
+                                    .edit-input-group
+                                        label(for="location")    
+                                            input(type="text", name="location",id="location", autocomplete="off", value=(location || ""), tabindex=0)
+                                            span.placeholder(class=(location !== undefined && location !== "" && "shrink")) Location
+                                            span.counter #{location ? location.length : 0} / 30
+                                    .edit-input-group
+                                        label(for="website")
+                                            input(type="text", name="website",id="website", autocomplete="off", tabindex=0, value=(website || ""))
+                                            span.placeholder Website
+                                            span.counter #{website ? website.length : 0} / 100
+                                    .birthDateContainer
+                                        .birthDatePreview
+                                            span.muted Birth date · 
+                                            button.toggleBirthDateTab(type="button", tabindex=0) Edit
+                                            p.birthDate #{birthDateDisplay}
+                                        .birthDateTabContainer.d-none
+                                            span.bold Birth date · 
+                                            button.toggleBirthDateTab(type="button", tabindex=0) Cancel
+                                            .birthDateTab
+                                                .form-group
+                                                    .edit-input-group.month
+                                                        label(for="month").selection
+                                                            
+                                                            select(name="month",id="month", tabindex=0)
+                                                                - for(let i = 1; i < months.length; i++) {
+                                                                    option(value=(i), selected=(birthMonth == i)) #{months[i]}
+                                                                - }
+                                                            span.placeholder.shrink Month
+                                                    .edit-input-group.month
+                                                        - let n = 1
+                                                        label(for="day").selection
+                                                            select(name="day",id="day")
+                                                                while n <= days
+                                                                    option(value=(n) selected=(n == birthDay)) #{n}
+                                                                    - n++
+                                                            span.placeholder.shrink Day
+                                                    .edit-input-group.year
+                                                        - let j = currentYear - 100
+                                                        label(for="year").selection
+                                                            select(name="year",id="year", tabindex=0)
+                                                                while currentYear >= j
+                                                                    option(value=(currentYear) selected=(currentYear == birthYear)) #{currentYear}
+                                                                    - currentYear--
+                                                            span.placeholder.shrink Year
+                                                .whoSeesThis.mt-2
+                                                    p.bold.whoSeesThis__heading Who sees this?
+                                                    span.muted You can control who sees your birthday on Hop In.
+                                                    .edit-input-group
+                                                        label(for="canSeeMonthAndDay").selection                                                   
+                                                            select(name="canSeeMonthAndDay",id="canSeeMonthAndDay", tabindex=0)
+                                                                option(value="public", selected=(canSeeMonthAndDay === "public")) Public
+                                                                option(value="followers", selected=(canSeeMonthAndDay === "followers")) Your followers
+                                                                option(value="youAreFollowing", selected=(canSeeMonthAndDay === "youAreFollowing")) People you are following
+                                                                option(value="followingEachOther", selected=(canSeeMonthAndDay === "followingEachOther")) You follow each other
+                                                                option(value="onlyYou", selected=(canSeeMonthAndDay === "onlyYou")) Only you
+                                                            span.placeholder.shrink Month and day
+                                                    .edit-input-group
+                                                        label(for="canSeeYear").selection                                                   
+                                                            select(name="canSeeYear",id="canSeeYear", tabindex=0)
+                                                                option(value="public", selected=(canSeeYear === "public")) Public
+                                                                option(value="followers", selected=(canSeeYear === "followers")) Your followers
+                                                                option(value="youAreFollowing", selected=(canSeeYear === "youAreFollowing")) People you are following
+                                                                option(value="followingEachOther", selected=(canSeeYear === "followingEachOther")) You follow each other
+                                                                option(value="onlyYou", selected=(canSeeYear === "onlyYou")) Only you
+                                                            span.placeholder.shrink Year
+
+
+
+
+                                        

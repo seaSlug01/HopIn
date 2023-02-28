@@ -1,0 +1,66 @@
+extends layouts/main-layout.pug
+    
+block content
+  script.
+    let chatDB = !{chat}
+    let messagesDB = !{messages}
+  
+  .chatContainer#chatContainer
+    form.searchInConvo
+      .searchInConvo__inputGroup
+        label(for="searchInConvo")
+          i.fa-solid.fa-magnifying-glass
+        input#searchConvo(type="text", placeholder="Search", name="convoKeywords", autocomplete="off")
+        span.d-none 1 results
+      .searchInConvo__controls
+        button(type="button", disabled)
+          i.fa-solid.fa-angle-up
+        button(type="button", disabled)
+          i.fa-solid.fa-angle-down
+      button.searchInConvo__close(type="button") Close
+    .chatMessagesContainer
+    button.scrollBottom#scrollBottom
+        i.fa-solid.fa-arrow-down
+    .loadingDots.userTyping.d-none
+      span.circle
+      span.circle
+      span.circle
+    .replyingTo
+      button.replyingTo__closeIcon
+        i.fa-solid.fa-xmark
+    .dropzoneMessagePreviewContainer
+      .dropzone-message-previewContainer.calculatedWidth
+      .blend.calculatedWidth
+    form.actions#submitMessage
+      button.chatAction.media.dropzone(type="button", data-toggle="tooltip", data-title="Upload files", data-tooltip-type="large")
+        i.fa-solid.fa-photo-film
+      .messageTextareaContainer
+        .messageTextareas
+          textarea.messageTextarea#textMessage(name="textMessage", rows="1", placeholder="Aa")
+          .textareaContent(contentEditable="",spellcheck="false")
+        .emojiContainer
+          button.emojiToggle(type="button", data-toggle="tooltip", data-title="Choose an emoji", data-tooltip-type="large")
+            i.fa-solid.fa-face-smile
+      button.chatAction.sendMessage(type="submit", data-toggle="tooltip", data-title="Press Enter to send", data-tooltip-type="large", disabled=true)
+        .send-message-icon
+    .chatInformation#chatInformation(data-init="true")
+
+
+
+
+    .modal#reactionsModal(tabindex="-1", role="dialog", aria-labelledBy="deletePostModal", aria-hidden="false")
+      .modal-container.center
+        .modal-close.round.btn-icon
+        .modal-header
+            h3
+              strong Message Reactions
+        .body
+          ul.reactionListHeaders.inline-tabs
+          .body__reactionsList
+
+    .modal#modifyChatModal(tabindex="-1", role="dialog", aria-labelledBy="modifyChatModal", aria-hidden="false")
+
+    block scripts
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==", crossorigin="anonymous", referrerpolicy="no-referrer")
+        script(src="/js/emoji.js", type="module")
+        script(src="/js/chatScreen.js", type="module")

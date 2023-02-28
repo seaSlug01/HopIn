@@ -1,0 +1,66 @@
+extends layouts/main-layout.pug
+    
+block content
+    script.
+      const profileUserId = "!{profileUser._id}";
+
+    - followersCount = profileUser.followers.length
+    - followingCount = profileUser.following.length
+    - joined = new Date(profileUser.createdAt).toLocaleString('default', { month: 'long' }) + " " + new Date(profileUser.createdAt).getFullYear()
+    .profileContainer
+      - const coverTag = (profileUser.coverPic !== "" && profileUser.coverPic !== undefined) ? "img" : "div"
+      #{coverTag}.cover(src=(profileUser.coverPic), data-target=(coverTag === "img" && "imageGalleryModal"), data-type="coverPic")
+      .userContainer(data-user-id=profileUser._id)
+        .upper
+          .profileImage(data-target="imageGalleryModal", data-type="profilePic")
+            img(src=(profileUser.profilePic), alt="Profile Picture")
+          .profile-actions
+            +createUserProfileActions(userLoggedIn, profileUser)
+        .userDetails
+          h3.displayName #{profileUser.firstName} #{profileUser.lastName}
+          span.username.muted @#{profileUser.username}
+          p.mb.bio #{profileUser.bio}
+          .generalDetails
+            +displayBirthDate(profileUser, userLoggedIn)
+            span.muted.joinDate.mb
+              i.fa-solid.fa-calendar-days
+              span Joined: #{joined}
+          .followersContainer
+            a(href=`/profile/${profileUser.username}/following`)
+              span.value
+                strong #{followingCount}
+                |  Following
+            a(href=`/profile/${profileUser.username}/followers`)
+              span.value
+                strong.followersValue.asda #{followersCount}
+                |  Followers
+
+    .feed 
+      ul.tabsContainer
+        +createTab("Posts", `/profile/${profileUser.username}/posts`, "posts")
+        +createTab("Shares & replies", `/profile/${profileUser.username}/shares-replies`, "shares-replies")
+        +createTab("Likes", `/profile/${profileUser.username}/likes`, "likes")    
+      .postsContainer
+      
+    
+    
+    +createPostModals(userLoggedIn)
+    - if(profileUser._id && profileUser._id == userLoggedIn._id)
+        +createEditProfileDetails(profileUser)
+
+        block scripts
+          script(src="/js/customRangeInput.js", type="module")
+          script(src="/js/editProfileDetails.js", type="module")
+
+
+
+    block scripts
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js", integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==", crossorigin="anonymous", referrerpolicy="no-referrer")
+        script(src="/js/posts.js", type="module")
+        script(src="/js/modal.js", type="module")
+        script(src="/js/tabs.js", type="module")
+        script(src="/js/profilePage.js", type="module")
+
+  
+
+
