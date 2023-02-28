@@ -3,7 +3,7 @@ config();
 
 const express = require('express');
 const app = express();
-const port = 3003;
+const devPORT = 3003;
 const middleware = require('./middleware');
 const path = require('path');
 const session = require('express-session');
@@ -42,8 +42,8 @@ cloudinary.config({
   api_secret: process.env.CLOUD_SECRET
 })
 
-const server = app.listen(port, () =>
-  console.log('Server listening on port ' + port)
+const server = app.listen(process.env.PORT || devPORT, () =>
+  console.log('Server listening on port ' + devPORT)
 );
 
 const io = require("socket.io")(server, {pingTimeout: 60000})
