@@ -22,7 +22,7 @@ async function uploadToGoogleCloudBucket(filePath, goBack) {
     action: 'read',
     expires: '03-09-2491'
   })
-  return  signedUrl[0];
+  return signedUrl[0];
 }
 
 function directoryPath(filePath, goBack) {
@@ -103,32 +103,37 @@ const srtToVtt = async (req, res) => {
   const ext = getExt(SrtFile.originalname)
   const isSrt = ext.toLowerCase() === "srt";
 
-  if(!isSrt) return;
+  if(!isSrt) return res.sendStatus(403);
 
   const convertToVTT = await fs.createReadStream(SrtFile.path)
     .pipe(srt2vtt())
     .pipe(fs.createWriteStream(`${SrtFile.originalname.split(".").slice(0, SrtFile.originalname.split(".").length - 1)}.vtt`))
 
-  const dir = createUserDirectory(req.session.user._id)
-  const VttFilePath = `${dir}/${SrtFile.filename}-${convertToVTT.path}`
+  const gBucketFilePath = await uploadToGoogleCloudBucket(convertToVTT.path, "../");
+  // commented out
+  // const dir = createUserDirectory(req.session.user._id)
+  // const VttFilePath = `${dir}/${SrtFile.filename}-${convertToVTT.path}`
+
   // current temp path is at the root level, we wanna add it
   // to the users tmp-files folders so we can mass delete them any time we want
   // ex: when logging out / when uploading the post, this path won't be needed
   // the srt file will go to a google cloud bucket
-  var tempPath = convertToVTT.path;
-  var targetPath = path.join(__dirname, `../${VttFilePath}`);
+
+  // commented out
+  // var tempPath = convertToVTT.path;
+  // var targetPath = path.join(__dirname, `../${VttFilePath}`);
 
 
-  fs.rename(tempPath, targetPath, error => {
-      if(error !== null) {
-          console.log(error)
-          return res.sendStatus((400))
-      }
-  })
+  // fs.rename(tempPath, targetPath, error => {
+  //     if(error !== null) {
+  //         console.log(error)
+  //         return res.sendStatus((400))
+  //     }
+  // })
 
-  removeFile(SrtFile.path)
+  // removeFile(SrtFile.path)
 
-  return VttFilePath
+  return gBucketFilePath
 }
 
 
