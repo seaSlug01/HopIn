@@ -14,30 +14,27 @@ export class UploadPostMedia extends Dropzone {
       // sucess will run after ALL the addedFiles are finished
       // goes like follows -> addedFile, addedFile, sucess, sucess
       // not like -> addedFile -> success -> 2nd addedFIle -> 2nd sucess
-
-      const {encoding, filename, mimetype, originalname, size, path} = multerResponse;
-
-      console.log(Object.keys(this.filesUploaded).length, this.files.length)
-      
-      
-     
       const fileType = file.type.split("/")[0];
-      this.filesUploaded[file.upload.uuid] = { encoding, filename, mimetype, originalname, size, path, mediaType: fileType }
+      this.filesUploaded[file.upload.uuid].mediaType = file.type.split("/")[0];
+      this.filesUploaded[file.upload.uuid].path = multerResponse.find(item => item.originalname === file.upload.filename).path;
+
+      console.log(multerResponse)
+      
 
       file.previewElement.setAttribute("data-media-id", file.upload.uuid);
       this.addSettingsAttributes(file.previewElement.querySelector(".postMediaPreview__item__edit"), fileType === "video" ? "caption" : "crop")
       if(fileType === "image") {
         this.addSettingsAttributes(file.previewElement.querySelector("img"), "crop")
         setTimeout(() => {
-          this.emit("thumbnail", file, path);
+          this.emit("thumbnail", file, this.filesUploaded[file.upload.uuid].path);
         }, 10)
       }
 
       if(fileType === "video") {
-         // if file is video, it should get a thumbnail
-        const { imageURI } = await generateVideoThumbnail(path);
-        this.filesUploaded[file.upload.uuid].thumbnail = URL.createObjectURL(imageURI);
-        this.setVideoPreview(path, this.filesUploaded[file.upload.uuid].thumbnail, file.previewElement, file);
+         // if file is video, cloudinary provides a thumbnail option
+        const splitPath = this.filesUploaded[file.upload.uuid].path.split(".");
+        this.filesUploaded[file.upload.uuid].thumbnail = splitPath.slice(0, splitPath.length -1).join(".") + ".jpg";
+        this.setVideoPreview(this.filesUploaded[file.upload.uuid].path, this.filesUploaded[file.upload.uuid].thumbnail, file.previewElement, file);
       }
 
       
@@ -72,8 +69,11 @@ export class UploadPostMedia extends Dropzone {
       const firstFileType = this.getFileType(this.files[0])
       const filesAreTheSameType = this.files.slice(1).every(file => this.getFileType(file) === firstFileType);
       // keep in mind that addedFile is a loop, but still works better than other events
+      console.log(file.upload)
+
       
       if(filesAreTheSameType) {
+        this.filesUploaded[file.upload.uuid] = file.upload
         console.log("Files are de same type")
         
         if(firstFileType === "image") {
@@ -131,7 +131,7 @@ export class UploadPostMedia extends Dropzone {
     videoPlayer.muted = true;
 
     const source = document.createElement("source");
-    source.src = window.location.origin + path;
+    source.src = path;
     source.type = file.type;
 
     videoPlayer.appendChild(source)

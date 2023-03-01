@@ -516,7 +516,7 @@ function hideUserDetails(e) {
 
 function userDetailsX(e, el) {
   const minMedia = window.matchMedia('(max-width: 1300px)');
-  if (e.target.classList.contains("profileImage") && minMedia.matches) return el.style.left = 0;
+  if (e.target.closest(".userImageContainer") && minMedia.matches) return el.style.left = 0;
 
   el.style.left = "50%";
   el.style.transform  = 'translateX(-50%)'
@@ -687,8 +687,8 @@ export function createPostHtml(postData, largeFont = false, hideSettings = false
               <div class="post-content ${(isSharedPost || pinned) && "pt-none"}">
                 <div class="userImageContainer">
                   <div class="user-details-block">
-                    <a href="${linkToProfile}">
-                      <div class="profileImage" data-toggle="user-details-modal" data-user-id="${postedBy._id}">
+                    <a href="${linkToProfile}" data-toggle="user-details-modal" data-user-id="${postedBy._id}">
+                      <div class="profileImage">
                         <img src="${postedBy.profilePic}" alt="${postedBy.username}'s profile picture"/>
                       </div>
                     </a>

@@ -116,9 +116,7 @@ export class Range {
 
 
   setRangeCropperZoom(zoomRatio) {
-    console.log("zoomRation here calledah ", zoomRatio)
     if(!this.zoomStartsFrom) this.zoomStartsFrom = zoomRatio > 0.4 ? 0.2 : zoomRatio;
-    console.log(zoomRatio * 100)
     zoomRatio = zoomRatio - this.zoomStartsFrom;
     const { max, rangeWidth } = this.#getMaxRange();
     

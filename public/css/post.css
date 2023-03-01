@@ -408,6 +408,15 @@
   justify-content: center;
 }
 
+.userImageContainer a:hover img {
+        transition: 0.3s all ease;
+        filter: brightness(0.9);
+      }
+
+.userImageContainer a .profileImage {
+      pointer-events: none;
+    }
+
 .postContainer.userContainer .post-details {
       padding-top: 0.3rem;
       padding-bottom: 0.3rem;

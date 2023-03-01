@@ -6,7 +6,7 @@ const fs = require("fs");
 const multer  = require('multer')
 const upload = multer({dest: "uploads/files/"})
 const iconvlite  = require("iconv-lite");
-const { decodeNonEnglishName, createUserDirectory, saveFile, srtToVtt } =  require("../controllers/utils.js");
+const { decodeNonEnglishName, createUserDirectory, saveFile, srtToVtt, fileUpload } =  require("../controllers/utils.js");
 iconvlite.skipDecodeWarning = true;
 
 app.use(express.urlencoded({ extended: true }))
@@ -40,6 +40,7 @@ router.post("/dropzone/single", upload.single("file"), async (req, res) => {
         return res.sendStatus(400)
     }
     
+    
     const file = req.file;
     file.originalname = decodeNonEnglishName(file.originalname)
 
@@ -51,6 +52,38 @@ router.post("/dropzone/single", upload.single("file"), async (req, res) => {
     res.json({success: true, data: {...file, path: pathToImage } });
 });
 
+router.post("/dropzone/post", upload.any("files", 4), async (req, res) => {
+    if(!req.files) {
+        return res.sendStatus(400);
+    }
+
+    const type = req.files[0].mimetype.split("/")[0];
+    if(!req.files.every(file => file.mimetype.split("/")[0] === type)) {
+        // forbidden since files are not of the same type
+        return res.sendStatus(403);
+    }
+
+    try {
+        const options = {resource_type: type};
+        const filePromises = req.files.map(file => fileUpload(file.path, "../", options));
+        const responses = await Promise.all(filePromises);
+        const newPaths = req.files.map((file, index) => ({
+            ...file,
+            originalname: decodeNonEnglishName(file.originalname),
+            size: responses[index].bytes,
+            path: responses[index].secure_url
+        }))
+
+        console.log(newPaths[0].size)
+
+        res.status(200).send(newPaths);
+
+    } catch(error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
+
 
 router.post("/dropzone/multiple", upload.any('files', 10), async (req, res) => {
     // but the thing is, i'm not uploading multiple files at once
@@ -60,6 +93,7 @@ router.post("/dropzone/multiple", upload.any('files', 10), async (req, res) => {
         console.log("No file uploaded with ajax request");
         return res.sendStatus(400)
     }
+    console.log(req.files)
     // console.log("how many times am i getting called? does dropzone getting instantiated multiple times affect the times this func is called?")
     const file = req.files[0];
     file.originalname = decodeNonEnglishName(file.originalname)
@@ -76,11 +110,20 @@ router.post("/cropper", upload.single("file"), async (req, res, next) => {
         console.log("No file uploaded with ajax request");
         return res.sendStatus(400)
     }
-    const userDirectory = createUserDirectory(req.session.user._id);
-    const pathToImage = saveFile(res, req.file, userDirectory);
-    // should delete the previous image after cropping it
-    
-    res.json({success: true, data: {...req.file, path: pathToImage } });
+
+    try {
+        const file = req.file;
+        const cloudUpload = await fileUpload(file.path, "../");
+        file.path = cloudUpload.secure_url;
+        file.size = cloudUpload.bytes;
+        console.log(file.size)
+        file.originalname = decodeNonEnglishName(file.originalname);
+        
+        res.status(200).send(file);
+    } catch(error) { 
+        console.log(error);
+        res.sendStatus(500);
+    }
 });
 
 router.post("/dropzone/subtitles", upload.single("file"), async (req, res, next) => {
