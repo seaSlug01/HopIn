@@ -113,6 +113,7 @@ router.post("/cropper", upload.single("file"), async (req, res, next) => {
 
     try {
         const file = req.file;
+        console.log(req.file)
         const cloudUpload = await fileUpload(file.path, "../");
         file.path = cloudUpload.secure_url;
         file.size = cloudUpload.bytes;
