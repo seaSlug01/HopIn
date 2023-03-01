@@ -603,12 +603,12 @@ export function createPostForm(formId, setPosts) {
 
   Dropzone.autoDiscover = false;
   const mediaSelection = new UploadPostMedia(mediaButton, {
-    url: "/uploads/dropzone/multiple/",
+    url: "/uploads/dropzone/post",
     previewsContainer: postPreviewContainer,
     previewTemplate: uploadPostMediaTemplate,
     paramName: "files",
     uploadMultiple: true,
-    parallelUploads: 1,
+    parallelUploads: 4,
     acceptedFiles: ".png, .jpg, .jpeg, video/*",
     maxFiles: 4,
     maxFilesize: 72

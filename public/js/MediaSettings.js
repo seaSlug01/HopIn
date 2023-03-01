@@ -559,7 +559,9 @@ export class ImageSettings extends MediaSettingsUtils {
       // this will be the callback
       if(this.activeTab === "crop") {
         e.target.disabled = true;
-        await this.#saveCropData(false)
+        if(this.#cropperChanges()) {
+          await this.#saveCropData(false)
+        }
       }
 
       for(let itemId of Object.keys(this.filesUploadedCopy)) {
@@ -676,15 +678,10 @@ export class ImageSettings extends MediaSettingsUtils {
 
         this.cropper.setCanvasData(canvasData)
 
-        console.log("is everything right?" ,width, height, left, top)
-
-
         this.range = new Range("cropZoom", this.cropper)
         this.cropper.zoomTo(zoomRatio)
 
         this.range.setRangeCropperZoom(zoomRatio)
-
-        
       }}
     } else {
       options = {
@@ -733,12 +730,26 @@ export class ImageSettings extends MediaSettingsUtils {
 
         console.log("HERE ", this.filesUploadedCopy[this.selectedMedia.uuid])
 
-        const {path, size, filename, encoding} = response.data.data;
+        const {path, size, filename, encoding} = response.data;
 
         return resolve({path, size, filename, encoding})
       })
     })
     
+  }
+
+  #cropperChanges() {
+    const {width, height, left, top} = this.cropper.getCropBoxData();
+    const {width: imageWidth, naturalWidth} = this.cropper.getImageData();
+    const zoomRatio = imageWidth / naturalWidth;
+    
+    const cropperProperties = {width, height, left, top, zoomRatio}
+    if(!this.filesUploadedCopy[this.selectedMedia.uuid].canvasData) {
+      return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) 
+    }
+
+    const canvasData = this.cropper.getCanvasData();
+    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) && Object.keys(canvasData).some(prop => canvasData[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]);
   }
 
   async #saveCropData(showLoading = true) {
@@ -767,7 +778,9 @@ export class ImageSettings extends MediaSettingsUtils {
     this.modal.querySelector(".modal-body").innerHTML = "";
     this.modal.querySelector(".modal-footer").innerHTML = "";
     if(prevTab === "crop") {
-      await this.#saveCropData();
+      if(this.#cropperChanges()) {
+        await this.#saveCropData();
+      }
     }
 
     const imageContainer = this.createElement(["modal-body__mainContentContainer", "modal-body__mainContentContainer--sensitiveContent"]);
@@ -795,8 +808,10 @@ export class ImageSettings extends MediaSettingsUtils {
     this.modal.querySelector(".modal-body").innerHTML = "";
     this.modal.querySelector(".modal-footer").innerHTML = "";
     if(prevTab === "crop") {
-      console.log("IF CROP, CROP DATA IS SAVED")
-      await this.#saveCropData();
+      if(this.#cropperChanges()) {
+        await this.#saveCropData();
+      }
+      
     }
 
     const imageContainer = this.createElement(["modal-body__mainContentContainer", "modal-body__mainContentContainer--alt"]);
@@ -880,18 +895,17 @@ export class ImageSettings extends MediaSettingsUtils {
   }
 
   #createCropper(image, options = {}) {
-    console.log(options)
     this.cropper = new Cropper(image, {
       ...options,
       background: false,
       viewMode: 1,
       crop: function(event) {
-        console.log("X", event.detail.x);
-        console.log("Y", event.detail.y);
-        console.log("Scale X", event.detail.scaleX);
-        console.log("Scale Y", event.detail.scaleY);
-        console.log("W", event.detail.width);
-        console.log("H", event.detail.height);
+        // console.log("X", event.detail.x);
+        // console.log("Y", event.detail.y);
+        // console.log("Scale X", event.detail.scaleX);
+        // console.log("Scale Y", event.detail.scaleY);
+        // console.log("W", event.detail.width);
+        // console.log("H", event.detail.height);
       },
       zoom: (e) => {
         if (e.detail.ratio > 2) {
@@ -956,14 +970,15 @@ export class ImageSettings extends MediaSettingsUtils {
       modalHeader.insertBefore(container, modalHeader.lastChild);
       container.addEventListener("click", async (e) => {
         if(e.target.dataset.to) {
-          console.log(buttons)
           const goToIndex = parseInt(e.target.dataset.to);
           const currentIndex = this.getIndex();
           const selectedItemId = this.filesUploadedArr[goToIndex].uuid;
 
           if(this.activeTab === "crop") {
             // save crop data before selected media changes
-            await this.#saveCropData();
+            if(this.#cropperChanges()) {
+              await this.#saveCropData();
+            }
           }
 
           this.selectedMedia = this.filesUploadedCopy[selectedItemId];
@@ -972,7 +987,6 @@ export class ImageSettings extends MediaSettingsUtils {
           this.filesUploadedCopy[selectedItemId].uuid = selectedItemId;
 
           const direction = goToIndex > currentIndex ? "right" : "left";
-          console.log(direction, goToIndex, currentIndex, this.selectedMedia.uuid, this.filesUploadedArr)
 
           // Whats the direction yo?
 

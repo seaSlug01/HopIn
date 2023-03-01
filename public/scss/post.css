@@ -479,6 +479,19 @@
   margin-right: 1rem;
   display: flex;
   justify-content: center;
+
+  a {
+
+    &:hover {
+      img {
+        transition: 0.3s all ease;
+        filter: brightness(0.9);
+      }
+    }
+    .profileImage {
+      pointer-events: none;
+    }
+  }
 }
 
 .postContainer {
