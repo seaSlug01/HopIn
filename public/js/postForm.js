@@ -566,7 +566,6 @@ export const submitPost = async (e, mediaSelection, setPosts, additionalCallback
       additionalCallback();
     }
   } catch(error) {
-    submitBtn.disabled = false;
     console.error(error)
   }
   
