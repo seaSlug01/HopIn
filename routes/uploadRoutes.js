@@ -113,14 +113,11 @@ router.post("/cropper", upload.single("file"), async (req, res, next) => {
 
     try {
         const file = req.file;
-        console.log(req.file)
-        const cloudUpload = await fileUpload(file.path, "../");
-        file.path = cloudUpload.secure_url;
-        file.size = cloudUpload.bytes;
-        console.log(file.size)
-        file.originalname = decodeNonEnglishName(file.originalname);
+        const userDirectory = createUserDirectory(req.session.user._id);
+        const pathToImage = saveFile(res, file, userDirectory);
         
-        res.status(200).send(file);
+
+        res.status(200).send({...file, path: pathToImage });
     } catch(error) { 
         console.log(error);
         res.sendStatus(500);
