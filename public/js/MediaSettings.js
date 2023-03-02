@@ -539,6 +539,8 @@ export class ImageSettings extends MediaSettingsUtils {
     this.croppedImagesCordinates = {}
     this.range = null;
 
+    console.log(this.filesUploadedCopy)
+
     this.createPrompt(tabs.slice(0, 3), "Save");
     this.#createImageSelectionButtons(this.modal.querySelector(".modal-header"))
 
