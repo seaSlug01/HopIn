@@ -318,7 +318,7 @@
   border-right: var(--thin-border);
   backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0);
-  z-index: 99;
+  z-index: 100;
 
   &.sticky {
     position: sticky;

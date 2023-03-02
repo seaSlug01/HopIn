@@ -604,12 +604,20 @@
   display: flex;
   padding: 0 1rem;
 }
+.postForm .postMediaPreview__item {
+      border-radius: 1rem;
+      overflow: hidden;
+    }
 .postForm.retracted {
     padding-top: 1rem;
   }
 .postForm.retracted .postMediaPreview.active {
       margin-top: 1rem;
     }
+.postForm.retracted .postMediaPreview.active__item {
+        border-radius: 1rem;
+        overflow: hidden;
+      }
 .postForm.retracted .buttonsContainer {
       margin-top: 1rem;
     }
@@ -824,6 +832,35 @@
 .postMediaPreview__item {
     position: relative;
   }
+.postMediaPreview__item .dz-progress {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+.postMediaPreview__item .dz-progress span {
+        background: #257cff;
+        display: block;
+        height: 5px;
+      }
+.postMediaPreview__item--video {
+      display: flex;
+      flex-direction: column;
+      
+    }
+.postMediaPreview__item--video .dz-progress {
+        display: none;
+      }
+.postMediaPreview__item--video .loading-post-message {
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-top: 0.5rem;
+      }
+.postMediaPreview__item--video .loading-post-message h4 {
+          font-size: 0.95rem;
+        }
+.postMediaPreview__item--video .loading-post-message p {
+          font-size: 0.9rem;
+        }
 .postMediaPreview__item--video .postMediaPreview__item__actions {
         top: 0.4rem;
       }
@@ -4537,8 +4574,9 @@
       overflow: hidden;
     }
 .dropzone-message-previewContainer .dz-preview .dz-progress span {
+        /* #257cff */
         background: #257cff;
-        height: 4px;
+        height: 4.5px;
         transition: width 0.1s ease;
       }
 .dropzone-message-previewContainer .dz-preview .dz-image {
@@ -4744,11 +4782,13 @@
     display: block;
     z-index: 99;
   }
+.chatInformation.show .chatInformation__mainContent {
+      height: 78vh;
+    }
 .chatInformation__mainContent {
     position: relative;
     overflow: hidden;
     height: 100%;
-    min-height: calc(50vh);
 
     
   }
@@ -5532,7 +5572,7 @@
   -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0);
-  z-index: 99;
+  z-index: 100;
 
 
 }
