@@ -186,6 +186,10 @@ b {
     pointer-events: not-allowed;
   }
 
+.btn-black:disabled:hover {
+      background: darkgrey;
+    }
+
 .btn-black.save {
     font-size: 14px;
   }

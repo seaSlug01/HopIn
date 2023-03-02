@@ -166,6 +166,10 @@ b {
   &:disabled {
     background: darkgrey;
     pointer-events: not-allowed;
+
+    &:hover {
+      background: darkgrey;
+    }
   }
 
   &.save {
