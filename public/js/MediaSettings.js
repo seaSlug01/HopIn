@@ -733,7 +733,7 @@ export class ImageSettings extends MediaSettingsUtils {
         const {path, size, filename, encoding} = response.data;
 
         return resolve({path, size, filename, encoding})
-      })
+      }, 'image/jpeg')
     })
     
   }
