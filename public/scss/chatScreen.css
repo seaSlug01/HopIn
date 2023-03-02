@@ -1028,6 +1028,14 @@
   overflow-x: auto;
   overflow-y: hidden;
 
+
+  .loadingBarContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
   &.active {
     padding: 1rem;
   }
@@ -1080,6 +1088,7 @@
 
       span {
         /* #257cff */
+        min-width: 25%;
         background: #257cff;
         height: 4.5px;
         transition: width 0.1s ease;

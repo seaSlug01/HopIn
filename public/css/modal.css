@@ -1238,6 +1238,12 @@
     z-index: 11;
   }
 
+#mediaSettings .modal-header .messages-loading-spinner {
+      margin-top: 0;
+      width: auto;
+      margin-right: 0.8rem;
+    }
+
 #mediaSettings .modal-header__changeSelectedImage {
       margin-right: 0.8rem;
       display: flex;

@@ -2039,6 +2039,11 @@
 #mediaSettings .modal-header {
     z-index: 11;
   }
+#mediaSettings .modal-header .messages-loading-spinner {
+      margin-top: 0;
+      width: auto;
+      margin-right: 0.8rem;
+    }
 #mediaSettings .modal-header__changeSelectedImage {
       margin-right: 0.8rem;
       display: flex;
@@ -4530,6 +4535,12 @@
   overflow-y: hidden;
   
 }
+.dropzone-message-previewContainer .loadingBarContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 .dropzone-message-previewContainer.active {
     padding: 1rem;
   }
@@ -4575,6 +4586,7 @@
     }
 .dropzone-message-previewContainer .dz-preview .dz-progress span {
         /* #257cff */
+        min-width: 25%;
         background: #257cff;
         height: 4.5px;
         transition: width 0.1s ease;
@@ -5665,6 +5677,40 @@
       height: 48%;
       filter: none;
     }
+.loadingBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+}
+.loadingBar span {
+    height: 100%;
+    width: 20%;
+    display: block;
+    border-radius: 100vw;
+    background: #257cff;
+    animation: loadingBarExpand 2.5s ease-in-out infinite;
+    position: absolute;
+    top: 0;
+  }
+@keyframes loadingBarExpand {
+  0% {
+    left: -20%;
+    width: 20%;
+  }
+
+  70% {
+    left: 100%;
+    width: 60%;
+  }
+
+  100% {
+    left: 100%;
+    width: 60%;
+  }
+}
 .loadingDots {
   display: flex;
   gap: 0.5em;

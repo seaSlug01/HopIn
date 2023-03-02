@@ -126,6 +126,15 @@ class MediaSettingsUtils {
     return modalHeader;
   }
 
+  headerSpinner() {
+    const container = this.createElement("messages-loading-spinner", "div");
+    const spinner = this.createElement("message-spinner", "div");
+    container.appendChild(spinner);
+
+    const header = this.modal.querySelector(".modal-header");
+    header.insertBefore(container, header.querySelector(".btn-black"));
+  }
+
 
   createSensitiveContentCategoryCheckboxes(container) {
     const checkboxesContainer = this.createElement("modal-footer__checkboxes");
@@ -557,10 +566,11 @@ export class ImageSettings extends MediaSettingsUtils {
     this.modal.querySelector(".modal-header .btn-black").addEventListener("click", async (e) => {
       mediaSelection.filesUploaded = this.filesUploadedCopy;
 
-
+      this.headerSpinner()
       // this will be the callback
       if(this.activeTab === "crop") {
         e.target.disabled = true;
+        e.target.textContent = "Saving";
         if(this.#cropperChanges()) {
           await this.#saveCropData(false)
         }
@@ -751,13 +761,14 @@ export class ImageSettings extends MediaSettingsUtils {
     }
 
     const canvasData = this.cropper.getCanvasData();
-    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) && Object.keys(canvasData).some(prop => canvasData[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]);
+
+    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) || Object.keys(canvasData).some(prop => canvasData[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]);
   }
 
-  async #saveCropData(showLoading = true) {
+  async #saveCropData(showLoading = true, prevTab) {
     try {
       if(showLoading) {
-        spinnerV2(this.modal.querySelector(".modal-body"));
+        prevTab === this.activeTab ? this.headerSpinner() : spinnerV2(this.modal.querySelector(".modal-body"));
       }
       
       const {path: newPath, size, filename, encoding} = await this.#applyCrop();
@@ -813,7 +824,6 @@ export class ImageSettings extends MediaSettingsUtils {
       if(this.#cropperChanges()) {
         await this.#saveCropData();
       }
-      
     }
 
     const imageContainer = this.createElement(["modal-body__mainContentContainer", "modal-body__mainContentContainer--alt"]);
@@ -979,7 +989,7 @@ export class ImageSettings extends MediaSettingsUtils {
           if(this.activeTab === "crop") {
             // save crop data before selected media changes
             if(this.#cropperChanges()) {
-              await this.#saveCropData();
+              await this.#saveCropData(true, this.activeTab);
             }
           }
 

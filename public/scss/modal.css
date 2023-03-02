@@ -1296,6 +1296,12 @@
   .modal-header {
     z-index: 11;
 
+    .messages-loading-spinner {
+      margin-top: 0;
+      width: auto;
+      margin-right: 0.8rem;
+    }
+
     &__changeSelectedImage {
       margin-right: 0.8rem;
       display: flex;

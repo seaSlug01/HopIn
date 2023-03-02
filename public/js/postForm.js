@@ -1,4 +1,4 @@
-import { createPostHtml, elements, regexPatterns, getCursorPos, cordinates } from "./common.js"
+import { createPostHtml, elements, regexPatterns, getCursorPos, cordinates, createLoadingBar } from "./common.js"
 import { EmojiSelection } from "./emoji.js";
 import { UploadPostMedia, uploadPostMediaTemplate } from "./UploadDropzone.js";
 import {toggleActive, countOperations } from "./posts.js";
@@ -502,17 +502,9 @@ function insertPost(post) {
   }
 }
 
-function showLoadingMessage(e, mediaSelection) {
-  const container = document.createElement("div");
-  container.classList.add("loading-post-message");
-
-  const header = document.createElement("h4");
-  header.textContent = "Uploading post...";
-  const p = document.createElement("p");
-  p.textContent = "It can take a while for images and videos to be uploaded."
-
-  elements.postsContainer.parentNode.insertBefore(container, elements.postsContainer);
-  [header, p].forEach(el => container.appendChild(el));
+function postLoadingBar(e, mediaSelection) {
+  const appendTo = e.target.closest(".modal-container") ? e.target.closest(".modal-container").querySelector(".modal-header") : e.target.closest(".postContainer");
+  createLoadingBar(appendTo);
 
   setInitialTextareaState(e, mediaSelection);
 }
@@ -546,7 +538,7 @@ export const submitPost = async (e, mediaSelection, setPosts, additionalCallback
     }
 
     if(data.media.length && data.media[0].mediaType !== "GIF") {
-      showLoadingMessage(e, mediaSelection)
+      postLoadingBar(e, mediaSelection)
     }
     const replyToId = e.target.getAttribute("data-replyid");
     if(replyToId) {
@@ -562,7 +554,6 @@ export const submitPost = async (e, mediaSelection, setPosts, additionalCallback
     if(!data.media.length || data.media[0].mediaType == "GIF") {
       setInitialTextareaState(e, mediaSelection);
     }
-    document.querySelector(".loading-post-message")?.remove();
     updateReplyCount(newPost);
     if(additionalCallback) {
       additionalCallback();
@@ -570,6 +561,8 @@ export const submitPost = async (e, mediaSelection, setPosts, additionalCallback
   } catch(error) {
     console.log("THIS ERROR SUCKS MY BALLS OFF MAN")
     console.error(error)
+  } finally {
+    document.querySelector(".loadingBar")?.remove();
   }
   
 }

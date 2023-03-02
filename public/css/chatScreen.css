@@ -983,6 +983,13 @@
   
 }
 
+.dropzone-message-previewContainer .loadingBarContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
 .dropzone-message-previewContainer.active {
     padding: 1rem;
   }
@@ -1035,6 +1042,7 @@
 
 .dropzone-message-previewContainer .dz-preview .dz-progress span {
         /* #257cff */
+        min-width: 25%;
         background: #257cff;
         height: 4.5px;
         transition: width 0.1s ease;

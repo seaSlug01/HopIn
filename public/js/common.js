@@ -659,6 +659,7 @@ export function createPostHtml(postData, largeFont = false, hideSettings = false
   }
 
   let userSettings = "";
+  console.log("hideSettings", hideSettings)
   if (postData.postedBy._id === userLoggedIn._id && !hideSettings) {
     userSettings = `<div class="settings">
                     <button class="btn-icon more blue" data-toggle="tooltip" data-title="More">
@@ -874,8 +875,8 @@ export async function outputPosts(results, container, clearHTML) {
   }
 
   let html = "";
-  results.forEach((post, index) => {
-    html += createPostHtml(post, false, index);
+  results.forEach((post) => {
+    html += createPostHtml(post);
   })
 
   container.insertAdjacentHTML("beforeend", html);
@@ -1116,6 +1117,16 @@ export function sortSearchHistory(arr) {
 
 export function appendToHeader(element) {
   document.querySelector(".header").append(element)
+}
+
+export function createLoadingBar(container) {
+  const loadingBar = document.createElement("div");
+  loadingBar.classList.add("loadingBar");
+
+  const bar = document.createElement("span");
+  
+  loadingBar.appendChild(bar);
+  container.appendChild(loadingBar);
 }
 
 

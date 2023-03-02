@@ -183,6 +183,7 @@ b {
 
 .btn-black:disabled {
     background: darkgrey;
+    pointer-events: not-allowed;
   }
 
 .btn-black.save {

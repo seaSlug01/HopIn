@@ -1,4 +1,5 @@
 import { openModal, setInitialModalTarget, closeModal } from "./modal.js"
+import { createLoadingBar } from "./common.js";
 
 export class UploadPostMedia extends Dropzone {
   constructor(element, options, submitButton) {
@@ -10,7 +11,6 @@ export class UploadPostMedia extends Dropzone {
     this.postForm = this.submitButton.closest(".postForm");
     this.postTextarea = this.postForm.querySelector(".realTextarea");
     this.loadingIndicators = {
-      line: null,
       number: null,
       heading: null
     }
@@ -124,6 +124,15 @@ export class UploadPostMedia extends Dropzone {
 
     this.on("error", (file) => {
       this.removeFile(file);
+    })
+
+    this.options.previewsContainer.addEventListener("click", e => {
+      if(e.target.classList.contains("loading-post-message") || e.target.closest(".loading-post-message")) {
+        this.postTextarea.focus();
+        setTimeout(() => {
+          this.postTextarea.setSelectionRange(this.postTextarea.value.length,this.postTextarea.value.length);
+        }, 1)
+      }
     })
   }
 
@@ -253,9 +262,13 @@ export class UploadFiles extends Dropzone {
       this.#togglePreviewActiveClass(this.files.length > 0)
     })
 
+    this.on("addedfiles", function(files) {
+      createLoadingBar(this.options.previewsContainer.querySelector(".loadingContainer"))
+    });
+
     this.on("queuecomplete", files => {
       this.#formButtonDisabled(false);
-      console.log("uploading completed")
+      this.options.previewsContainer.querySelector(".loadingBar")?.remove();
     })
 
     this.on("uploadprogress", (file, progress) => {
