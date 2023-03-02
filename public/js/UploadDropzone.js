@@ -9,6 +9,11 @@ export class UploadPostMedia extends Dropzone {
     this.submitButton = submitButton;
     this.postForm = this.submitButton.closest(".postForm");
     this.postTextarea = this.postForm.querySelector(".realTextarea");
+    this.loadingIndicators = {
+      line: null,
+      number: null,
+      heading: null
+    }
 
     this.on("success", async (file, multerResponse) => {
       // sucess will run after ALL the addedFiles are finished
@@ -85,6 +90,7 @@ export class UploadPostMedia extends Dropzone {
             this.removeFile(this.files[0]);
           }
           
+          this.videoLoadingMessage(file.previewElement);
           this.toggleButton(element)
           const classList = ["postMediaPreview__item--video", "loading"]
           file.previewElement.classList.add(...classList)
@@ -101,6 +107,21 @@ export class UploadPostMedia extends Dropzone {
       }
     })
 
+    this.on("uploadprogress", (file, progress) => {
+      const fileType = file.type.split("/")[0];
+      if(fileType === "video") {
+        this.videoUploadIndications(progress);
+      } else {
+        const progressBar = file.previewElement.querySelector(".dz-progress"); 
+
+        if(progress == 100) {
+          setTimeout(() => {
+            progressBar && progressBar.remove();
+          }, 200)
+        }
+      }
+    })
+
     this.on("error", (file) => {
       this.removeFile(file);
     })
@@ -110,6 +131,29 @@ export class UploadPostMedia extends Dropzone {
     if(Object.keys(this.filesUploaded).length == this.files.length) {
         this.submitButton.disabled = false;
     }
+  }
+
+
+  videoUploadIndications(progress) {
+    this.loadingIndicators.number.textContent = Math.round(progress);
+
+    if(progress >= 50 && progress < 100) {
+      this.loadingIndicators.heading.textContent = "Processing";
+    } else if(progress == 100) {
+      this.loadingIndicators.heading.textContent = "Uploaded";
+    } 
+  }
+
+  videoLoadingMessage(previewElement) {
+    const loadingContainer = document.createElement("div");
+    loadingContainer.classList.add("loading-post-message");
+
+    loadingContainer.innerHTML = `<h4><span class="indication--heading">Uploading</span> (<span class="indication--number">0</span>%)</h4>
+    <p>It will take a while to upload long videos. Make sure to keep your browser tab open to avoid upload interruptions.</p>`
+
+    previewElement.appendChild(loadingContainer);
+    this.loadingIndicators.number = loadingContainer.querySelector(".indication--number");
+    this.loadingIndicators.heading = loadingContainer.querySelector(".indication--heading");
   }
 
   toggleButton(el, disabled = true) {
@@ -214,7 +258,7 @@ export class UploadFiles extends Dropzone {
       console.log("uploading completed")
     })
 
-    this.on("uploadprogress", (file, progress, bytesSent) => {
+    this.on("uploadprogress", (file, progress) => {
       const progressBar = file.previewElement.querySelector(".dz-progress"); 
       // if(file.size < 10000000) {
       //   progressBar && progressBar.remove();
@@ -485,6 +529,9 @@ export const uploadPostMediaTemplate = `<div class="postMediaPreview__item dz-pr
                                               </div>
                                               <div class="dz-image">
                                                 <img data-dz-thumbnail />
+                                              </div>
+                                              <div class="dz-progress">
+                                                <span class="dz-upload" data-dz-uploadprogress></span>
                                               </div>
                                             </div>`
 

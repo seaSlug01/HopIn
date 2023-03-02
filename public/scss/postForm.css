@@ -20,11 +20,23 @@
   display: flex;
   padding: 0 1rem;
 
+  .postMediaPreview {
+    &__item {
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+  }
+
   &.retracted {
     padding-top: 1rem;
 
     .postMediaPreview.active {
       margin-top: 1rem;
+
+      &__item {
+        border-radius: 1rem;
+        overflow: hidden;
+      }
     }
 
     .buttonsContainer {
@@ -274,7 +286,39 @@
   &__item {
     position: relative;
 
+    .dz-progress {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      span {
+        background: #257cff;
+        display: block;
+        height: 5px;
+      }
+    }
+
     &--video {
+      display: flex;
+      flex-direction: column;
+
+      .dz-progress {
+        display: none;
+      }
+
+
+      .loading-post-message {
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-top: 0.5rem;
+
+        h4 {
+          font-size: 0.95rem;
+        }
+
+        p {
+          font-size: 0.9rem;
+        }
+      }
 
       .postMediaPreview__item__actions {
         top: 0.4rem;
