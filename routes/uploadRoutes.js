@@ -64,19 +64,14 @@ router.post("/dropzone/post", upload.any("files", 4), async (req, res) => {
     }
 
     try {
-        const options = {resource_type: type};
-        const filePromises = req.files.map(file => fileUpload(file.path, "../", options));
-        const responses = await Promise.all(filePromises);
-        const newPaths = req.files.map((file, index) => ({
-            ...file,
-            originalname: decodeNonEnglishName(file.originalname),
-            size: responses[index].bytes,
-            path: responses[index].secure_url
-        }))
-
-        console.log(newPaths[0].size)
-
-        res.status(200).send(newPaths);
+        const userDirectory = createUserDirectory(req.session.user._id);
+        for(let file of req.files) {
+            file.originalname = decodeNonEnglishName(file.originalname)
+            const pathToImage = saveFile(res, file, userDirectory);
+            file.path = pathToImage;
+        }
+        
+        res.status(200).send(req.files);
 
     } catch(error) {
         console.log(error);

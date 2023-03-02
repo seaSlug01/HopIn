@@ -132,7 +132,7 @@ const srtToVtt = async (req, res) => {
 
   removeFile(SrtFile.path)
 
-  return targetPath
+  return VttFilePath
 }
 
 
