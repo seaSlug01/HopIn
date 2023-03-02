@@ -18,10 +18,7 @@ export class UploadPostMedia extends Dropzone {
       const fileType = file.type.split("/")[0];
       this.filesUploaded[file.upload.uuid].mediaType = fileType;
       this.filesUploaded[file.upload.uuid].path = multerResponse.find(item => item.originalname === file.upload.filename).path;
-      
-      console.log("yo o", this.filesUploaded[file.upload.uuid])
 
-      
 
       file.previewElement.setAttribute("data-media-id", file.upload.uuid);
       this.addSettingsAttributes(file.previewElement.querySelector(".postMediaPreview__item__edit"), fileType === "video" ? "caption" : "crop")
@@ -194,18 +191,20 @@ export class UploadFiles extends Dropzone {
     this.errorTimeout = null;
 
     this.on("success", async function(file, multerResponse) {
-      const ext = this.getFileExtension(multerResponse.path);
+      const targetResponse = multerResponse.find(item => item.originalname === file.upload.filename);
+      const targetFileIndex = this.filesUploaded.findIndex(item => item.filename === targetResponse.originalname);
+      const ext = this.getFileExtension(targetResponse.path);
 
-      const {thumbnail, mediaType, duration} = await this.#createHTMLBasedOnFileExtension(file, multerResponse.path, ext);
-      let currentFileProps = { ...multerResponse, thumbnail, mediaType }
+      const {thumbnail, mediaType, duration} = await this.#createHTMLBasedOnFileExtension(file, targetResponse.path, ext);
+      let currentFileProps = { ...targetResponse, thumbnail, mediaType, mimetype: file.type }
       if(duration) {
         currentFileProps.duration = duration
       }
-      this.filesUploaded = [...this.filesUploaded, currentFileProps]
-      console.log(this.filesUploaded)
+      this.filesUploaded[targetFileIndex] = {...this.filesUploaded[targetFileIndex], ...currentFileProps}
     })
 
     this.on("addedfile", (file) => {
+      this.filesUploaded.push(file.upload);
       this.#preventDuplicates(file);
       this.#togglePreviewActiveClass(this.files.length > 0)
     })
@@ -217,10 +216,10 @@ export class UploadFiles extends Dropzone {
 
     this.on("uploadprogress", (file, progress, bytesSent) => {
       const progressBar = file.previewElement.querySelector(".dz-progress"); 
-      if(file.size < 10000000) {
-        progressBar && progressBar.remove();
-        return;
-      }
+      // if(file.size < 10000000) {
+      //   progressBar && progressBar.remove();
+      //   return;
+      // }
 
       if(progress == 100) {
         setTimeout(() => {
