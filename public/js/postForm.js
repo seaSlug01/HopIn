@@ -553,6 +553,8 @@ export const submitPost = async (e, mediaSelection, setPosts, additionalCallback
       data.replyTo = replyToId
     }
 
+
+    console.log("THIS SUCKS")
     const {data: newPost} = await axios.post("/api/posts", data);
     setPosts({[newPost._id]: newPost})
 
@@ -566,6 +568,7 @@ export const submitPost = async (e, mediaSelection, setPosts, additionalCallback
       additionalCallback();
     }
   } catch(error) {
+    console.log("THIS ERROR SUCKS MY BALLS OFF MAN")
     console.error(error)
   }
   
