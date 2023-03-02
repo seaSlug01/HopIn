@@ -1476,8 +1476,8 @@ const mediaSelection = new UploadFiles(mediaBtn, {
   previewTemplate: uploadMultipleTemplate,
   paramName: "files",
   uploadMultiple: true,
-  parallelUploads: 1,
-  acceptedFiles: "image/*, .mp4, .mkv, .avi, .pdf, .doc, .docx, .xls, .xlsx, .csv, .txt, .ppt, .pptx, .srt",
+  parallelUploads: 12,
+  acceptedFiles: "image/*, .mp4, .mkv, .avi, .pdf, .doc, .docx, .xls, .xlsx, .csv, .txt, .ppt, .pptx",
   maxFiles: 12,
   maxFilesize: 72
 }, submitBtn)

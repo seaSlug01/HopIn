@@ -80,7 +80,7 @@ router.post("/dropzone/post", upload.any("files", 4), async (req, res) => {
 })
 
 
-router.post("/dropzone/multiple", upload.any('files', 10), async (req, res) => {
+router.post("/dropzone/multiple", upload.any('files', 12), async (req, res) => {
     // but the thing is, i'm not uploading multiple files at once
     // I've had some problems with dropzone parallel upload
     // so in reality dropzone uploads operates on multiple file upload, one by one
@@ -88,15 +88,19 @@ router.post("/dropzone/multiple", upload.any('files', 10), async (req, res) => {
         console.log("No file uploaded with ajax request");
         return res.sendStatus(400)
     }
-    console.log(req.files)
-    // console.log("how many times am i getting called? does dropzone getting instantiated multiple times affect the times this func is called?")
-    const file = req.files[0];
-    file.originalname = decodeNonEnglishName(file.originalname)
-
-    const userDirectory = createUserDirectory(req.session.user._id);
-    const pathToImage = saveFile(res, file, userDirectory);
-
-    res.status(200).send({...file, path: pathToImage })
+    try {
+        const userDirectory = createUserDirectory(req.session.user._id);
+        for(let file of req.files) {
+            file.originalname = decodeNonEnglishName(file.originalname)
+            const pathToImage = saveFile(res, file, userDirectory);
+            file.path = pathToImage;
+        }
+        
+        res.status(200).send(req.files);
+    } catch(error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 });
 
 
