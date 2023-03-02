@@ -133,6 +133,7 @@ class MediaSettingsUtils {
 
     const header = this.modal.querySelector(".modal-header");
     header.insertBefore(container, header.querySelector(".btn-black"));
+    gsap.fromTo(spinner, {rotate: 0}, { rotate: 350, duration: 1, ease: "slow(0.7, 0.7, false)", repeat: -1 })
   }
 
 
