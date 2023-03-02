@@ -30,6 +30,7 @@ function directoryPath(filePath, goBack) {
 }
 
 const fileUpload = async (filePath, goBack = "", options) => {
+  console.log(filePath)
   try {
     const response = await cloudinary.uploader.upload(directoryPath(filePath, goBack), {
       ...options,
