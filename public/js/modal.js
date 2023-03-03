@@ -1,7 +1,7 @@
 import { elements, updateProfileTabs, copyImage, getScrollbarWidth, cordinates } from "./common.js"
 
 
-function wrapperPadding(scrollbar = 0) {
+export function wrapperPadding(scrollbar = 0) {
   let padding;
   if(window.matchMedia("(min-width: 1300px) and (max-width: 1600px)").matches || window.matchMedia("(max-width: 1200px)").matches) {
     padding = `0 ${scrollbar}px 0 0`;

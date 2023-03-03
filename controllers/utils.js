@@ -98,6 +98,11 @@ function removeFile(filePath) {
   });
 }
 
+async function removeFiles(paths, cd) {
+  const deletePromise = paths.map(path => removeFile(directoryPath(path, cd)))
+  await Promise.all(deletePromise);
+}
+
 const srtToVtt = async (req, res) => {
   const SrtFile = req.file;
   const ext = getExt(SrtFile.originalname)
@@ -136,4 +141,4 @@ const srtToVtt = async (req, res) => {
 }
 
 
-module.exports = { directoryPath, fileUpload, googleCloudBucket, uploadToGoogleCloudBucket, decodeNonEnglishName, createUserDirectory, saveFile, getExt, srtToVtt }
+module.exports = { directoryPath, fileUpload, googleCloudBucket, uploadToGoogleCloudBucket, decodeNonEnglishName, createUserDirectory, saveFile, getExt, srtToVtt, removeFile, removeFiles }

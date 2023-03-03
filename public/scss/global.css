@@ -165,7 +165,7 @@ b {
 
   &:disabled {
     background: darkgrey;
-    pointer-events: not-allowed;
+    cursor: default;
 
     &:hover {
       background: darkgrey;

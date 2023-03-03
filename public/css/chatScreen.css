@@ -1286,13 +1286,14 @@
   }
 
 .chatInformation.show .chatInformation__mainContent {
-      height: 78vh;
+      height: auto;
+      min-height: 78vh;
     }
 
 .chatInformation__mainContent {
     position: relative;
     overflow: hidden;
-    height: 100%;
+    height: 0;
 
     
   }
@@ -1412,6 +1413,10 @@
 .chatInformation__mainContent__page--2 .mediaAndFiles__grid__mediaItem--video {
                 position: relative;
               }
+
+.chatInformation__mainContent__page--2 .mediaAndFiles__grid__mediaItem--video > * {
+                  pointer-events: none;
+                }
 
 .chatInformation__mainContent__page--2 .mediaAndFiles__grid__mediaItem--video__duration {
                   position: absolute;

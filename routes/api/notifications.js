@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     const userMessages = await Chat.find({users: {$in: req.session.user._id}}).populate({path: "latestMessage"})
 
     const unreadMessagesCount = userMessages.filter(c => 
-      c.latestMessage.sentBy.toString() !== req.session.user._id 
+      c.latestMessage?.sentBy?.toString() !== req.session.user._id 
       && !c.latestMessage.seen.some(seenObj => 
         seenObj.user.toString() === req.session.user._id))
       .length

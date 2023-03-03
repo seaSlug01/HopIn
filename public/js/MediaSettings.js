@@ -1,6 +1,6 @@
-import { setInitialModalTarget, closeModal } from "./modal.js"
+import { setInitialModalTarget, closeModal, wrapperPadding } from "./modal.js"
 import { Range } from "./customRangeInput.js";
-import { spinnerV2 } from "./common.js";
+import { spinnerV2, getScrollbarWidth } from "./common.js";
 
 // 3 pages will have media selection
 // home / postPage / profilePage
@@ -52,6 +52,11 @@ class MediaSettingsUtils {
       }
   
       return arr;
+  }
+
+  lockBody() {
+    wrapperPadding(getScrollbarWidth())
+    document.body.classList.add("lock")
   }
 
   createElement(classList, tag = "div") {
@@ -294,6 +299,7 @@ class MediaSettingsUtils {
     wrapperScroll.appendChild(modalFooter);
 
     document.body.appendChild(modal);
+    this.lockBody();
   }
 
 
@@ -775,7 +781,12 @@ export class ImageSettings extends MediaSettingsUtils {
     console.log(width, height, left, top, zoomRatio);
     console.log(this.filesUploadedCopy[this.selectedMedia.uuid].width, this.filesUploadedCopy[this.selectedMedia.uuid].height, this.filesUploadedCopy[this.selectedMedia.uuid].left, this.filesUploadedCopy[this.selectedMedia.uuid].top, this.filesUploadedCopy[this.selectedMedia.uuid].zoomRatio)
 
-    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) || Object.keys(canvasData).some(prop => Math.floor(canvasData[prop]) !== Math.floor(this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]));
+    // Math.abs since canvasData can troll me sometimes
+    // it might give 44.999993 while I had saved 44.999992
+    // so normal equality check can't be trusted
+    // but it seems to be consistent with cropBoxData and imageData
+
+    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) || Object.keys(canvasData).some(prop => Math.abs(canvasData[prop] - this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]) > 1);
   }
 
   async #saveCropData(showLoading = true, prevTab) {
