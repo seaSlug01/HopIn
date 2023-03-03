@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const {ObjectId} = require('mongodb');
 const cloudinary = require("cloudinary").v2;
 const { createChatName, createOrUpdateChat, setDuetChatName, setGroupChatName, addReplyFlagIfNeeded, populateMessage, fetchMessages, populateChat, removeSeenFlagFromPreviousMessages, messageParameters, setUsername, chatListModifications } = require("./helpers");
-const { directoryPath, fileUpload, createUserDirectory, saveFile, uploadToGoogleCloudBucket } = require("../utils.js");
+const { directoryPath, fileUpload, createUserDirectory, saveFile, uploadToGoogleCloudBucket, removeFile, removeFiles } = require("../utils.js");
 const path = require("path");
 const { removeScriptTags } = require("../../utils.js");
 const striptags = require('striptags');
@@ -91,12 +91,15 @@ async function uploadChatImages(req, res) {
   let usersViewing = req.body.usersViewing;
 
   let multiplePicturePromise = [];
+  let imageCurrentPaths = [];
   for(let imgObj of imagesData) {
     multiplePicturePromise.push(cloudinary.uploader.upload(directoryPath(imgObj.path, "../")))
+    imageCurrentPaths.push(imgObj.path);
   }
 
   try {
     let imageResponses = await Promise.all(multiplePicturePromise)
+    await removeFiles(imageCurrentPaths, "../");
 
     imageResponses.forEach(response => {
       const filename = response?.original_filename?.split("-")[0];
@@ -196,34 +199,44 @@ async function uploadChatVideos(req, res) {
   const messageText = `${username} sent a video.`
   try {
     if(videos) {
-      let videosLen = videos.length;
-      for (let i = 0; i < videosLen; i++) {
-        let lastLoop = i === videosLen - 1;
-        const video = videos[i];
+      let videoCurrentPaths = [];
+      let videoUploadPromises = [];
 
-        const toCloud = await fileUpload(video.path, "../", { resource_type: "video" })
-        video.path = toCloud.secure_url;
-        const splitSURL = toCloud.secure_url.split(".");
-        const linkWithoutExtension = splitSURL.slice(0, splitSURL.length -1).join(".");
-        video.thumbnail = linkWithoutExtension + ".jpg";
+      for(let video of videos) {
+        videoCurrentPaths.push(video.path);
+        videoUploadPromises.push(fileUpload(video.path, "../", { resource_type: "video" }))
+      }
 
-        let messageParams = messageParameters({
-          media: video,
+      const videoResponses = await Promise.all(videoUploadPromises);
+      await removeFiles(videoCurrentPaths, "../");
+
+      messages = videos.map((video, index, self) => {
+        const videoCloudPath = videoResponses[index].secure_url
+        const pathSplit = videoCloudPath.split(".");
+        const linkWithoutExtension = pathSplit.slice(0, pathSplit.length -1).join(".");
+        const videoThumbnail = linkWithoutExtension + ".jpg";
+
+        const isLastLoop = index === self.length - 1
+
+        const messageParams = messageParameters({
+          media: [{...video, path: videoCloudPath, thumbnail: videoThumbnail}],
           sentBy: req.session.user._id,
           text: messageText,
           chatId
-        }, isReplyTo, lastLoop && usersViewing.length, usersViewing);
+        }, isReplyTo, isLastLoop && usersViewing.length, usersViewing)
 
-        const message = lastLoop ?
-          new Message(messageParams) :
-          await Message.create(messageParams)
-          
-        messages.push(message);
-      }
+        const message = isLastLoop ?
+              new Message(messageParams) :
+              messageParams
+              
+        return message;
+      })
     }
 
     const {chatDoc, messageDoc} = await createOrUpdateChat(chatScreenId, req.session.user._id, chat, messages.pop(), {_id: chatId}, req.body.customId)
-    messages = await Promise.all(messages.map(async m => await populateMessage(m)));
+    messages = await Message.insertMany(messages).then(async messages => {
+      return await Promise.all(messages.map(async msg => await populateMessage(msg)))
+    })
     messages.push(messageDoc)
     console.log("Uploading videos complete")
     res.status(201).send({chat: chatDoc, messages});
@@ -247,24 +260,20 @@ async function uploadChatFiles(req, res) {
   const messageText = `${username} sent a file.`;
 
   try {
-
+    const fileBucketPromises = [];
+    const currentFilePaths = [];
     for(let file of files) {
-
-      try {
-        const googleCloudBucketPath = await uploadToGoogleCloudBucket(file.path, "../")
-        
-        file.path = googleCloudBucketPath;
-        
-        
-      } catch(error) {
-        throw new Error(error); 
-      }
+      currentFilePaths.push(file.path)
+      fileBucketPromises.push(uploadToGoogleCloudBucket(file.path, "../"))
     }
+
+    const gBucketResponses = await Promise.all(fileBucketPromises);
+    await removeFiles(currentFilePaths, "../");
 
 
     const messagesArr = files.map((file, index, array) => {
       let messageParams = messageParameters({
-        media: file, sentBy: req.session.user._id, text: messageText, chatId
+        media: [{...file, path: gBucketResponses[index]}], sentBy: req.session.user._id, text: messageText, chatId
       }, isReplyTo, index === array.length - 1 && usersViewing.length,
       usersViewing);
       
@@ -820,6 +829,8 @@ async function setChatImage(req, res) {
 
     const chatImageUpload = await fileUpload(pathToImage, "../")
     chatImage = chatImageUpload.secure_url;
+    removeFile(path.join(__dirname, `../../${pathToImage}`))
+    
 
     let username = chat.nicknames[req.session.user._id] || `${req.session.user.firstName} ${req.session.user.lastName}`.trim();
     let messageText = `${username} changed the group photo.`

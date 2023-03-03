@@ -611,6 +611,11 @@ export function createPostForm(formId, setPosts) {
 
   new EmojiSelection(form.querySelector(".btn-icon[data-title='Emoji']"), crypto.randomUUID(), textarea, true, {value: postCharactersLimit, callback: () => onInput(textarea, postCharactersLimit)});
 
+  textarea.addEventListener("blur", async () => {
+    if(!Object.keys(mediaSelection.filesUploaded).length) {
+      await axios.delete(`/uploads/deleteTempUserFiles/${userLoggedIn._id}`);
+    }
+  })
   textarea.addEventListener("keyup", lastKey);
   textarea.addEventListener("input", (e) => onInput(e.target, postCharactersLimit));
   form.addEventListener("submit", async (e) => {

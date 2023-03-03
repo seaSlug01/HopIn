@@ -1,4 +1,4 @@
-import { docReady, outputPosts, elements, createSpinner, altDescriptionListener, togglePostGIF, dataToObject, displayUserDetailsWindow } from "./common.js";
+import { docReady, outputPosts, elements, createSpinner, altDescriptionListener, togglePostGIF, dataToObject, displayUserDetailsWindow, deleteUserTempFiles } from "./common.js";
 import { createPostForm } from "./postForm.js";
 import { ImageSettings, VideoSettings } from "./MediaSettings.js";
 import { createImageGallery } from "./PostImageGallery.js";
@@ -104,6 +104,8 @@ elements.postsContainer.addEventListener("click", e => togglePostGIF(e, postsSta
 elements.postsContainer.addEventListener("click", (e) => createImageGallery(e, postsState.posts))
 
 elements.postsContainer.addEventListener("mouseover", _.debounce(e => displayUserDetailsWindow(e, postsState.posts), 200))
+
+window.addEventListener('beforeunload', deleteUserTempFiles);
 
 
 

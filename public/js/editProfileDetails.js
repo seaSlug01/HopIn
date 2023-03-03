@@ -1,4 +1,4 @@
-import { elements, isSelectorSupported } from "./common.js";
+import { elements, isSelectorSupported, createSpinnerV2 } from "./common.js";
 import {openModal, closeModal, setInitialModalTarget} from "./modal.js";
 import { Range } from "./customRangeInput.js";
 
@@ -107,23 +107,28 @@ function dropzoneOptions(previewsContainer, target) {
   }
 }
 
+
+
 // dropzone profile pic
 const dropzoneProfilePic = new UploadImage("#profileImageDz", editProfileImageContainer, dropzoneOptions("#previewProfileImage", "profilePic"));
 // dropzone cover pic
 const dropzoneCoverPic = new UploadImage("#coverImageDz", editCoverImageContainer, dropzoneOptions("#previewCoverImage", "coverPic"));
 
-
-dropzoneCoverPic.on("dragenter", () => {
-  dropzoneBorder(editCoverImageContainer, true)
+[{dz: dropzoneProfilePic, container: editProfileImageContainer}, {dz: dropzoneCoverPic, container: editCoverImageContainer}].forEach(({dz, container}) => {
+  dz.on("dragenter", () => {
+    dropzoneBorder(container, true)
+  })
+  dz.on("dragleave", () => {
+    dropzoneBorder(container)
+  })
 })
-dropzoneCoverPic.on("dragleave", () => dropzoneBorder(editCoverImageContainer))
-
-dropzoneProfilePic.on("dragenter", () => {
-  dropzoneBorder(editProfileImageContainer, true)
-})
-dropzoneProfilePic.on("dragleave", () => dropzoneBorder(editProfileImageContainer))
 
 
+function loadingIndication() {
+  const spinner = createSpinnerV2();
+  const modalHeader = elements.editProfileDetailsModal.querySelector(".modal-header")  
+  modalHeader.insertBefore(spinner, modalHeader.querySelector(".btn-black"));
+}
 
 function applyCrop() {
   const canvas = cropper.getCroppedCanvas();
@@ -133,12 +138,16 @@ function applyCrop() {
     return;
   }
 
+  loadingIndication();
+  applyCropBtn.textContent = "Applying";
+  applyCropBtn.disabled = true;
   canvas.toBlob(async (blob) => {
     const formData = new FormData();
     formData.append("file", blob);
+
     const response = await axios.post("/uploads/cropper", formData);
     
-
+    console.log(response)
     let dropzoneObject;
     if(previewImageCropContainer.dataset.target === "profilePic") {
       dropzoneObject = dropzoneProfilePic;
@@ -148,15 +157,15 @@ function applyCrop() {
     }
 
     cropperComplete(dropzoneObject, response.data);
-  })
+  }, "image/jpeg")
 }
 // CROPPER SUBMIT
 applyCropBtn.addEventListener("click", applyCrop)
 
-function cropperComplete(dropzoneObj, resp) {
+function cropperComplete(dropzoneObj, newFile) {
   cropper.destroy();
   cropperResetDOM();
-  dropzoneObj.fileUploaded = resp.data;
+  dropzoneObj.fileUploaded = newFile;
   dropzoneObj.container.querySelector(".dz-image img").setAttribute("src", dropzoneObj.fileUploaded.path)
 }
 
@@ -169,6 +178,9 @@ function cropperResetDOM() {
   previewImageCropContainer.removeAttribute("data-target");
   previewImageCropContainer.classList.add("d-none");
   form.classList.remove("d-none");
+  elements.editProfileDetailsModal.querySelector(".messages-loading-spinner").remove();
+  applyCropBtn.textContent = "Apply";
+  applyCropBtn.disabled = false;
 }
 
 function cancelCropper(e) {
@@ -212,7 +224,6 @@ birthDateContainer.addEventListener("click", e => {
 console.log("This page is loaded")
 // open and close handlers
 document.querySelector(".edit-profile").addEventListener("click", (e) => {
-  console.log("clicked")
   openModal(document.getElementById(e.target.dataset.target))
 })
 
@@ -446,12 +457,7 @@ const submitForm = async e => {
 form.addEventListener("submit", submitForm);
 navigator.userAgent.indexOf("Firefox") != -1 && saveBtn.addEventListener("click", submitForm);
 
-// window.addEventListener("load", async e => {
-//   await axios.delete(`/uploads/deleteTempUserFiles/${form.getAttribute("data-id")}`);
-// })
-
-window.addEventListener("beforeunload", async e => {
-  console.log("happens")
+window.addEventListener("beforeunload", async () => {
   await axios.delete(`/uploads/deleteTempUserFiles/${form.getAttribute("data-id")}`);
 })
 

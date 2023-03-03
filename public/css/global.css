@@ -183,7 +183,7 @@ b {
 
 .btn-black:disabled {
     background: darkgrey;
-    pointer-events: not-allowed;
+    cursor: default;
   }
 
 .btn-black:disabled:hover {

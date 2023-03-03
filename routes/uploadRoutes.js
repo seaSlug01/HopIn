@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs").promises;
 const multer  = require('multer')
 const upload = multer({dest: "uploads/files/"})
 const iconvlite  = require("iconv-lite");
-const { decodeNonEnglishName, createUserDirectory, saveFile, srtToVtt, fileUpload } =  require("../controllers/utils.js");
+const { decodeNonEnglishName, createUserDirectory, saveFile, srtToVtt } =  require("../controllers/utils.js");
 iconvlite.skipDecodeWarning = true;
 
 app.use(express.urlencoded({ extended: true }))
@@ -17,14 +17,17 @@ app.use(express.json({ limit: '50mb' }));
 // const { readdirSync, rmSync } = require('fs');
 
 router.delete("/deleteTempUserFiles/:userId", (req, res) => {
-    let userDirectory;
+    // Sync will block your code, and since you use this route every time you exit a page
+    // it will look like page load times is longer
+    // since ur synchronously deleting the folder
+   
+    console.log("deleting")
+    // if(!fs.existsSync(path.join(__dirname, `../uploads/files/tmp-userFiles-${req.params.userId}`))) return;
 
-    if(!fs.existsSync(path.join(__dirname, `../uploads/files/tmp-userFiles-${req.params.userId}`))) return;
-
-    userDirectory = path.join(__dirname, `../uploads/files/tmp-userFiles-${req.params.userId}`);
+    let userDirectory = path.join(__dirname, `../uploads/files/tmp-userFiles-${req.params.userId}`);
 
     // fs.readdirSync(userDirectory).forEach(file => fs.rmSync(`${userDirectory}/${file}`))
-    fs.rmdirSync(userDirectory, {recursive: true})
+    fs.rm(userDirectory, {recursive: true, force: true})
 })
 
 router.delete("/testDelete");

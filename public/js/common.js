@@ -901,6 +901,9 @@ export function outputPostsWithReplies(results, container) {
 }
 
 
+export async function deleteUserTempFiles() {
+  await axios.delete(`/uploads/deleteTempUserFiles/${userLoggedIn._id}`);
+}
 
 
 // followButton
@@ -993,15 +996,21 @@ export function createSpinner(container, clearHTML) {
 }
 
 
-export function spinnerV2(container) {
+export function createSpinnerV2() {
   const spinnerContainer = document.createElement("div");
   spinnerContainer.classList.add("messages-loading-spinner");
   const spinner = document.createElement("div");
   spinner.classList.add("message-spinner");
 
-  container.appendChild(spinnerContainer);
   spinnerContainer.appendChild(spinner);
   gsap.fromTo(spinner, {rotate: 0}, { rotate: 350, duration: 1, ease: "slow(0.7, 0.7, false)", repeat: -1 })
+
+  return spinnerContainer;
+}
+
+export function spinnerV2(container) {
+  const spinner = createSpinnerV2();
+  container.appendChild(spinner);
 }
 
 
@@ -1244,6 +1253,9 @@ document.body.addEventListener("mouseout", e => {
     tooltip && tooltip.classList.remove("show");
   }
 })
+
+
+
 
 
 

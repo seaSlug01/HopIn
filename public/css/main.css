@@ -1654,6 +1654,11 @@
     width: calc(100% + 4px);
     transform: translateX(-2px);
   }
+#editProfileModal .modal-header .messages-loading-spinner {
+      margin-top: 0;
+      margin-right: 1rem;
+      width: auto;
+    }
 #editProfileModal .editProfileDetailsForm {
     max-height: 41rem;
     overflow-y: auto;
@@ -2757,6 +2762,10 @@
     overflow: visible;
     z-index: 1;
 }
+#editProfileImage .dropzone {
+        width: 100%;
+        height: 100%;
+    }
 #editProfileImage > * {
         pointer-events: all;
     }
@@ -2809,13 +2818,6 @@
 #editProfileImage .uploadImage svg, #editCoverImage .uploadImage svg {
             pointer-events: none;
         }
-#editProfileImage .dropzone, #editCoverImage .dropzone {
-        width: 45px;
-        height: 45px;
-        min-height: 45px; /* overiding default 125 */
-        border-radius: 50%;
-        background: transparent;
-    }
 #editProfileImage .dz-drag-hover .dz-message, #editCoverImage .dz-drag-hover .dz-message {
             opacity: 1;
             visibility: visible;
@@ -2827,6 +2829,13 @@
     justify-content: center;
     align-items: center;
 }
+#editCoverImage .dropzone {
+        width: 45px;
+        height: 45px;
+        min-height: 45px; /* overiding default 125 */
+        border-radius: 50%;
+        background: transparent;
+    }
 #editCoverImage .removeCover {
         background: rgba(0, 0, 0, 0.5);
         z-index: 1;
@@ -2858,8 +2867,11 @@
 #editCoverImage #coverImageDz {
         border: none;
         position: relative;
-        cursor: auto;
+        cursor: pointer;
     }
+#editCoverImage #coverImageDz .uploadImage {
+            pointer-events: none;
+        }
 #editCoverImage #coverImageDz.dz-drag-hover .dz-message {
             opacity: 1;
         }
@@ -2905,10 +2917,10 @@
           }
 #previewImageCropContainer .wrapper {
         position: relative;
-        background-image: url( '/../images/spinner-svgrepo-com.svg');
+        background-image: url("../images/Rolling-1s-200px.svg");
         background-position: center;
+        background-size: 2rem;
         background-repeat: no-repeat;
-        background-size: 2.2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -4795,12 +4807,13 @@
     z-index: 99;
   }
 .chatInformation.show .chatInformation__mainContent {
-      height: 78vh;
+      height: auto;
+      min-height: 78vh;
     }
 .chatInformation__mainContent {
     position: relative;
     overflow: hidden;
-    height: 100%;
+    height: 0;
 
     
   }
@@ -4901,6 +4914,9 @@
 .chatInformation__mainContent__page--2 .mediaAndFiles__grid__mediaItem--video {
                 position: relative;
               }
+.chatInformation__mainContent__page--2 .mediaAndFiles__grid__mediaItem--video > * {
+                  pointer-events: none;
+                }
 .chatInformation__mainContent__page--2 .mediaAndFiles__grid__mediaItem--video__duration {
                   position: absolute;
                   bottom: 5%;

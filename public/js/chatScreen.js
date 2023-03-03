@@ -1,6 +1,6 @@
 import {EmojiSelection} from "./emoji.js";
 import {uploadMultipleTemplate, UploadFiles } from "./UploadDropzone.js";
-import {formatBytes, docReady, scrollToBottom, setMessageTooltipPosition, timeDifference, elements, downloadLink} from "./common.js";
+import {formatBytes, docReady, scrollToBottom, setMessageTooltipPosition, timeDifference, elements, downloadLink, deleteUserTempFiles} from "./common.js";
 import {openModal, closingModalInitialState} from "./modal.js";
 import {Accordion} from "./accordion.js";
 import {BubbleButton} from "./bubbleButton.js";
@@ -1468,6 +1468,7 @@ function typingIndicator() {
 }
 
 messageTextarea.addEventListener("input", messageTextareaOperations)
+messageTextarea.addEventListener("blur", deleteUserTempFiles)
 new EmojiSelection(emojiToggleBtn, "searchEmoji-messages", messageTextarea, true);
 Dropzone.autoDiscover = false;
 const mediaSelection = new UploadFiles(mediaBtn, { 
@@ -1481,9 +1482,6 @@ const mediaSelection = new UploadFiles(mediaBtn, {
   maxFiles: 12,
   maxFilesize: 72
 }, submitBtn)
-
-
-
 
 // chatMessagesContainer
 
@@ -3071,7 +3069,7 @@ document.addEventListener("click", async e => {
 
     const activeItem = chatState[category].find(item => item.id === e.target.id || item.path === e.target.src || item.path === e.target.dataset.videopath || item.filename === e.target.dataset.filename);
     if(category === "media" && activeItem.mediaType === "video") {
-      e.target.previousElementSibling.pause();
+      e.target.previousElementSibling && e.target.previousElementSibling.tagName.toLowerCase() === "video" && e.target.previousElementSibling.pause();
     }
 
     const activeItemIndex = chatState[category].indexOf(activeItem);
@@ -3293,6 +3291,8 @@ async function scrollToLatestMessages(e) {
 }
 
 scrollBottom.addEventListener("click", scrollToLatestMessages)
+
+window.addEventListener('beforeunload', deleteUserTempFiles);
 
 
 
