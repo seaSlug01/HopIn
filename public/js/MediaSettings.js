@@ -757,19 +757,31 @@ export class ImageSettings extends MediaSettingsUtils {
     const zoomRatio = imageWidth / naturalWidth;
     
     const cropperProperties = {width, height, left, top, zoomRatio}
+    console.log("initial");
     if(!this.filesUploadedCopy[this.selectedMedia.uuid].canvasData) {
       return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) 
     }
 
+    console.log("bypasssing if block");
+
     const canvasData = this.cropper.getCanvasData();
 
-    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) || Object.keys(canvasData).some(prop => canvasData[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]);
+    console.log(Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]),
+    Object.keys(canvasData).some(prop => Math.floor(canvasData[prop]) !== Math.floor(this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop])),
+    Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) || Object.keys(canvasData).some(prop => Math.floor(canvasData[prop]) !== Math.floor(this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]))
+    )
+
+    console.log(this.filesUploadedCopy[this.selectedMedia.uuid].canvasData, canvasData, this.filesUploadedCopy[this.selectedMedia.uuid].newPath)
+    console.log(width, height, left, top, zoomRatio);
+    console.log(this.filesUploadedCopy[this.selectedMedia.uuid].width, this.filesUploadedCopy[this.selectedMedia.uuid].height, this.filesUploadedCopy[this.selectedMedia.uuid].left, this.filesUploadedCopy[this.selectedMedia.uuid].top, this.filesUploadedCopy[this.selectedMedia.uuid].zoomRatio)
+
+    return Object.keys(cropperProperties).some(prop => cropperProperties[prop] !== this.filesUploadedCopy[this.selectedMedia.uuid][prop]) || Object.keys(canvasData).some(prop => Math.floor(canvasData[prop]) !== Math.floor(this.filesUploadedCopy[this.selectedMedia.uuid].canvasData[prop]));
   }
 
   async #saveCropData(showLoading = true, prevTab) {
     try {
       if(showLoading) {
-        prevTab === this.activeTab ? this.headerSpinner() : spinnerV2(this.modal.querySelector(".modal-body"));
+        prevTab === "crop" ? this.headerSpinner() : spinnerV2(this.modal.querySelector(".modal-body"));
       }
       
       const {path: newPath, size, filename, encoding} = await this.#applyCrop();
@@ -1024,7 +1036,7 @@ export class ImageSettings extends MediaSettingsUtils {
             btn.setAttribute("data-to", goToIndex)
           })
 
-          await this.#displaySelectedTab(this.activeTab)
+          await this.#displaySelectedTab()
         }
       })
     }
