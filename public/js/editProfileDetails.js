@@ -192,8 +192,10 @@ function cropperResetDOM() {
 
 function cancelCropper(e) {
   if(e.target.parentNode.parentNode.getAttribute("data-target") === "coverPic") {
+    e.target.parentNode.parentNode.classList.add("d-none");
     applyCrop();
     form.classList.remove("d-none");
+    console.log("If its the cover pic")
   } else {
     cropper.destroy();
     cropperResetDOM();
