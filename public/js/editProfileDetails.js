@@ -142,8 +142,8 @@ async function applyCrop() {
 
   if(canvas == null) {
     alert("Could not get image, make sure its an image file.");
-    previewImageCropContainer.querySelector("img").remove();
-    cropper.destroy();
+    previewImageCropContainer.querySelector("img")?.remove();
+    cropper?.destroy();
     return;
   }
 
