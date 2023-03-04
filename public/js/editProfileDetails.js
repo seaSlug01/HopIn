@@ -53,6 +53,7 @@ class UploadImage extends Dropzone {
       }
       
       this.fileUploaded = resp.data;
+      this.emit("thumbnail", file, this.fileUploaded.path);
       await this.showCropper();     
     })
 
@@ -192,6 +193,7 @@ function cropperResetDOM() {
 function cancelCropper(e) {
   if(e.target.parentNode.parentNode.getAttribute("data-target") === "coverPic") {
     applyCrop();
+    form.classList.remove("d-none");
   } else {
     cropper.destroy();
     cropperResetDOM();
