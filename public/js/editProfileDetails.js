@@ -137,7 +137,7 @@ function loadingIndication() {
   modalHeader.insertBefore(spinner, modalHeader.querySelector(".btn-black"));
 }
 
-function applyCrop() {
+async function applyCrop() {
   const canvas = cropper.getCroppedCanvas();
 
   if(canvas == null) {
@@ -190,10 +190,10 @@ function cropperResetDOM() {
   applyCropBtn.disabled = false;
 }
 
-function cancelCropper(e) {
+async function cancelCropper(e) {
   if(e.target.parentNode.parentNode.getAttribute("data-target") === "coverPic") {
     e.target.parentNode.parentNode.classList.add("d-none");
-    applyCrop();
+    await applyCrop();
     form.classList.remove("d-none");
     
     form.querySelector(`.editCoverImage__temp`)?.remove();
