@@ -37,6 +37,8 @@ class UploadImage extends Dropzone {
     this.on("addedfile", () => {
       form.classList.add("d-none");
       form.previousElementSibling.classList.remove("d-none");
+      const previewImageCropContainer = form.previousElementSibling;
+      previewImageCropContainer.setAttribute("data-target", this.options.target)
     })
 
     this.on("maxfilesexceeded", (file) => {
@@ -79,9 +81,8 @@ class UploadImage extends Dropzone {
 
 
     elements.editProfileDetailsModal.setAttribute("data-lock", "");
-    const previewImageCropContainer = form.previousElementSibling;
     const previewImageCrop = this.previewImageCropper();
-    previewImageCropContainer.setAttribute("data-target", this.options.target)
+    
     let aspectRatio = this.options.target === "profilePic" ? 1/1 : 26/9;
     
     cropper = new Cropper(previewImageCrop, {
