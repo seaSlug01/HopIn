@@ -153,8 +153,7 @@ function applyCrop() {
     formData.append("file", blob);
 
     const response = await axios.post("/uploads/cropper", formData);
-    
-    console.log(response)
+
     let dropzoneObject;
     if(previewImageCropContainer.dataset.target === "profilePic") {
       dropzoneObject = dropzoneProfilePic;
@@ -196,7 +195,8 @@ function cancelCropper(e) {
     e.target.parentNode.parentNode.classList.add("d-none");
     applyCrop();
     form.classList.remove("d-none");
-    console.log("If its the cover pic")
+    
+    form.querySelector(`.editCoverImage__temp`)?.remove();
   } else {
     cropper.destroy();
     cropperResetDOM();
@@ -400,20 +400,20 @@ let saveCover = userHasCover;
 function hideCoverButton(dropzoneObj) {
   const imageToRemove = dropzoneObj.container.querySelector("img");
   imageToRemove.remove();
-  if(dropzoneObj.fileUploaded.path !== undefined && userHasCover) {
+
+  if(userHasCover && !dropzoneObj.fileUploaded.path) {
+    removeCoverBtn.classList.add("d-none");
+    userHasCover = null;
+  } else if(dropzoneObj.fileUploaded.path !== undefined && userHasCover) {
     console.log("if")
     const resetImage = document.createElement("img");
     resetImage.classList.add("editCoverImage__temp");
     resetImage.src = userHasCover;
     dropzoneObj.container.append(resetImage);
-    dropzoneObj.fileUploaded.path = null;
+    dropzoneObj.fileUploaded = {};
   } else if(dropzoneObj.fileUploaded.path !== undefined && !userHasCover) {
     console.log("else if")
-    dropzoneObj.fileUploaded.path = null;
-    removeCoverBtn.classList.add("d-none");
-  } else if(userHasCover) {
-    console.log("2nd else if")
-    userHasCover = null;
+    dropzoneObj.fileUploaded = {};
     removeCoverBtn.classList.add("d-none");
   }
   
