@@ -138,7 +138,7 @@ function loadingIndication() {
 }
 
 async function applyCrop() {
-  const canvas = cropper.getCroppedCanvas();
+  const canvas = cropper?.getCroppedCanvas();
 
   if(canvas == null) {
     alert("Could not get image, make sure its an image file.");
