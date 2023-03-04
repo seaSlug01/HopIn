@@ -35,30 +35,57 @@ class UploadImage extends Dropzone {
 
 
     this.on("addedfile", () => {
-      this.showCropperOptions();
+      form.classList.add("d-none");
+      form.previousElementSibling.classList.remove("d-none");
+    })
+
+    this.on("maxfilesexceeded", (file) => {
+      this.removeAllFiles();
+      this.addFile(file);
+    })
+
+    this.on("success", async (file, resp) => {
+      dropzoneBorder(this.container)
+      
+      const image = this.container.querySelector(`.${this.container.id}__temp`);
+      if(image) {
+        image.remove();
+      }
+      
+      this.fileUploaded = resp.data;
+      await this.showCropper();     
+    })
+
+    this.on("dragenter", () => {
+      dropzoneBorder(this.container, true)
+    })
+    this.on("dragleave", () => {
+      dropzoneBorder(this.container)
     })
   }
 
-  showCropperOptions() {
-    elements.editProfileDetailsModal.setAttribute("data-lock", "");
-    const previewImageCropContainer = form.previousElementSibling;
-    previewImageCropContainer.classList.remove("d-none");
-    const previewImageCrop = previewImageCropContainer.querySelector(".previewImageCrop");
-    previewImageCrop.setAttribute("src", this.fileUploaded.path)
-    previewImageCropContainer.setAttribute("data-target", this.fileUploaded.target)
+  previewImageCropper() {
+    const img = document.createElement("img");
+    img.src = this.fileUploaded.path
+    previewImageCropContainer.querySelector(".wrapper").appendChild(img);
+    return img;
   }
 
   async showCropper() {
     if(cropper !== undefined) {
       cropper.destroy();
-    } 
+    }
 
+
+    elements.editProfileDetailsModal.setAttribute("data-lock", "");
+    const previewImageCropContainer = form.previousElementSibling;
+    const previewImageCrop = this.previewImageCropper();
+    previewImageCropContainer.setAttribute("data-target", this.options.target)
+    let aspectRatio = this.options.target === "profilePic" ? 1/1 : 26/9;
     
-    let aspectRatio = this.fileUploaded.target === "profilePic" ? 1/1 : 26/9;
-    
-    cropper = await new Cropper(previewImageCrop, {
+    cropper = new Cropper(previewImageCrop, {
       ready: () => {
-        this.fileUploaded.target === "coverPic" && cropper.setCropBoxData({
+        this.options.target === "coverPic" && cropper.setCropBoxData({
           width: elements.editProfileDetailsModal.querySelector(".modal-container").offsetWidth,
         });
         range = new Range("range", cropper);
@@ -90,26 +117,7 @@ function dropzoneOptions(previewsContainer, target) {
     paramName: "file",
     resizeQuality: 0.7,
     // createImageThumbnails: false,
-    init: function() {
-      this.on("maxfilesexceeded", function(file) {
-        this.removeAllFiles();
-        this.addFile(file);
-      })
-
-      this.on("success", async function(file, resp) {
-        dropzoneBorder(this.container)
-        form.classList.add("d-none");
-        
-        const image = this.container.querySelector(`.${this.container.id}__temp`);
-        if(image) {
-          image.remove();
-        }
-        
-        
-        this.fileUploaded = {...resp.data, target};
-        await this.showCropper();     
-      })
-    }
+    target
   }
 }
 
@@ -119,15 +127,6 @@ function dropzoneOptions(previewsContainer, target) {
 const dropzoneProfilePic = new UploadImage("#profileImageDz", editProfileImageContainer, dropzoneOptions("#previewProfileImage", "profilePic"));
 // dropzone cover pic
 const dropzoneCoverPic = new UploadImage("#coverImageDz", editCoverImageContainer, dropzoneOptions("#previewCoverImage", "coverPic"));
-
-[{dz: dropzoneProfilePic, container: editProfileImageContainer}, {dz: dropzoneCoverPic, container: editCoverImageContainer}].forEach(({dz, container}) => {
-  dz.on("dragenter", () => {
-    dropzoneBorder(container, true)
-  })
-  dz.on("dragleave", () => {
-    dropzoneBorder(container)
-  })
-})
 
 
 function loadingIndication() {
@@ -183,8 +182,9 @@ function cropperResetDOM() {
   elements.editProfileDetailsModal.removeAttribute("data-lock");
   previewImageCropContainer.removeAttribute("data-target");
   previewImageCropContainer.classList.add("d-none");
+  previewImageCropContainer.querySelector("img").remove();
   form.classList.remove("d-none");
-  elements.editProfileDetailsModal.querySelector(".messages-loading-spinner").remove();
+  elements.editProfileDetailsModal.querySelector(".messages-loading-spinner")?.remove();
   applyCropBtn.textContent = "Apply";
   applyCropBtn.disabled = false;
 }
