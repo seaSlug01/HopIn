@@ -32,17 +32,23 @@ class UploadImage extends Dropzone {
     super(element, options)
     this.container = container; 
     this.fileUploaded = {};
+
+
+    this.on("addedfile", () => {
+      this.showCropperOptions();
+    })
   }
 
-  async showCropper() {
+  showCropperOptions() {
     elements.editProfileDetailsModal.setAttribute("data-lock", "");
     const previewImageCropContainer = form.previousElementSibling;
     previewImageCropContainer.classList.remove("d-none");
     const previewImageCrop = previewImageCropContainer.querySelector(".previewImageCrop");
     previewImageCrop.setAttribute("src", this.fileUploaded.path)
     previewImageCropContainer.setAttribute("data-target", this.fileUploaded.target)
+  }
 
-  
+  async showCropper() {
     if(cropper !== undefined) {
       cropper.destroy();
     } 
