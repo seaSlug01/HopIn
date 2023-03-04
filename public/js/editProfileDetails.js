@@ -38,7 +38,7 @@ class UploadImage extends Dropzone {
       form.classList.add("d-none");
       form.previousElementSibling.classList.remove("d-none");
       const previewImageCropContainer = form.previousElementSibling;
-      previewImageCropContainer.setAttribute("data-target", this.options.target)
+      previewImageCropContainer.setAttribute("data-target", this.options.target);
     })
 
     this.on("maxfilesexceeded", (file) => {
@@ -68,6 +68,7 @@ class UploadImage extends Dropzone {
   }
 
   previewImageCropper() {
+    previewImageCropContainer.querySelector("img")?.remove();
     const img = document.createElement("img");
     img.src = this.fileUploaded.path
     previewImageCropContainer.querySelector(".wrapper").appendChild(img);
@@ -197,7 +198,6 @@ async function cancelCropper(e) {
     e.target.parentNode.parentNode.classList.add("d-none");
     await applyCrop();
     form.classList.remove("d-none");
-    
     form.querySelector(`.editCoverImage__temp`)?.remove();
   } else {
     cropper.destroy();
