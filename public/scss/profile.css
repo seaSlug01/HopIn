@@ -121,9 +121,18 @@
   .generalDetails {
     display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
 
-    & > span {
-      margin-right: 1rem;
+    a {
+      color: var(--clr-primary);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    & > span, a {
 
       i, svg {
         margin-right: 0.4rem;
