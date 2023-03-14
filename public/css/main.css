@@ -2366,11 +2366,17 @@
 .userDetails .generalDetails {
     display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
   }
-.userDetails .generalDetails > span {
-      margin-right: 1rem;
+.userDetails .generalDetails a {
+      color: rgb(29, 161, 242);
+      color: var(--clr-primary);
+      text-decoration: none;
     }
-.userDetails .generalDetails > span i, .userDetails .generalDetails > span svg {
+.userDetails .generalDetails a:hover {
+        text-decoration: underline;
+      }
+.userDetails .generalDetails > span i, .userDetails .generalDetails > span svg, .userDetails .generalDetails a i, .userDetails .generalDetails a svg {
         margin-right: 0.4rem;
         font-size: 1.2rem;
         color: #8a8a8a;

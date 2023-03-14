@@ -209,6 +209,12 @@ mixin displayBirthDate(profileUser, userLoggedIn)
         span.muted.joinDate.mb
             i.fa-solid.fa-cake-candles
             span Γενέθλια: #{displayedDate}
+
+mixin websiteUrl(url)
+    -if(url !== "")
+        a(href=url)
+            i.fa-solid.fa-link.muted
+            | #{url.replace(/(^\w+:|^)\/\//, '').replace(/www./, "")}
     
     
 
@@ -348,7 +354,7 @@ mixin createUserProfileActions(userLoggedIn, profileUser)
                                     .edit-input-group
                                         label(for="website")
                                             input(type="text", name="website",id="website", autocomplete="off", tabindex=0, value=(website || ""))
-                                            span.placeholder Website
+                                            span.placeholder(class=(website !== undefined && website !== "" && "shrink")) Website
                                             span.counter #{website ? website.length : 0} / 100
                                     .birthDateContainer
                                         .birthDatePreview

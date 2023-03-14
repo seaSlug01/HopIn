@@ -22,6 +22,7 @@ block content
           p.mb.bio #{profileUser.bio}
           .generalDetails
             +displayBirthDate(profileUser, userLoggedIn)
+            +websiteUrl(profileUser.website)
             span.muted.joinDate.mb
               i.fa-solid.fa-calendar-days
               span Joined: #{joined}
