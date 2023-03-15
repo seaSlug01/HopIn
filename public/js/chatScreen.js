@@ -157,10 +157,12 @@ docReady(async () => {
     socket.on("messageReceived", (newMessageData) => messageReceived(newMessageData))
 
     socket.on("userIsTyping", () => {
+      console.log("User is typing")
       userTyping.classList.remove("d-none");
     })
 
     socket.on("userStoppedTyping", () => {
+      console.log("User stoped typing")
       userTyping.classList.add("d-none")
     })
   }
@@ -2321,6 +2323,8 @@ async function submitMessage(e, messageText, mediaSelection) {
 }
 
 export function messageReceived({chat, senderId}) {
+  if(chat._id !== chatState.chat._id) return;
+  
   console.log("Do I even get received?")
   chatState.fetchMoreMessages.bottom = true;
   chatState.newMessage = true;

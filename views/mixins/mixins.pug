@@ -211,7 +211,7 @@ mixin displayBirthDate(profileUser, userLoggedIn)
             span Γενέθλια: #{displayedDate}
 
 mixin websiteUrl(url)
-    -if(url !== "")
+    -if(url)
         a(href=url)
             i.fa-solid.fa-link.muted
             | #{url.replace(/(^\w+:|^)\/\//, '').replace(/www./, "")}

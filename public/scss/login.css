@@ -22,6 +22,7 @@
   &.login {
     .left {
       width: 75%;
+      font-size: 1rem;
 
       .container {
         display: flex;
@@ -51,6 +52,30 @@
         }
         .form {
           width: 85%;
+        }
+      }
+
+      @media (max-width: 1300px) {
+        width: 100%;
+        font-size: 1rem;
+
+        .container {
+          width: 55%;
+        }
+      }
+
+      @media (max-width: 1300px) {
+        width: 100%;
+        font-size: 0.8rem;
+
+        .container {
+          width: 60%;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .container {
+          width: 90%;
         }
       }
     }
@@ -101,8 +126,8 @@
         }
 
         .circle {
-          width: 40px;
-          height: 40px;
+          width: 2.5em;
+          height: 2.5em;
           background: inherit;
           border-radius: 50%;
           position: relative;
@@ -195,14 +220,14 @@
     }
 
     .subtitle {
-      margin-top: 1.7rem;
+      margin-top: 1.7em;
     }
 
     .formStepsContainer {
       position: relative;
 
       .header {
-        font-size: 1.5rem;
+        font-size: 1.5em;
         color: #252525;
       }
 
@@ -230,7 +255,7 @@
 
     .container {
       width: 80%;
-      margin-top: 120px;
+      margin-top: 7.5em;
       transform: scale(0.9);
 
       .form {
@@ -239,24 +264,24 @@
         width: 100%;
 
         .link {
-          margin-top: 3rem;
+          margin-top: 3em;
         }
 
         .btn {
-          margin-top: 3rem;
+          margin-top: 3em;
         }
 
         .form-control {
           &:not(:first-child) {
-            margin-top: 2rem;
+            margin-top: 2em;
           }
 
           label {
-            font-size: 1.1rem;
+            font-size: 1.1em;
             letter-spacing: 2px;
             font-weight: 600;
             color: #4172fd;
-            padding-left: 0.3rem;
+            padding-left: 0.3em;
           }
 
           .error {
@@ -288,8 +313,8 @@
                 opacity 1s ease forwards;
 
               span {
-                font-size: 1rem;
-                padding: 0.5rem;
+                font-size: 1em;
+                padding: 0.5em;
 
                 color: white;
                 font-weight: bold;
@@ -308,9 +333,9 @@
 
                 img {
                   max-width: 100%;
-                  width: 26px;
-                  height: 26px;
-                  margin: 0 0.6rem;
+                  width: 1.625em;
+                  height: 1.625em;
+                  margin: 0 0.6em;
                   filter: invert(1);
                 }
               }
@@ -319,7 +344,7 @@
 
           .input-group {
             position: relative;
-            height: 60px;
+            height: 3.75em;
             margin-top: 5px;
             overflow: hidden;
             border-radius: 10px;
@@ -333,7 +358,7 @@
               position: absolute;
               z-index: 1;
               pointer-events: none;
-              font-size: 1.65rem;
+              font-size: 1.65em;
               font-weight: 300;
               left: 8px;
               color: #7c7c7c;
@@ -344,10 +369,10 @@
 
               &.shrink {
                 &[data-shrink='100%'] {
-                  font-size: 1.2rem;
+                  font-size: 1.2em;
                   opacity: 0;
                 }
-                font-size: 0.9rem;
+                font-size: 0.9em;
                 top: 10px;
                 text-shadow: 0px 0.5px #7c7c7c;
                 letter-spacing: 3px;
@@ -356,8 +381,8 @@
 
             .icon {
               position: absolute;
-              width: 60px;
-              height: 60px;
+              width: 3.75em;
+              height: 3.75em;
               top: 0;
               right: 0;
               display: flex;
@@ -393,18 +418,18 @@
 
               .eyeball {
                 position: absolute;
-                width: 10px;
-                height: 10px;
+                width: 0.625em;
+                height: 0.625em;
                 border-radius: 50%;
                 background: #090200;
-                top: 28px;
-                right: 25px;
+                top: 1.75em;
+                right: 1.5625em;
                 transition: background 0.3s ease, transform 0.5s ease;
               }
 
               & i {
                 font-size: 1.7em;
-                padding-top: 0.3rem;
+                padding-top: 0.3em;
                 pointer-events: none;
                 transition: transform 0.5s ease;
               }
@@ -416,12 +441,12 @@
               height: 100%;
               border: none;
               background: transparent;
-              padding-top: 0.8rem;
+              padding-top: 0.8em;
               outline: none;
               z-index: 0;
-              text-indent: 0.5rem;
-              font-size: 1.65rem;
-              text-indent: 15px;
+              text-indent: 0.5em;
+              font-size: 1.65em;
+              text-indent: 0.9375em;
               font-family: Lato, sans-serif;
               background: #e6e6e6;
               transition: background 0.2s ease;
@@ -439,6 +464,18 @@
 
               &:focus {
                 background: #d3d3d3;
+              }
+            }
+
+
+            @media (max-width: 1200px) {
+              .placeholder {
+                &.shrink {
+                  font-weight: bold;
+                  font-size: 1.1em;
+                  letter-spacing: 2px;
+                  text-shadow: none;
+                }
               }
             }
           }
@@ -459,6 +496,11 @@
 
     &.login {
       background-position: center;
+    }
+
+
+    @media (max-width: 1300px) {
+      display: none;
     }
 
     // img {
@@ -484,7 +526,7 @@
   text-decoration: none;
   font-weight: bold;
   letter-spacing: 1px;
-  font-size: 18px;
+  font-size: 1.125em;
   color: rgb(29, 161, 242);
 
   &::after {
