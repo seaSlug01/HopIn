@@ -163,7 +163,7 @@ const createPost = async (req, res) => {
           newPost = await User.populate(newPost, { path: "replyTo.postedBy" })
           
           // send notification to the user you've replied to
-          await Notification.insertNotification(newPost.replyTo.postedBy, req.session.user._id, "reply", newPost._id)
+          await Notification.insertNotification(newPost.replyTo.postedBy._id, req.session.user._id, "reply", newPost._id)
         }
 
         await sendNotificationToMentionedUsers(req.session.user._id, newPost)

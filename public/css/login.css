@@ -19,6 +19,7 @@
 
 .login-register-container.register .left, .login-register-container.login .left {
       width: 75%;
+      font-size: 1rem;
     }
 
 .login-register-container.register .left .container, .login-register-container.login .left .container {
@@ -53,6 +54,36 @@
 .login-register-container.register .left .container .form, .login-register-container.login .left .container .form {
           width: 85%;
         }
+
+@media (max-width: 1300px) {
+
+.login-register-container.register .left, .login-register-container.login .left {
+        width: 100%;
+        font-size: 1rem
+    }
+
+        .login-register-container.register .left .container, .login-register-container.login .left .container {
+          width: 55%;
+        }
+      }
+
+@media (max-width: 1300px) {
+
+.login-register-container.register .left, .login-register-container.login .left {
+        width: 100%;
+        font-size: 0.8rem
+    }
+
+        .login-register-container.register .left .container, .login-register-container.login .left .container {
+          width: 60%;
+        }
+      }
+
+@media (max-width: 800px) {
+        .login-register-container.register .left .container, .login-register-container.login .left .container {
+          width: 90%;
+        }
+      }
 
 .login-register-container .left {
     display: flex;
@@ -102,8 +133,8 @@
           }
 
 .login-register-container .left .track-steps li .circle {
-          width: 40px;
-          height: 40px;
+          width: 2.5em;
+          height: 2.5em;
           background: inherit;
           border-radius: 50%;
           position: relative;
@@ -191,7 +222,7 @@
     }
 
 .login-register-container .left .subtitle {
-      margin-top: 1.7rem;
+      margin-top: 1.7em;
     }
 
 .login-register-container .left .formStepsContainer {
@@ -199,7 +230,7 @@
     }
 
 .login-register-container .left .formStepsContainer .header {
-        font-size: 1.5rem;
+        font-size: 1.5em;
         color: #252525;
       }
 
@@ -226,7 +257,7 @@
 
 .login-register-container .left .container {
       width: 80%;
-      margin-top: 120px;
+      margin-top: 7.5em;
       transform: scale(0.9);
     }
 
@@ -237,23 +268,23 @@
       }
 
 .login-register-container .left .container .form .link {
-          margin-top: 3rem;
+          margin-top: 3em;
         }
 
 .login-register-container .left .container .form .btn {
-          margin-top: 3rem;
+          margin-top: 3em;
         }
 
 .login-register-container .left .container .form .form-control:not(:first-child) {
-            margin-top: 2rem;
+            margin-top: 2em;
           }
 
 .login-register-container .left .container .form .form-control label {
-            font-size: 1.1rem;
+            font-size: 1.1em;
             letter-spacing: 2px;
             font-weight: 600;
             color: #4172fd;
-            padding-left: 0.3rem;
+            padding-left: 0.3em;
           }
 
 .login-register-container .left .container .form .form-control .error {
@@ -286,8 +317,8 @@
             }
 
 .login-register-container .left .container .form .form-control .error .errorContainer span {
-                font-size: 1rem;
-                padding: 0.5rem;
+                font-size: 1em;
+                padding: 0.5em;
 
                 color: white;
                 font-weight: bold;
@@ -307,15 +338,15 @@
 
 .login-register-container .left .container .form .form-control .error .errorContainer span img {
                   max-width: 100%;
-                  width: 26px;
-                  height: 26px;
-                  margin: 0 0.6rem;
+                  width: 1.625em;
+                  height: 1.625em;
+                  margin: 0 0.6em;
                   filter: invert(1);
                 }
 
 .login-register-container .left .container .form .form-control .input-group {
             position: relative;
-            height: 60px;
+            height: 3.75em;
             margin-top: 5px;
             overflow: hidden;
             border-radius: 10px;
@@ -331,7 +362,7 @@
               position: absolute;
               z-index: 1;
               pointer-events: none;
-              font-size: 1.65rem;
+              font-size: 1.65em;
               font-weight: 300;
               left: 8px;
               color: #7c7c7c;
@@ -342,12 +373,12 @@
             }
 
 .login-register-container .left .container .form .form-control .input-group .placeholder.shrink[data-shrink='100%'] {
-                  font-size: 1.2rem;
+                  font-size: 1.2em;
                   opacity: 0;
                 }
 
 .login-register-container .left .container .form .form-control .input-group .placeholder.shrink {
-                font-size: 0.9rem;
+                font-size: 0.9em;
                 top: 10px;
                 text-shadow: 0px 0.5px #7c7c7c;
                 letter-spacing: 3px;
@@ -355,8 +386,8 @@
 
 .login-register-container .left .container .form .form-control .input-group .icon {
               position: absolute;
-              width: 60px;
-              height: 60px;
+              width: 3.75em;
+              height: 3.75em;
               top: 0;
               right: 0;
               display: flex;
@@ -394,18 +425,18 @@
 
 .login-register-container .left .container .form .form-control .input-group .icon .eyeball {
                 position: absolute;
-                width: 10px;
-                height: 10px;
+                width: 0.625em;
+                height: 0.625em;
                 border-radius: 50%;
                 background: #090200;
-                top: 28px;
-                right: 25px;
+                top: 1.75em;
+                right: 1.5625em;
                 transition: background 0.3s ease, transform 0.5s ease;
               }
 
 .login-register-container .left .container .form .form-control .input-group .icon i {
                 font-size: 1.7em;
-                padding-top: 0.3rem;
+                padding-top: 0.3em;
                 pointer-events: none;
                 transition: transform 0.5s ease;
               }
@@ -416,12 +447,12 @@
               height: 100%;
               border: none;
               background: transparent;
-              padding-top: 0.8rem;
+              padding-top: 0.8em;
               outline: none;
               z-index: 0;
-              text-indent: 0.5rem;
-              font-size: 1.65rem;
-              text-indent: 15px;
+              text-indent: 0.5em;
+              font-size: 1.65em;
+              text-indent: 0.9375em;
               font-family: Lato, sans-serif;
               background: #e6e6e6;
               transition: background 0.2s ease;
@@ -439,6 +470,15 @@
 .login-register-container .left .container .form .form-control .input-group input:focus {
                 background: #d3d3d3;
               }
+
+@media (max-width: 1200px) {
+                .login-register-container .left .container .form .form-control .input-group .placeholder.shrink {
+                  font-weight: bold;
+                  font-size: 1.1em;
+                  letter-spacing: 2px;
+                  text-shadow: none;
+                }
+            }
 
 .login-register-container .right {
     background-image: url('../images/pexels-lisa-fotios-1921336.jpg');
@@ -470,13 +510,20 @@
       background-position: center;
     }
 
+@media (max-width: 1300px) {
+
+.login-register-container .right {
+      display: none
+  }
+    }
+
 .link {
   position: relative;
   display: inline-block;
   text-decoration: none;
   font-weight: bold;
   letter-spacing: 1px;
-  font-size: 18px;
+  font-size: 1.125em;
   color: rgb(29, 161, 242);
 }
 

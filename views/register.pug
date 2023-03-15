@@ -131,6 +131,7 @@ block content
         if(pw.value !== confirmPassword.value) {
           alert("Your passwords do not match")
         } else {
+          circles[2].classList.add("success")
           form.submit();
           console.log("submitted")
         }
