@@ -257,7 +257,7 @@ function calculateOffset(el, oldPin, newPin) {
 }
 
 function pinToTop(oldPinId, newPin) {
-  const condition = (window.location.href.includes("profile") && ((userLoggedIn._id == profileUserId)) && window.location.hash === "#posts");
+  const condition = (window.location.href.includes("profile") && ((userLoggedIn._id == profileUserId)) && (window.location.hash === "#posts" || window.location.hash === ""));
 
   console.log(condition, "conditioner")
   console.log(window.location.href.includes("profile"), window.location.hash === "#posts", window.location.hash)
