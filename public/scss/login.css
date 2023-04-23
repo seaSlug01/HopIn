@@ -265,6 +265,7 @@
 
         .link {
           margin-top: 3em;
+          margin-bottom: 1.5rem;
         }
 
         .btn {
@@ -422,14 +423,14 @@
                 height: 0.625em;
                 border-radius: 50%;
                 background: #090200;
-                top: 1.75em;
-                right: 1.5625em;
+                top: 1.7em;
+                right: 1.6em;
                 transition: background 0.3s ease, transform 0.5s ease;
               }
 
               & i {
                 font-size: 1.7em;
-                padding-top: 0.3em;
+                padding-top: 0.15em;
                 pointer-events: none;
                 transition: transform 0.5s ease;
               }
