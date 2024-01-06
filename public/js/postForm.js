@@ -520,9 +520,10 @@ function updateReplyCount(post) {
   } 
 }
 
-export const submitPost = async (e, mediaSelection, setPosts, additionalCallback) => {
+export const submitPost = async (e, mediaSelection, setPosts, limit, additionalCallback) => {
   e.preventDefault();
   const textarea = e.target.querySelector(".realTextarea");
+  if(textarea.value.length > limit) return;
   const submitBtn = e.target.querySelector(".btn-submit");
   submitBtn.disabled = true;
 
@@ -620,7 +621,7 @@ export function createPostForm(formId, setPosts) {
   textarea.addEventListener("input", (e) => onInput(e.target, postCharactersLimit));
   form.addEventListener("submit", async (e) => {
     const additionalCallack = formId == "reply" ? hideReplyForm : null;
-    await submitPost(e, mediaSelection, setPosts, additionalCallack);
+    await submitPost(e, mediaSelection, setPosts, postCharactersLimit, additionalCallack);
   });
 
   return {mediaSelection}
