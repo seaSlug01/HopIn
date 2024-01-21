@@ -1,17 +1,17 @@
-@import 'variables.css';
-@import 'post.css';
-@import 'postForm.css';
-@import 'modal.css';
-@import 'profile.css';
-@import 'editProfileForm.css';
-@import 'customInputRange.css';
-@import 'tabs.css';
-@import 'search.css';
-@import 'messages.css';
-@import 'chatScreen.css';
-@import 'emoji.css';
-@import 'accordion.css';
-@import 'notifications.css';
+@import "variables.css";
+@import "post.css";
+@import "postForm.css";
+@import "modal.css";
+@import "profile.css";
+@import "editProfileForm.css";
+@import "customInputRange.css";
+@import "tabs.css";
+@import "search.css";
+@import "messages.css";
+@import "chatScreen.css";
+@import "emoji.css";
+@import "accordion.css";
+@import "notifications.css";
 
 .wrapper {
   display: flex;
@@ -70,7 +70,6 @@
             letter-spacing: 0.9px;
             position: relative;
 
-
             &.notifications {
               .notificationsCount {
                 top: 4px;
@@ -92,8 +91,6 @@
                 display: inline-flex;
               }
             }
-
-            
 
             .tooltip {
               display: none;
@@ -163,7 +160,6 @@
       }
     }
 
-
     @media only screen and (max-width: 1300px) {
       flex-grow: 0;
       flex-basis: 8%;
@@ -172,7 +168,6 @@
       min-width: 4.2rem;
 
       nav ul {
-  
         li {
           &.logout {
             img {
@@ -182,7 +177,7 @@
               object-fit: contain;
             }
           }
-  
+
           a {
             margin-bottom: 0.8rem;
             padding: 0;
@@ -191,18 +186,18 @@
             .tooltip {
               display: block;
             }
-            
-            &:hover {
 
+            &:hover {
               .capsule {
                 background: #e3e3e3;
-  
-                svg, img {
+
+                svg,
+                img {
                   filter: none;
                 }
               }
             }
-          
+
             span:not(.letter) {
               display: none;
             }
@@ -213,7 +208,7 @@
               height: 3.1rem;
               display: flex;
               justify-content: center;
-  
+
               svg {
                 margin-right: 0;
                 width: 28px;
@@ -258,7 +253,7 @@
       border-left: var(--thin-border);
       width: 39.5rem;
 
-      @media (max-width: 1110px) {   
+      @media (max-width: 1110px) {
         width: 39rem;
       }
 
@@ -277,8 +272,6 @@
         border-right: var(--thin-border);
         background: rgb(247, 249, 250);
       }
-
-    
     }
 
     .third-column {
@@ -288,14 +281,13 @@
       flex-direction: column;
       align-items: center;
 
-      @media (max-width: 1110px) {   
-          width: 32%;
+      @media (max-width: 1110px) {
+        width: 32%;
       }
 
-      @media (max-width: 1020px) {   
+      @media (max-width: 1020px) {
         display: none;
       }
-
 
       .box {
         width: 100%;
@@ -308,7 +300,6 @@
         }
       }
     }
-
   }
 }
 
@@ -324,6 +315,10 @@
     position: sticky;
     top: 0;
     left: 0;
+  }
+
+  &.white {
+    background-color: white;
   }
 
   &.chats {
@@ -352,10 +347,11 @@
       }
 
       &:hover {
-       outline: 4px solid rgb(235 243 255 / 85%);
+        outline: 4px solid rgb(235 243 255 / 85%);
       }
 
-      &::before, &::after {
+      &::before,
+      &::after {
         content: "";
         position: absolute;
         top: 50%;
@@ -394,7 +390,7 @@
 
   h1.pageTitle {
     font-size: 1.3rem;
-  } 
+  }
 
   .navigate {
     width: 35px;
@@ -424,10 +420,7 @@
       filter: none;
     }
   }
-
-
 }
-
 
 .loadingBar {
   position: absolute;
@@ -466,7 +459,6 @@
   }
 }
 
-
 .loadingDots {
   display: flex;
   gap: 0.5em;
@@ -484,10 +476,7 @@
       animation-delay: 1s;
     }
   }
-
-  
 }
-
 
 .markAllAsRead {
   margin-left: auto;
@@ -500,7 +489,7 @@
   }
 
   i {
-    transform: rotate(180deg)
+    transform: rotate(180deg);
   }
 
   .tooltip {
