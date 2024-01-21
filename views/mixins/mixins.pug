@@ -248,7 +248,7 @@ mixin createUserProfileActions(userLoggedIn, profileUser)
     mixin createEditProfileDetails(profileUser)
         - const { birthDate: { date: stringDate, canSeeMonthAndDay, canSeeYear }, bio, firstName, lastName, location, website, profilePic, coverPic } = profileUser;
         //- - const months = ["January", "February", "March", " April", " May", " June", " July", " August", " September", "October", "November", "December"]
-        - const months = [...Array(11).keys()].map(key => new Date(0, key).toLocaleString('en', { month: 'long' }));
+        - const months = [...Array(12).keys()].map(key => new Date(0, key).toLocaleString('en', { month: 'long' }));
         
         - let date, birthYear, birthDay, birthMonth, birthToDisplay;
         - if(stringDate !== undefined && stringDate !== null) {
@@ -268,7 +268,7 @@ mixin createUserProfileActions(userLoggedIn, profileUser)
        
         
         
-        - let currentYear = new Date().getFullYear() + 1;
+        - let currentYear = new Date().getFullYear();
         - let days = 31
         - let name = lastName ? firstName + " " + lastName : firstName;
 
@@ -370,7 +370,7 @@ mixin createUserProfileActions(userLoggedIn, profileUser)
                                                         label(for="month").selection
                                                             
                                                             select(name="month",id="month", tabindex=0)
-                                                                - for(let i = 1; i < months.length; i++) {
+                                                                - for(let i = 0; i < months.length; i++) {
                                                                     option(value=(i), selected=(birthMonth == i)) #{months[i]}
                                                                 - }
                                                             span.placeholder.shrink Month
