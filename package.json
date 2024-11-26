@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "watch-node": "nodemon app.js",
     "watch-postcss": "postcss public/scss -d public/css/ -w",
     "dev": "concurrently \"npm:watch-*\"",
